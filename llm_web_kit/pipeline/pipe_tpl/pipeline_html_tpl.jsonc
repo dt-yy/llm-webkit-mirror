@@ -1,0 +1,65 @@
+{
+    // dataset_name和path_prefix_matcher是二选一，如果都出现了，那么以path_prefix_matcher为准
+    "dataset_name": "zlib", //数据集名称
+
+    "skip": false, //是否跳过这个数据集
+    "debug": false, //如果开启debug模式，则不会缓存任何数据，所有持久化操作都会被忽略
+    "raw_data_format": {
+        "raw_input_data_path": [
+            "s3://llm-raw-input/zlib/pdfs_1/",
+            "s3://llm-raw-input/zlib/pdfs_1/"
+        ],
+        "formatted_raw_data_path": "s3://llm-raw-output/zlib/pdfs/", // 对raw_input_data_path里的数据进行格式化之后的数据存放路径
+        "ignore_formatted_raw_data_path": false, //formatted_raw_data_path是否有效
+        "do_not_save_formatted_input_data": "false" //如果是true，不会保存formatted数据
+    },
+
+    "extract_pipeline": { //每个子key里的处理器都是有序的，顺序执行
+        "enable": true,
+        "pre_processor": [
+            {
+                "enable": false,
+                "python_class": "llm_web_kit.pipline.zlib.ZLibPreExtractor"
+            }, //自定义的拦截处理程序
+            {
+                "enable": false,
+                "python_class": "llm_web_kit.pipline.PDF"
+            }, //是否根据文件格式进行预处理
+        ],
+        "processor": [
+            {
+                "enable": true,
+                "python_class": "llm_web_kit.pipline.zlib.ZLibProcessor"
+            }, //自定义的处理程序
+            {
+                "enable": true,
+                "python_class": "llm_web_kit.pipline.PDF"
+            }, //是否根据文件格式进行处理
+        ],
+        "post_processor": [
+            {
+                "enable": false,
+                "python_class": "llm_web_kit.pipline.zlib.ZLibPostExtractor"
+            }, //自定义的拦截处理程序
+            {
+                "enable": false,
+                "python_class": "llm_web_kit.pipline.PDF"
+            }, //是否根据文件格式进行后处理
+        ]
+    },
+    
+    "content_safe": {
+        "enable": true,
+        "processor": [
+            {
+                "enable": true,
+                "python_class": "llm_web_kit.model.WebChecker",
+                "kwargs": {}
+            }, //自定义的处理程序
+            {
+                "enable": true,
+                "python_class": "llm_web_kit.model.BooksChecker"
+            }, //是否根据文件格式进行处理
+        ]
+    }
+}
