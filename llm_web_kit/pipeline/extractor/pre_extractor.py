@@ -172,3 +172,19 @@ class HTMLFileFormatFilterExtractor(BaseFileFormatFilterExtractor):
     @override
     def _do_pre_extract(self, content_list:ContentList) -> ContentList:
         pass # TODO
+
+
+class NoOpPreExtractor(AbstractPreExtractor):
+    """一个空的预处理器，不做任何处理
+    用于测试
+    """
+    def __init__(self, config: dict):
+        super().__init__(config)
+
+    @override
+    def _filter_by_rule(self, content_list:ContentList) -> bool:
+        return True
+
+    @override
+    def _do_pre_extract(self, content_list:ContentList) -> ContentList:
+        return content_list

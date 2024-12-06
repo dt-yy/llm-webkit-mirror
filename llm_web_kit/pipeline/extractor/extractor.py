@@ -240,3 +240,40 @@ class PDFFileExtractor(BaseFileFormatExtractor):
         """
         # TODO
         raise NotImplementedError("Subclass must implement abstract method")
+
+class NoOpExtractor(AbstractExtractor):
+    """一个什么都不做的提取器, 让架构更加一致。
+    通常在disable某个步骤的时候使用，充当透传功能。
+
+    Args:
+        AbstractExtractor (_type_): _description_
+    """
+    
+    def __init__(self, config: dict):
+        """从参数指定的配置中初始化这个流水线链
+
+        Args:
+            config (dict): 配置字典
+        """
+        super().__init__(config)
+
+    @override
+    def _filter_by_rule(self, content_list:ContentList) -> bool:
+        """根据规则过滤content_list
+
+        Args:
+            content_list (ContentList): 判断content_list是否是自己想要拦截处理的数据
+
+        Returns:
+            bool: 如果是希望处理的数据，返回True，否则返回False
+        """
+        return True
+    
+    @override
+    def _do_extract(self, content_list:ContentList) -> ContentList:
+        """实现真正的数据提取
+
+        Args:
+            content_list (ContentList): 需要处理的数据集
+        """
+        return content_list

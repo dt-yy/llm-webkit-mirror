@@ -3,7 +3,7 @@ from overrides import override
 
 from llm_web_kit.exception.exception import PipelineInitExp
 from llm_web_kit.input.datajson import ContentList, DataJson, DataJsonKey
-from llm_web_kit.pipeline.pipeline import Pipeline
+from llm_web_kit.pipeline.pipeline import Pipeline, PipelineSimpleFactory
 
 
 class PipelineSuit(object):
@@ -65,10 +65,12 @@ class PipelineSuit(object):
             if not pipeline:
                 try:
                     pipeline_config = self.__config[dataset_name]
-                    pipeline_of_dataset = Pipeline(pipeline_config)
+                    pipeline_of_dataset = PipelineSimpleFactory.create(pipeline_config)
                     self.__pipelines[dataset_name] = pipeline_of_dataset
                 except KeyError:
                     raise PipelineInitExp(f"Dataset name {dataset_name} is not found in the configuration file.")
+                except ValueError as e:
+                    raise PipelineInitExp(f"Failed to initialize pipeline for dataset: {dataset_name}, check pipeline config file of this dataset.") from e
                 except Exception as e:
                     raise PipelineInitExp(f"Failed to initialize pipeline for dataset: {dataset_name}") from e
 

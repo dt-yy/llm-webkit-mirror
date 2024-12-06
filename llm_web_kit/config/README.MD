@@ -17,7 +17,12 @@
     "xx-passwd": {
         "xxxx.zip": {"passwd": "1234", "user": "xxx"}
 
-    }
+    },
+    "log":[{
+        "log-level": "INFO",
+        "log-format": "",
+        "log-dir": "",
+    }]
 }
 
 

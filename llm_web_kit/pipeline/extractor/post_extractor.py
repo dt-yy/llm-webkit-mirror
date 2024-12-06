@@ -189,4 +189,34 @@ class PDFPostExtractor(BaseFileFormatPostExtractor):
         """
         # TODO 
         raise NotImplementedError("Subclass must implement abstract method")
+<<<<<<< HEAD
     
+class NoOpPostExtractor(BaseRuleFilterPostExtractor):
+    """一个什么都不做的提取器
+
+    Args:
+        BaseRuleFilterPostExtractor (_type_): 一个基础的规则过滤提取器
+    """
+    @override
+    def _filter_by_rule(self, content_list:ContentList) -> bool:
+        """根据规则过滤content_list
+
+        Args:
+            content_list (ContentList): 判断content_list是否是自己想要拦截处理的数据
+
+        Returns:
+            bool: 如果是希望处理的数据，返回True，否则返回False
+        """
+        return True
+    
+    @override
+    def _do_post_extract(self, content_list:ContentList) -> ContentList:
+        """实现真正的数据提取
+
+        Args:
+            content_list (ContentList): 需要处理的数据集
+        """
+        return content_list
+=======
+    
+>>>>>>> a283f237251e02da623fa15fa3cd49f9184ee505
