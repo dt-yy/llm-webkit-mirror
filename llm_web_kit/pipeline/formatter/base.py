@@ -10,7 +10,7 @@ class AbstractFormatter(ABC):
         pass
 
     @abstractmethod
-    def format(self, data: DataJson) -> DataJson:
+    def format(self, data_json: DataJson) -> DataJson:
         raise NotImplementedError
     
 
@@ -22,5 +22,5 @@ class NoOpFormatter(AbstractFormatter):
     """
 
     @override
-    def format(self, data: DataJson) -> DataJson:
-        return data
+    def format(self, data_json: DataJson) -> DataJson:
+        return data_json

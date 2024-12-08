@@ -1,6 +1,6 @@
 from abc import ABC, abstractmethod
 from overrides import override
-from llm_web_kit.input.datajson import ContentList
+from llm_web_kit.input.datajson import DataJson
 from llm_web_kit.pipeline.extractor.base import FileTypeMatcher
 
 
@@ -11,7 +11,7 @@ class AbstractExtractor(ABC):
         ABC (_type_): _description_
     """
     
-    def __init__(self, config: dict):
+    def __init__(self, config: dict, *args, **kwargs):
         """从参数指定的配置中初始化这个流水线链
 
         Args:
@@ -20,27 +20,27 @@ class AbstractExtractor(ABC):
         self.__config = config
 
 
-    def extract(self, content_list: ContentList) -> ContentList:
+    def extract(self, data_json: DataJson) -> DataJson:
         """实现针对一条输入数据的提取
 
         Args:
-            content_list (ContentList): _description_
+            data_json (DataJson): _description_
 
         Returns:
             dict: _description_
         """
-        if self._filter_by_rule(content_list):
-            return self._do_extract(content_list)
+        if self._filter_by_rule(data_json):
+            return self._do_extract(data_json)
         else:
-            return content_list
+            return data_json
     
 
     @abstractmethod
-    def _filter_by_rule(self, content_list:ContentList) -> bool:
-        """根据规则过滤content_list
+    def _filter_by_rule(self, data_json:DataJson) -> bool:
+        """data_json
 
         Args:
-            content_list (ContentList): 判断content_list是否是自己想要拦截处理的数据
+            data_json (DataJson): data_json
 
         Returns:
             bool: 如果是希望处理的数据，返回True，否则返回False
@@ -48,11 +48,11 @@ class AbstractExtractor(ABC):
         raise NotImplementedError("Subclass must implement abstract method")
     
     @abstractmethod
-    def _do_extract(self, content_list:ContentList) -> ContentList:
+    def _do_extract(self, data_json:DataJson) -> DataJson:
         """实现真正的数据提取
 
         Args:
-            content_list (ContentList): 需要处理的数据集
+            data_json (DataJson): 需要处理的数据集
         """
         raise NotImplementedError("Subclass must implement abstract method")
     
@@ -65,13 +65,13 @@ class BaseRuleFilterExtractor(AbstractExtractor):
         AbstractExtractor (_type_): _description_
     """
     
-    def __init__(self, config: dict):
+    def __init__(self, config: dict, *args, **kwargs):
         """从参数指定的配置中初始化这个流水线链
 
         Args:
             config (dict): 配置字典
         """
-        super().__init__(config)
+        super().__init__(config, *args, **kwargs)
     
 
 class BaseFileFormatExtractor(BaseRuleFilterExtractor, FileTypeMatcher):
@@ -81,162 +81,124 @@ class BaseFileFormatExtractor(BaseRuleFilterExtractor, FileTypeMatcher):
         AbstractExtractor (_type_): _description_
     """
     
-    def __init__(self, config: dict):
+    def __init__(self, config: dict, *args, **kwargs):
         """从参数指定的配置中初始化这个流水线链
 
         Args:
             config (dict): 配置字典
         """
-        super().__init__(config)
+        super().__init__(config, *args, **kwargs)
 
 
-class MDFileExtractor(BaseFileFormatExtractor):
+class MDFileFormatExtractor(BaseFileFormatExtractor):
     """一个从markdown文件中提取数据的提取器
 
     Args:
         BaseFileFormatExtractor (_type_): _description_
     """
     
-    def __init__(self, config: dict):
+    def __init__(self, config: dict, *args, **kwargs):
         """从参数指定的配置中初始化这个流水线链
 
         Args:
             config (dict): 配置字典
         """
-        super().__init__(config)
+        super().__init__(config, *args, **kwargs)
 
     @override
-    def _filter_by_rule(self, content_list:ContentList) -> bool:
-        """根据规则过滤content_list
+    def _filter_by_rule(self, data_json:DataJson) -> bool:
+        """data_json
 
         Args:
-            content_list (ContentList): 判断content_list是否是自己想要拦截处理的数据
+            data_json (DataJson): data_json
 
         Returns:
             bool: 如果是希望处理的数据，返回True，否则返回False
         """
-        return self.is_md_format(content_list)
+        return self.is_md_format(data_json)
     
     @override
-    def _do_extract(self, content_list:ContentList) -> ContentList:
+    def _do_extract(self, data_json:DataJson) -> DataJson:
         """实现真正的数据提取
 
         Args:
-            content_list (ContentList): 需要处理的数据集
+            data_json (DataJson): 需要处理的数据集
         """
         # TODO
         raise NotImplementedError("Subclass must implement abstract method")
     
 
-class TXTFileExtractor(BaseFileFormatExtractor):
+class TXTFileFormatExtractor(BaseFileFormatExtractor):
     """一个从txt文件中提取数据的提取器
 
     Args:
         BaseFileFormatExtractor (_type_): _description_
     """
     
-    def __init__(self, config: dict):
+    def __init__(self, config: dict, *args, **kwargs):
         """从参数指定的配置中初始化这个流水线链
 
         Args:
             config (dict): 配置字典
         """
-        super().__init__(config)
+        super().__init__(config, *args, **kwargs)
 
     @override
-    def _filter_by_rule(self, content_list:ContentList) -> bool:
-        """根据规则过滤content_list
+    def _filter_by_rule(self, data_json:DataJson) -> bool:
+        """data_json
 
         Args:
-            content_list (ContentList): 判断content_list是否是自己想要拦截处理的数据
+            data_json (DataJson): data_json
 
         Returns:
             bool: 如果是希望处理的数据，返回True，否则返回False
         """
-        return self.is_txt_format(content_list)
+        return self.is_txt_format(data_json)
     
     @override
-    def _do_extract(self, content_list:ContentList) -> ContentList:
+    def _do_extract(self, data_json:DataJson) -> DataJson:
         """实现真正的数据提取
 
         Args:
-            content_list (ContentList): 需要处理的数据集
+            data_json (DataJson): 需要处理的数据集
         """
         # TODO
         raise NotImplementedError("Subclass must implement abstract method")
     
 
-class HTMLFileExtractor(BaseFileFormatExtractor):
-    """一个从html文件中提取数据的提取器
-
-    Args:
-        BaseFileFormatExtractor (_type_): _description_
-    """
-    
-    def __init__(self, config: dict):
-        """从参数指定的配置中初始化这个流水线链
-
-        Args:
-            config (dict): 配置字典
-        """
-        super().__init__(config)
-
-    @override
-    def _filter_by_rule(self, content_list:ContentList) -> bool:
-        """根据规则过滤content_list
-
-        Args:
-            content_list (ContentList): 判断content_list是否是自己想要拦截处理的数据
-
-        Returns:
-            bool: 如果是希望处理的数据，返回True，否则返回False
-        """
-        return self.is_html_format(content_list)
-    
-    @override
-    def _do_extract(self, content_list:ContentList) -> ContentList:
-        """实现真正的数据提取
-
-        Args:
-            content_list (ContentList): 需要处理的数据集
-        """
-        # TODO
-        raise NotImplementedError("Subclass must implement abstract method")
-    
-
-class PDFFileExtractor(BaseFileFormatExtractor):
+class PDFFileFormatExtractor(BaseFileFormatExtractor):
     """一个从pdf文件中提取数据的提取器
 
     Args:
         BaseFileFormatExtractor (_type_): _description_
     """
     
-    def __init__(self, config: dict):
+    def __init__(self, config: dict, *args, **kwargs):
         """从参数指定的配置中初始化这个流水线链
 
         Args:
             config (dict): 配置字典
         """
-        super().__init__(config)
+        super().__init__(config, *args, **kwargs)
 
     @override
-    def _filter_by_rule(self, content_list:ContentList) -> bool:
-        """根据规则过滤content_list
+    def _filter_by_rule(self, data_json:DataJson) -> bool:
+        """data_json
 
         Args:
-            content_list (ContentList): 判断content_list是否是自己想要拦截处理的数据
+            data_json (DataJson): data_json
 
         Returns:
             bool: 如果是希望处理的数据，返回True，否则返回False
         """
-        return self.is_pdf_format(content_list)
+        return self.is_pdf_format(data_json)
     
     @override
-    def _do_extract(self, content_list:ContentList) -> ContentList:
+    def _do_extract(self, data_json:DataJson) -> DataJson:
         """实现真正的数据提取
 
         Args:
-            content_list (ContentList): 需要处理的数据集
+            data_json (DataJson): 需要处理的数据集
         """
         # TODO
         raise NotImplementedError("Subclass must implement abstract method")
@@ -249,20 +211,20 @@ class NoOpExtractor(AbstractExtractor):
         AbstractExtractor (_type_): _description_
     """
     
-    def __init__(self, config: dict):
+    def __init__(self, config: dict, *args, **kwargs):
         """从参数指定的配置中初始化这个流水线链
 
         Args:
             config (dict): 配置字典
         """
-        super().__init__(config)
+        super().__init__(config, *args, **kwargs)
 
     @override
-    def _filter_by_rule(self, content_list:ContentList) -> bool:
-        """根据规则过滤content_list
+    def _filter_by_rule(self, data_json:DataJson) -> bool:
+        """data_json
 
         Args:
-            content_list (ContentList): 判断content_list是否是自己想要拦截处理的数据
+            data_json (DataJson): 判断data_json是否是自己想要拦截处理的数据
 
         Returns:
             bool: 如果是希望处理的数据，返回True，否则返回False
@@ -270,10 +232,10 @@ class NoOpExtractor(AbstractExtractor):
         return True
     
     @override
-    def _do_extract(self, content_list:ContentList) -> ContentList:
+    def _do_extract(self, data_json:DataJson) -> DataJson:
         """实现真正的数据提取
 
         Args:
-            content_list (ContentList): 需要处理的数据集
+            data_json (DataJson): 需要处理的数据集
         """
-        return content_list
+        return data_json

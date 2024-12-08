@@ -15,7 +15,7 @@ AbstractPreExtractor
 
 from abc import ABC, abstractmethod
 from overrides import override
-from llm_web_kit.input.datajson import ContentList
+from llm_web_kit.input.datajson import DataJson
 from llm_web_kit.pipeline.extractor.base import FileTypeMatcher
 
 
@@ -25,7 +25,7 @@ class AbstractPreExtractor(ABC):
 
     """
 
-    def __init__(self, config: dict):
+    def __init__(self, config: dict, *args, **kwargs):
         """从参数指定的配置中初始化这个流水线链
 
         Args:
@@ -34,28 +34,29 @@ class AbstractPreExtractor(ABC):
         self.__config = config
 
 
-    def pre_extract(self, content_list:ContentList) -> ContentList:
+    def pre_extract(self, data_json:DataJson) -> DataJson:
         """实现针对一条输入数据的预处理
 
         Args:
-            content_list (ContentList): _description_
+            data_json (ContentList): _description_
 
         Returns:
             dict: _description_
         """
-        if self._filter_by_rule(content_list):
-            self._do_pre_extract(content_list)
+        if self._filter_by_rule(data_json):
+            d = self._do_pre_extract(data_json)
+            return d
         else:
-            return content_list
+            return data_json
 
 
     
     @abstractmethod
-    def _filter_by_rule(self, content_list:ContentList) -> bool:
+    def _filter_by_rule(self, data_json:DataJson) -> bool:
         """根据规则过滤content_list
 
         Args:
-            content_list (ContentList): 判断content_list是否是自己想要拦截处理的数据
+            content_list (DataJson): 判断content_list是否是自己想要拦截处理的数据
 
         Returns:
             bool: 如果是希望处理的数据，返回True，否则返回False
@@ -64,7 +65,7 @@ class AbstractPreExtractor(ABC):
     
 
     @abstractmethod
-    def _do_pre_extract(self, content_list:ContentList) -> ContentList:
+    def _do_pre_extract(self, data_json:DataJson) -> DataJson:
         """实现真正的数据集预处理
 
         Args:
@@ -76,101 +77,82 @@ class AbstractPreExtractor(ABC):
         raise NotImplementedError("Subclass must implement abstract method")
     
 
-class BaseRuleFilterExtractor(AbstractPreExtractor):
+class BaseRuleFilterPreExtractor(AbstractPreExtractor):
     """实现一个基础的规则过滤器
     例如，根据文件名的后缀拦截数据并进行基础的预处理
 
     Args:
         AbstractPreExtractor (_type_): _description_
     """
-    def __init__(self, config: dict):
-        super().__init__(config)
+    def __init__(self, config: dict, *args, **kwargs):
+        super().__init__(config, *args, **kwargs)
 
 
-class BaseFileFormatFilterExtractor(BaseRuleFilterExtractor, FileTypeMatcher):
+class BaseFileFormatFilterPreExtractor(BaseRuleFilterPreExtractor, FileTypeMatcher):
     """实现一个基础的文件格式过滤器
     例如，根据文件名的后缀拦截数据并进行基础的预处理
 
     Args:
-        BaseRuleFilterExtractor (_type_): _description_
+        BaseRuleFilterPreExtractor (_type_): _description_
     """
-    def __init__(self, config: dict):
-        super().__init__(config)
+    def __init__(self, config: dict, *args, **kwargs):
+        super().__init__(config, *args, **kwargs)
 
     
-class MDFileFormatFilterExtractor(BaseFileFormatFilterExtractor):
+class MDFileFormatFilterPreExtractor(BaseFileFormatFilterPreExtractor):
     """实现一个基础的MD文件格式过滤器
     例如，根据文件名的后缀拦截数据并进行基础的预处理
 
     Args:
-        BaseFileFormatFilterExtractor (_type_): _description_
+        BaseFileFormatFilterPreExtractor (_type_): _description_
     """
-    def __init__(self, config: dict):
-        super().__init__(config)
+    def __init__(self, config: dict, *args, **kwargs):
+        super().__init__(config, *args, **kwargs)
 
     @override
-    def _filter_by_rule(self, content_list:ContentList) -> bool:
-        return self.is_md_format(content_list)
+    def _filter_by_rule(self, data_json:DataJson) -> bool:
+        return self.is_md_format(data_json)
 
     @override
-    def _do_pre_extract(self, content_list:ContentList) -> ContentList:
+    def _do_pre_extract(self, data_json:DataJson) -> DataJson:
         pass # TODO
 
 
-class TXTFileFormatFilterExtractor(BaseFileFormatFilterExtractor):
+class TXTFileFormatFilterPreExtractor(BaseFileFormatFilterPreExtractor):
     """实现一个基础的TEXT文件格式过滤器
     例如，根据文件名的后缀拦截数据并进行基础的预处理
 
     Args:
-        BaseFileFormatFilterExtractor (_type_): _description_
+        BaseFileFormatFilterPreExtractor (_type_): _description_
     """
-    def __init__(self, config: dict):
-        super().__init__(config)
+    def __init__(self, config: dict, *args, **kwargs):
+        super().__init__(config, *args, **kwargs)
 
     @override
-    def _filter_by_rule(self, content_list:ContentList) -> bool:
-        return self.is_txt_format(content_list)
+    def _filter_by_rule(self, data_json:DataJson) -> bool:
+        return self.is_txt_format(data_json)
 
     @override
-    def _do_pre_extract(self, content_list:ContentList) -> ContentList:
+    def _do_pre_extract(self, data_json:DataJson) -> DataJson:
         pass # TODO
 
 
-class PDFFileFormatFilterExtractor(BaseFileFormatFilterExtractor):
+class PDFFileFormatFilterPreExtractor(BaseFileFormatFilterPreExtractor):
     """实现一个基础的PDF文件格式过滤器
     例如，根据文件名的后缀拦截数据并进行基础的预处理
 
     Args:
-        BaseFileFormatFilterExtractor (_type_): _description_
+        BaseFileFormatFilterPreExtractor (_type_): _description_
     """
-    def __init__(self, config: dict):
-        super().__init__(config)
+    def __init__(self, config: dict, *args, **kwargs):
+        super().__init__(config, *args, **kwargs)
 
     @override
-    def _filter_by_rule(self, content_list:ContentList) -> bool:
-        return self.is_pdf_format(content_list)
+    def _filter_by_rule(self, data_json:DataJson) -> bool:
+        return self.is_pdf_format(data_json)
 
     @override
-    def _do_pre_extract(self, content_list:ContentList) -> ContentList:
-        pass # TODO
-    
-
-class HTMLFileFormatFilterExtractor(BaseFileFormatFilterExtractor):
-    """实现一个基础的HTML文件格式过滤器
-    例如，根据文件名的后缀拦截数据并进行基础的预处理
-
-    Args:
-        BaseFileFormatFilterExtractor (_type_): _description_
-    """
-    def __init__(self, config: dict):
-        super().__init__(config)
-
-    @override
-    def _filter_by_rule(self, content_list:ContentList) -> bool:
-        return self.is_html_format(content_list)
-
-    @override
-    def _do_pre_extract(self, content_list:ContentList) -> ContentList:
+    def _do_pre_extract(self, data_json:DataJson) -> DataJson:
         pass # TODO
 
 
@@ -178,13 +160,13 @@ class NoOpPreExtractor(AbstractPreExtractor):
     """一个空的预处理器，不做任何处理
     用于测试
     """
-    def __init__(self, config: dict):
-        super().__init__(config)
+    def __init__(self, config: dict, *args, **kwargs):
+        super().__init__(config, *args, **kwargs)
 
     @override
-    def _filter_by_rule(self, content_list:ContentList) -> bool:
+    def _filter_by_rule(self, data_json:DataJson) -> bool:
         return True
 
     @override
-    def _do_pre_extract(self, content_list:ContentList) -> ContentList:
-        return content_list
+    def _do_pre_extract(self, data_json:DataJson) -> DataJson:
+        return data_json

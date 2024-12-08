@@ -49,7 +49,7 @@ class StructureChecker(object):
         Args:
             json_obj (dict): _description_
         """
-        pass # TODO: 实现这个方法
+        pass # TODO: 实现这个方法, 根据不同的输入标准进行检查
 
 
 
@@ -59,6 +59,9 @@ class ContentList(StructureMapper):
     """
     def __init__(self, json_data:dict):
         self.__content_list = json_data
+
+    def length(self) -> int:
+        return len(self.__content_list)
 
 
 

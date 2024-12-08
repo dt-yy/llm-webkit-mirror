@@ -2,7 +2,7 @@ import commentjson as json
 from overrides import override
 
 from llm_web_kit.exception.exception import PipelineInitExp
-from llm_web_kit.input.datajson import ContentList, DataJson, DataJsonKey
+from llm_web_kit.input.datajson import DataJson, DataJson, DataJsonKey
 from llm_web_kit.pipeline.pipeline import Pipeline, PipelineSimpleFactory
 
 
@@ -12,25 +12,33 @@ class PipelineSuit(object):
     例如，从文件到contentList的处理链
 
     """
-    def __init__(self, config_file_path: str):
+    def __init__(self, config: str|dict):
         """从参数指定的配置文件中读取配置并初始化这个流水线链
+
+        Args:
+            config (str|dict): 配置文件的路径
+        """
+        self.__pipelines = {}  # "dataset_name" => pipeline
+        self.__config = {} # "dataset_name" => config
+
+        cfg = config
+        if isinstance(config, str):
+            cfg = self.__load_config(config_file_path=config)
+
+        dataset_name = cfg.get(DataJsonKey.DATASET_NAME, None)
+        if not dataset_name:
+            raise PipelineInitExp(f"JSON config object must be a dictionary containing '{DataJsonKey.DATASET_NAME}'.")
+        else:
+            self.__config[dataset_name] = cfg
+
+    def __load_config(self, config_file_path: str):
+        """从配置文件中加载配置
 
         Args:
             config_file_path (str): 配置文件的路径
         """
         with open(config_file_path, 'r', encoding='utf-8') as file:
-            self.__config = json.load(file)
-            self.__init__(self.__config)
-
-    def __init__(self, config: dict):
-        """从参数指定的配置中初始化这个流水线链
-
-        Args:
-            config (dict): 配置字典
-        """
-        self.__config = config # 先不初始化那么多实例，用到哪个实例再初始化
-        self.__pipelines = {} # "dataset_name" => pipeline
-
+            return json.load(file)
 
     def __getattr__(self, method_name):
         """ 动态转发方法到具体和dataset_name绑定的pipeline实例上
@@ -56,17 +64,17 @@ class PipelineSuit(object):
                 raise PipelineInitExp(f"First argument must be the JSON object containing 'dataset_name'.")
 
             json_obj = args[0]
-            if not isinstance(json_obj, dict) or 'dataset_name' not in json_obj:
+            if not isinstance(json_obj, dict) or DataJsonKey.DATASET_NAME not in json_obj:
                 raise PipelineInitExp("JSON object must be a dictionary containing 'dataset_name'.")
 
             dataset_name = json_obj[DataJsonKey.DATASET_NAME]
-            pipeline = self.__pipelines.get(dataset_name)
+            pipeline = self._PipelineSuit__pipelines.get(dataset_name)
             
             if not pipeline:
                 try:
-                    pipeline_config = self.__config[dataset_name]
-                    pipeline_of_dataset = PipelineSimpleFactory.create(pipeline_config)
-                    self.__pipelines[dataset_name] = pipeline_of_dataset
+                    pipeline_config = self._PipelineSuit__config[dataset_name]
+                    pipeline = PipelineSimpleFactory.create(pipeline_config)
+                    self._PipelineSuit__pipelines[dataset_name] = pipeline
                 except KeyError:
                     raise PipelineInitExp(f"Dataset name {dataset_name} is not found in the configuration file.")
                 except ValueError as e:

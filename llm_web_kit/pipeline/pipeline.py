@@ -2,7 +2,7 @@
 
 from abc import ABC, abstractmethod
 from typing import List
-from llm_web_kit.input.datajson import ContentList, DataJson
+from llm_web_kit.input.datajson import DataJson, DataJson
 from overrides import override
 
 from llm_web_kit.libs.class_loader import load_python_class_by_name
@@ -23,11 +23,11 @@ class AbstractPipeline(ABC):
         NotImplementedError: _description_
     """
     @abstractmethod
-    def format(self, data:DataJson) -> DataJson:
+    def format(self, data_json:DataJson) -> DataJson:
         raise NotImplementedError
 
     @abstractmethod
-    def extract(self, dict) -> DataJson:
+    def extract(self, data_json:DataJson) -> DataJson:
         raise NotImplementedError
 
 
@@ -66,7 +66,7 @@ class FormatterChain:
                     # 根据formatter_class指向的类名，动态加载类，然后实例化一个formatter
                     if formatter_class is None:
                         raise ValueError(f"formatter_class is None, dataset name : {dataset_name}")
-                    formatter = load_python_class_by_name(formatter_class, class_init_kwargs)
+                    formatter = load_python_class_by_name(formatter_class, config, class_init_kwargs)
                     self.__formatter_lst.append(formatter)
 
 
@@ -125,7 +125,7 @@ class ExtractorChain:
             if is_extractor_enable:
                 if pre_extractor_class is None:
                     raise ValueError(f"pre_extractor_class is None, dataset name : {dataset_name}")
-                pre_extractor = load_python_class_by_name(pre_extractor_class, class_init_kwargs)
+                pre_extractor = load_python_class_by_name(pre_extractor_class, config,  class_init_kwargs)
                 self.__pre_extractor_lst.append(pre_extractor)
 
         # #########################################################
@@ -139,7 +139,7 @@ class ExtractorChain:
             if is_extractor_enable:
                 if extractor_class is None:
                     raise ValueError(f"extractor_class is None, dataset name : {dataset_name}")
-                extractor = load_python_class_by_name(extractor_class, class_init_kwargs)
+                extractor = load_python_class_by_name(extractor_class, config, class_init_kwargs)
                 self.__extractor_lst.append(extractor)
 
         # #########################################################
@@ -153,7 +153,7 @@ class ExtractorChain:
             if is_post_extractor_enable:
                 if post_extractor_class is None:
                     raise ValueError(f"post_extractor_class is None, dataset name : {dataset_name}")
-                post_extractor = load_python_class_by_name(post_extractor_class, class_init_kwargs)
+                post_extractor = load_python_class_by_name(post_extractor_class, config, class_init_kwargs)
                 self.__post_extractor_lst.append(post_extractor)
 
 
@@ -168,13 +168,13 @@ class ExtractorChain:
             DataJson: _description_
         """
         for ext in self.__pre_extractor_lst:
-            data = ext.extract(data)
+            data = ext.pre_extract(data)
 
         for ext in self.__extractor_lst:
             data = ext.extract(data)
 
         for ext in self.__post_extractor_lst:
-            data = ext.extract(data)
+            data = ext.post_extract(data)
         
         return data
 
@@ -185,7 +185,7 @@ class Pipeline(AbstractPipeline):
     format() ---> extract() ---> other...
 
     """
-    def __init__(self, formatter_chain: FormatterChain, extractor_chain: ExtractorChain):
+    def __init__(self, config:dict, formatter_chain: FormatterChain, extractor_chain: ExtractorChain):
         """从formatter和extractor初始化一个pipeline
 
         Args:
@@ -195,44 +195,59 @@ class Pipeline(AbstractPipeline):
         Returns:
             _type_: _description_
         """
+        self.__config = config
         self.__formatter_chain: FormatterChain = formatter_chain
         self.__extractor_chain: ExtractorChain = extractor_chain
 
     @override
-    def format(self, data:DataJson) -> DataJson:
+    def format(self, data_json:DataJson) -> DataJson:
         """_summary_
 
         Args:
-            data (DataJson): _description_
+            data_json (DataJson): _description_
 
         Returns:
             DataJson: _description_
         """
-        data = self.__formatter_chain.format(data)
+        if isinstance(data_json, dict):
+            data_json = DataJson(data_json)
+        self.__validate_format_input(data_json)
+
+        data = self.__formatter_chain.format(data_json)
         return data
 
     @override
-    def extract(self, data: DataJson) -> DataJson:
+    def extract(self, data_json: DataJson) -> DataJson:
         """_summary_
 
         Args:
-            dict (_type_): _description_
-
-
-
+            data_json (DataJson): _description_
         Returns:
             DataJson: DataJson对象
         """
-        data = self.__extractor_chain.extract(data)
+        if isinstance(data_json, dict):
+            data_json = DataJson(data_json)
+        self.__validate_extract_input(data_json)
+
+        data = self.__extractor_chain.extract(data_json)
         return data
 
-    def __validate(self, config: dict):
+    def __validate_format_input(self, data_json: DataJson):
         """校验一下配置里必须满足的条件，否则抛出异常
 
         Args:
             config (dict): _description_
         """
         pass # TODO: 实现这个方法
+
+    def __validate_extract_input(self, data_json: DataJson):
+        """校验一下配置里必须满足的条件，否则抛出异常
+
+        Args:
+            config (dict): _description_
+        """
+        pass
+
 
 
 ############################################################
