@@ -1,5 +1,5 @@
 import commentjson as json
-from overrides import override
+from pathlib import Path
 
 from llm_web_kit.exception.exception import PipelineInitExp
 from llm_web_kit.input.datajson import DataJson, DataJson, DataJsonKey
@@ -16,22 +16,41 @@ class PipelineSuit(object):
         """从参数指定的配置文件中读取配置并初始化这个流水线链
 
         Args:
-            config (str|dict): 配置文件的路径
+            config (str|dict): 配置文件的路径,可以指向一个具体的jsonc文件，也可以是一个包含配置的字典对象，或者包含了很多个jsonc文件的目录
         """
         self.__pipelines = {}  # "dataset_name" => pipeline
         self.__config = {} # "dataset_name" => config
 
-        cfg = config
+        config_files = []
         if isinstance(config, str):
-            cfg = self.__load_config(config_file_path=config)
+            pth = Path(config)
+            if not pth.exists():
+                raise PipelineInitExp(f"Config file {config} does not exist.")
+            if pth.is_dir():
+                config_files = [str(p) for p in Path(config).rglob("*.json")]
+            else:
+                config_files.append(config)
 
-        dataset_name = cfg.get(DataJsonKey.DATASET_NAME, None)
-        if not dataset_name:
-            raise PipelineInitExp(f"JSON config object must be a dictionary containing '{DataJsonKey.DATASET_NAME}'.")
+            for config_file in config_files:
+                cfg = self.load_config_file(config_file_path=config_file)
+                dataset_name = cfg.get(DataJsonKey.DATASET_NAME, None)
+                if not dataset_name:
+                    raise PipelineInitExp(
+                        f"JSON config object must be a dictionary containing '{DataJsonKey.DATASET_NAME}'.")
+                else:
+                    self.__config[dataset_name] = cfg
+        elif isinstance(config, dict):
+            dataset_name = config.get(DataJsonKey.DATASET_NAME, None)
+            if not dataset_name:
+                raise PipelineInitExp(
+                    f"JSON config object must be a dictionary containing '{DataJsonKey.DATASET_NAME}'.")
+            else:
+                self.__config[dataset_name] = config
         else:
-            self.__config[dataset_name] = cfg
+            raise PipelineInitExp("Config must be a path to a jsonc file or a dictionary.")
 
-    def __load_config(self, config_file_path: str):
+    @staticmethod
+    def load_config_file(config_file_path: str):
         """从配置文件中加载配置
 
         Args:

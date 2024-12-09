@@ -13,5 +13,3 @@ class TestPipelineSuite(unittest.TestCase):
         pipesuit.format(input_data)
         data:DataJson = pipesuit.extract(input_data)
         assert data.get_content_list().length() == 0
-
-

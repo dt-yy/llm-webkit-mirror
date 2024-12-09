@@ -29,7 +29,7 @@
   <summary><h2 style="display: inline-block">Table of Contents</h2></summary>
   <ol>
     <li>
-      <a href="#llm-web-kit">MinerU</a>
+      <a href="#llm-web-kit">llm-web-kit</a>
       <ul>
         <li><a href="#project-introduction">Project Introduction</a></li>
         <li><a href="#key-features">Key Features</a></li>
