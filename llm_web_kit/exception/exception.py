@@ -30,7 +30,7 @@ class ErrorMsg:
 ErrorMsg._load_errors()
 
 
-class PipelineBaseException(Exception):
+class WebKitBaseException(Exception):
     """基础的Pipeline异常类，系统中任何地方抛出的异常都必须是这个异常的子类
 
     Args:
@@ -54,7 +54,7 @@ class PipelineBaseException(Exception):
 #  Pipeline相关的异常
 #
 ###############################################################################
-class PipelineBaseExp(PipelineBaseException):
+class PipelineBaseExp(WebKitBaseException):
     """Pipeline初始化异常
 
     Args:

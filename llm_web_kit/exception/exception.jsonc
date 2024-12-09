@@ -1,26 +1,26 @@
 {
     // 兜底异常
     "base":{
-        "UNCATCHED_ERROR": {"code": 1000, "message": "Uncatched error"},
+        "UNCATCHED_ERROR": {"code": 1000, "message": "Uncatched error"}
     },
 
     // 分模块的业务异常
     "pre_extract":{
         "UNCATCHED_ERROR": {"code": 2000, "message": "Uncatched error"},
-        "KEY_ERR": {"code": 2001, "message": "key error"},
+        "KEY_ERR": {"code": 2001, "message": "key error"}
     },
 
     "extract":{
-        "UNCATCHED_ERROR": {"code": 3000, "message": "Uncatched error"},
+        "UNCATCHED_ERROR": {"code": 3000, "message": "Uncatched error"}
     },
 
     "post_extract":{
-        "UNCATCHED_ERROR": {"code": 4000, "message": "Uncatched error"},
+        "UNCATCHED_ERROR": {"code": 4000, "message": "Uncatched error"}
     },
 
     "pipeline":{
         "UNCATCHED_ERROR": {"code": 5000, "message": "Uncatched error"},
-        "INIT_ERROR": {"code": 5001, "message": "pipeline init error"},
-    },
+        "INIT_ERROR": {"code": 5001, "message": "pipeline init error"}
+    }
 
 }
