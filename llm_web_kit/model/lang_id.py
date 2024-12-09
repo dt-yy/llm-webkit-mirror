@@ -1,14 +1,17 @@
-import fasttext
+import os
 import re
-import logging
+import fasttext
+
 from typing import Tuple
-from llm_web_kit.libs.download_assets import download_url_asset
-from llm_web_kit.libs.singleton_resource_manager import singleton_resource_manager
-
-logger = logging.getLogger(__name__)
-
-FAST_TEXT_176_URL = "https://dl.fbaipublicfiles.com/fasttext/supervised-models/lid.176.bin"
-# FAST_TEXT_218_URL = "https://huggingface.co/facebook/fasttext-language-identification/resolve/main/model.bin?download=true"
+from llm_web_kit.libs.logger import mylogger as logger
+from llm_web_kit.config.cfg_reader import get_config
+from llm_web_kit.model.resource_utils.download_assets import (
+    CACHE_DIR,
+    download_auto_file,
+)
+from llm_web_kit.model.resource_utils.singleton_resource_manager import (
+    singleton_resource_manager,
+)
 
 
 class LanguageIdentification:
@@ -16,6 +19,7 @@ class LanguageIdentification:
     Language Identification model using fasttext
 
     """
+
     def __init__(self, model_path: str = None):
         """
         Initialize LanguageIdentification model
@@ -26,8 +30,23 @@ class LanguageIdentification:
         """
 
         if not model_path:
-            model_path = download_url_asset(FAST_TEXT_176_URL)
+            model_path = self.auto_download()
         self.model = fasttext.load_model(model_path)
+
+    def auto_download(self):
+        """
+        Default download the 176.bin model
+        """
+        resource_name = "lang-id-176"
+        resource_config = get_config()["resources"]
+        lang_id_176_config: dict = resource_config[resource_name]
+        lang_id_176_url = lang_id_176_config["download_path"]
+        lang_id_176_md5 = lang_id_176_config.get("md5", "")
+        target_path = os.path.join(CACHE_DIR, resource_name, "model.bin")
+        logger.info(f"try to make target_path: {target_path} exist")
+        target_path = download_auto_file(lang_id_176_url, target_path, lang_id_176_md5)
+        logger.info(f"target_path: {target_path} exist")
+        return target_path
 
     @property
     def version(self) -> str:
@@ -86,7 +105,9 @@ def get_singleton_lang_detect() -> LanguageIdentification:
     return singleton_resource_manager.get_resource("lang_detect")
 
 
-def decide_language_by_prob_v176(predictions: Tuple[str], probabilities: Tuple[float]) -> str:
+def decide_language_by_prob_v176(
+    predictions: Tuple[str], probabilities: Tuple[float]
+) -> str:
     """
     Decide language based on probabilities
     The rules are tuned by Some sepciific data sources
@@ -119,7 +140,9 @@ def decide_language_by_prob_v176(predictions: Tuple[str], probabilities: Tuple[f
             final_lang = max(lang_prob_dict, key=lang_prob_dict.get)
             if final_lang == "hr":
                 final_lang = "sr"
-        elif max(lang_prob_dict.values()) > 0 and max(lang_prob_dict, key=lang_prob_dict.get) in ["sr", "hr"]:
+        elif max(lang_prob_dict.values()) > 0 and max(
+            lang_prob_dict, key=lang_prob_dict.get
+        ) in ["sr", "hr"]:
             final_lang = "sr"
         else:
             final_lang = "mix"
@@ -133,7 +156,9 @@ def detect_code_block(content_str: str) -> bool:
     """
     Detect if the content string contains code block
     """
-    code_hint_lines = sum([1 for line in content_str.split("\n") if line.strip().startswith("```")])
+    code_hint_lines = sum(
+        [1 for line in content_str.split("\n") if line.strip().startswith("```")]
+    )
     return code_hint_lines > 1
 
 
@@ -190,7 +215,9 @@ def decide_language_func(content_str: str, lang_detect: LanguageIdentification) 
     if detect_inline_equation(content_str):
         logger.warning("Content string contains inline equation, may be misclassified")
     if detect_latex_env(content_str):
-        logger.warning("Content string contains latex environment, may be misclassified")
+        logger.warning(
+            "Content string contains latex environment, may be misclassified"
+        )
 
     # return "empty" if the content string is empty
     if len(content_str.strip()) == 0:
@@ -200,11 +227,13 @@ def decide_language_func(content_str: str, lang_detect: LanguageIdentification) 
         predictions, probabilities = lang_detect.predict(content_str)
         result = decide_language_by_prob_v176(predictions, probabilities)
     else:
-        raise ValueError(f"Unsupported version: {lang_detect.version}. Supported versions: {LANG_ID_SUPPORTED_VERSIONS}")
+        raise ValueError(
+            f"Unsupported version: {lang_detect.version}. Supported versions: {LANG_ID_SUPPORTED_VERSIONS}"
+        )
     return result
 
 
-def decide_lang_by_str(content_str: str, normlize: bool = True) -> str:
+def decide_lang_by_str(content_str: str) -> str:
     """
     Decide language based on the content string, based on decide_language_func
     """

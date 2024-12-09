@@ -1,5 +1,5 @@
 import pytest
-from llm_web_kit.libs.singleton_resource_manager import SingletonResourceManager
+from llm_web_kit.model.resource_utils.singleton_resource_manager import SingletonResourceManager
 
 
 class TestSingletonResourceManager:
