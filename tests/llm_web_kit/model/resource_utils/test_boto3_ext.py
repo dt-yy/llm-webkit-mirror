@@ -41,7 +41,7 @@ def test_split_s3_path():
     assert split_s3_path("s3://bucket") == ("bucket", "")
 
 
-@patch("llm_web_kit.model.resource_utils.boto3_ext.get_config")
+@patch("llm_web_kit.model.resource_utils.boto3_ext.load_config")
 def test_get_s3_config(get_config_mock):
     get_config_mock.return_value = {
         "s3": {
@@ -57,7 +57,7 @@ def test_get_s3_config(get_config_mock):
         get_s3_config("s3://nonexistent_bucket/key")
 
 
-@patch("llm_web_kit.model.resource_utils.boto3_ext.get_config")
+@patch("llm_web_kit.model.resource_utils.boto3_ext.load_config")
 @patch("llm_web_kit.model.resource_utils.boto3_ext.boto3.client")
 def test_get_s3_client(boto3_client_mock, get_config_mock):
     get_config_mock.return_value = {

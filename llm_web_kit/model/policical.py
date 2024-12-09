@@ -4,7 +4,7 @@ from transformers import AutoTokenizer
 
 from typing import Dict, Tuple
 from llm_web_kit.libs.logger import mylogger as logger
-from llm_web_kit.config.cfg_reader import get_config
+from llm_web_kit.config.cfg_reader import load_config
 from llm_web_kit.model.resource_utils.download_assets import (
     CACHE_DIR,
     download_auto_file,
@@ -33,7 +33,7 @@ class PoliticalDetector:
         Default download the 24m7.zip model
         """
         resource_name = "political-24m7"
-        resource_config = get_config()["resources"]
+        resource_config = load_config()["resources"]
         political_24m7_config: dict = resource_config[resource_name]
         political_24m7_s3 = political_24m7_config["download_path"]
         political_24m7_md5 = political_24m7_config.get("md5", "")

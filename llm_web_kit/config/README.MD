@@ -11,12 +11,31 @@
 ```json
 {
     "s3": {
-        "bucket-name":["AK", "SK", "endpoint", "addressing_style=path|virtual|auto"],
-        "bucket-2": []
+        "bucket_name1": {
+            "ak": "XXXXXXXXXXXXXXXXXXXX",
+            "sk": "XXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXX",
+            "endpoint": "http://endpoint1",
+            "addressing_style": "path"
+        },
+        "bucket_name2": {
+            "ak": "XXXXXXXXXXXXXXXXXXXX",
+            "sk": "XXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXX",
+            "endpoint": "http://endpoint2",
+            "addressing_style": "path"
+        }
     },
-    "xx-passwd": {
-        "xxxx.zip": {"passwd": "1234", "user": "xxx"}
-
+    "resources": {
+        "common":{
+            "cache_path": "~/.llm_web_kit_cache"
+        },
+        "lang-id-176": {
+            "download_path": "https://dl.fbaipublicfiles.com/fasttext/supervised-models/lid.176.bin",
+            "md5": "01810bc59c6a3d2b79c79e6336612f65"
+        },
+        "political-24m7": {
+            "download_path": "XXXXXX",
+            "md5": "XXXXX"
+        }
     },
     "logger": [
                 {

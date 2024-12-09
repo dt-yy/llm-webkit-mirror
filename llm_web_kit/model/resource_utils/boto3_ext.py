@@ -3,7 +3,7 @@ from typing import Union, List, Dict
 import boto3
 from botocore.config import Config
 from botocore.exceptions import ClientError
-from llm_web_kit.config.cfg_reader import get_config
+from llm_web_kit.config.cfg_reader import load_config
 
 __re_s3_path = re.compile("^s3://([^/]+)(?:/(.*))?$")
 
@@ -43,7 +43,7 @@ def get_s3_config(path: str):
         dict: s3 config
     """
     bucket, _ = split_s3_path(path)
-    config_dict = get_config()
+    config_dict = load_config()
     if bucket in config_dict["s3"]:
         return config_dict["s3"][bucket]
     else:

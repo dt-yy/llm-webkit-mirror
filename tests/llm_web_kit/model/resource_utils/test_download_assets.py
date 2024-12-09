@@ -15,13 +15,13 @@ from llm_web_kit.model.resource_utils.download_assets import (
 class Test_decide_cache_dir:
 
     @patch("os.environ", {"WEB_KIT_CACHE_DIR": "/env/cache_dir"})
-    @patch("llm_web_kit.model.resource_utils.download_assets.get_config")
+    @patch("llm_web_kit.model.resource_utils.download_assets.load_config")
     def test_only_env(self, get_configMock):
         get_configMock.side_effect = Exception
         assert decide_cache_dir() == "/env/cache_dir"
 
     @patch("os.environ", {})
-    @patch("llm_web_kit.model.resource_utils.download_assets.get_config")
+    @patch("llm_web_kit.model.resource_utils.download_assets.load_config")
     def test_only_config(self, get_configMock):
         get_configMock.return_value = {
             "resources": {"common": {"cache_path": "/config/cache_dir"}}
@@ -29,14 +29,14 @@ class Test_decide_cache_dir:
         assert decide_cache_dir() == "/config/cache_dir"
 
     @patch("os.environ", {})
-    @patch("llm_web_kit.model.resource_utils.download_assets.get_config")
+    @patch("llm_web_kit.model.resource_utils.download_assets.load_config")
     def test_default(self, get_configMock):
         get_configMock.side_effect = Exception
         # if no env or config, use default
         assert decide_cache_dir() == os.path.expanduser("~/.llm_web_kit_cache")
 
     @patch("os.environ", {"WEB_KIT_CACHE_DIR": "/env/cache_dir"})
-    @patch("llm_web_kit.model.resource_utils.download_assets.get_config")
+    @patch("llm_web_kit.model.resource_utils.download_assets.load_config")
     def test_both(self, get_configMock):
         get_configMock.return_value = {
             "resources": {"common": {"cache_path": "/config/cache_dir"}}
@@ -151,7 +151,6 @@ class TestDownloadAutoFile:
         mock_http_conn.assert_not_called()
         mock_s3_conn.assert_not_called()
 
-
     @patch("llm_web_kit.model.resource_utils.download_assets.calc_file_md5")
     @patch("llm_web_kit.model.resource_utils.download_assets.os.remove")
     @patch("llm_web_kit.model.resource_utils.download_assets.is_s3_path")
@@ -187,7 +186,6 @@ class TestDownloadAutoFile:
             assert result == target_path
             with open(target_path, "rb") as f:
                 assert f.read() == b"hello world"
-                
 
     @patch("llm_web_kit.model.resource_utils.download_assets.calc_file_md5")
     @patch("llm_web_kit.model.resource_utils.download_assets.os.remove")

@@ -4,7 +4,7 @@ import fasttext
 
 from typing import Tuple
 from llm_web_kit.libs.logger import mylogger as logger
-from llm_web_kit.config.cfg_reader import get_config
+from llm_web_kit.config.cfg_reader import load_config
 from llm_web_kit.model.resource_utils.download_assets import (
     CACHE_DIR,
     download_auto_file,
@@ -38,7 +38,7 @@ class LanguageIdentification:
         Default download the 176.bin model
         """
         resource_name = "lang-id-176"
-        resource_config = get_config()["resources"]
+        resource_config = load_config()["resources"]
         lang_id_176_config: dict = resource_config[resource_name]
         lang_id_176_url = lang_id_176_config["download_path"]
         lang_id_176_md5 = lang_id_176_config.get("md5", "")

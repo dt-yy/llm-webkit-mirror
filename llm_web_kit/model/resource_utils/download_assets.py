@@ -5,7 +5,7 @@ import requests
 import tempfile
 from tqdm import tqdm
 from typing import Iterable
-from llm_web_kit.config.cfg_reader import get_config
+from llm_web_kit.config.cfg_reader import load_config
 from llm_web_kit.model.resource_utils.boto3_ext import (
     get_s3_client,
     split_s3_path,
@@ -29,7 +29,7 @@ def decide_cache_dir():
         cache_dir = os.environ["WEB_KIT_CACHE_DIR"]
 
     try:
-        config = get_config()
+        config = load_config()
         cache_dir = config["resources"]["common"]["cache_path"]
         print(config)
     except Exception:
