@@ -18,12 +18,30 @@
         "xxxx.zip": {"passwd": "1234", "user": "xxx"}
 
     },
-    "log":[{
-        "log-level": "INFO",
-        "log-format": "",
-        "log-dir": "",
-    }]
+    "logger": [
+                {
+                    "to": "sys.stdout",
+                    "log-level": "DEBUG",
+                    "log-format": "{time:YYYY-MM-DD HH:mm:ss} | {level} | {name}:{function}:{line} - {message}"
+                },
+                {
+                    "to": "/tmp/logs/test-{time:YYYY-MM-DD}.log",
+                    "rotation": "1 day",
+                    "retention": "10 days",
+                    "log-level": "INFO",
+                    "log-format": "{time:YYYY-MM-DD HH:mm:ss} | {level} | {name}:{function}:{line} - {message}"
+                },
+                {
+                    "to": "/tmp/logs/error-{time:YYYY-MM-DD}.log",
+                    "rotation": "1 day",
+                    "retention": "10 days",
+                    "log-level": "ERROR",
+                    "log-format": "{time:YYYY-MM-DD HH:mm:ss} | {level} | {name}:{function}:{line} - {message}"
+                }
+            ]
 }
 
 
 ```
+
+    
