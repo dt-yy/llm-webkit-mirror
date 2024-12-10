@@ -1,18 +1,17 @@
 import os
+from typing import Dict, Tuple
+
 import fasttext
 from transformers import AutoTokenizer
 
-from typing import Dict, Tuple
-from llm_web_kit.libs.logger import mylogger as logger
 from llm_web_kit.config.cfg_reader import load_config
+from llm_web_kit.libs.logger import mylogger as logger
 from llm_web_kit.model.resource_utils.download_assets import (
-    CACHE_DIR,
-    download_auto_file,
-)
-from llm_web_kit.model.resource_utils.unzip_ext import get_unzip_dir, unzip_local_file
-from llm_web_kit.model.resource_utils.singleton_resource_manager import (
-    singleton_resource_manager,
-)
+    CACHE_DIR, download_auto_file)
+from llm_web_kit.model.resource_utils.singleton_resource_manager import \
+    singleton_resource_manager
+from llm_web_kit.model.resource_utils.unzip_ext import (get_unzip_dir,
+                                                        unzip_local_file)
 
 
 class PoliticalDetector:
@@ -20,48 +19,40 @@ class PoliticalDetector:
     def __init__(self, model_path: str = None):
         if not model_path:
             model_path = self.auto_download()
-        model_bin_path = os.path.join(model_path, "model.bin")
-        tokenizer_path = os.path.join(model_path, "internlm2-chat-20b")
+        model_bin_path = os.path.join(model_path, 'model.bin')
+        tokenizer_path = os.path.join(model_path, 'internlm2-chat-20b')
 
         self.model = fasttext.load_model(model_bin_path)
-        self.tokenizer = AutoTokenizer.from_pretrained(
-            tokenizer_path, use_fast=False, trust_remote_code=True
-        )
+        self.tokenizer = AutoTokenizer.from_pretrained(tokenizer_path, use_fast=False, trust_remote_code=True)
 
     def auto_download(self):
-        """
-        Default download the 24m7.zip model
-        """
-        resource_name = "political-24m7"
-        resource_config = load_config()["resources"]
+        """Default download the 24m7.zip model."""
+        resource_name = 'political-24m7'
+        resource_config = load_config()['resources']
         political_24m7_config: dict = resource_config[resource_name]
-        political_24m7_s3 = political_24m7_config["download_path"]
-        political_24m7_md5 = political_24m7_config.get("md5", "")
+        political_24m7_s3 = political_24m7_config['download_path']
+        political_24m7_md5 = political_24m7_config.get('md5', '')
         # get the zip path calculated by the s3 path
-        zip_path = os.path.join(CACHE_DIR, f"{resource_name}.zip")
+        zip_path = os.path.join(CACHE_DIR, f'{resource_name}.zip')
         # the unzip path is calculated by the zip path
         unzip_path = get_unzip_dir(zip_path)
-        logger.info(f"try to make unzip_path: {unzip_path} exist")
+        logger.info(f'try to make unzip_path: {unzip_path} exist')
         # if the unzip path does not exist, download the zip file and unzip it
         if not os.path.exists(unzip_path):
-            logger.info(f"unzip_path: {unzip_path} does not exist")
-            logger.info(f"try to unzip from zip_path: {zip_path}")
+            logger.info(f'unzip_path: {unzip_path} does not exist')
+            logger.info(f'try to unzip from zip_path: {zip_path}')
             if not os.path.exists(zip_path):
-                logger.info(f"zip_path: {zip_path} does not exist")
-                logger.info(f"downloading {political_24m7_s3}")
-                zip_path = download_auto_file(
-                    political_24m7_s3, zip_path, political_24m7_md5
-                )
-            logger.info(f"unzipping {zip_path}")
+                logger.info(f'zip_path: {zip_path} does not exist')
+                logger.info(f'downloading {political_24m7_s3}')
+                zip_path = download_auto_file(political_24m7_s3, zip_path, political_24m7_md5)
+            logger.info(f'unzipping {zip_path}')
             unzip_path = unzip_local_file(zip_path, unzip_path)
         return unzip_path
 
     def predict(self, text: str) -> Tuple[str, float]:
-        text = text.replace("\n", " ")
-        input_ids = self.tokenizer(text)["input_ids"]
-        predictions, probabilities = self.model.predict(
-            " ".join([str(i) for i in input_ids]), k=-1
-        )
+        text = text.replace('\n', ' ')
+        input_ids = self.tokenizer(text)['input_ids']
+        predictions, probabilities = self.model.predict(' '.join([str(i) for i in input_ids]), k=-1)
 
         return predictions, probabilities
 
@@ -74,21 +65,18 @@ class PoliticalDetector:
 
 
 def get_singleton_political_detect() -> PoliticalDetector:
-    """
-    Get the singleton instance of PoliticalDetector
+    """Get the singleton instance of PoliticalDetector.
 
     Returns:
         PoliticalDetector: The singleton instance of PoliticalDetector
     """
-    if not singleton_resource_manager.has_name("political_detect"):
-        singleton_resource_manager.set_resource("political_detect", PoliticalDetector())
-    return singleton_resource_manager.get_resource("political_detect")
+    if not singleton_resource_manager.has_name('political_detect'):
+        singleton_resource_manager.set_resource('political_detect', PoliticalDetector())
+    return singleton_resource_manager.get_resource('political_detect')
 
 
-def decide_political_by_prob(
-    predictions: Tuple[str], probabilities: Tuple[float]
-) -> float:
-    idx = predictions.index("__label__normal")
+def decide_political_by_prob(predictions: Tuple[str], probabilities: Tuple[float]) -> float:
+    idx = predictions.index('__label__normal')
     normal_score = probabilities[idx]
     return normal_score
 
@@ -105,22 +93,20 @@ def decide_political_by_str(content_str: str) -> float:
 
 
 def update_political_by_str(content_str: str) -> Dict[str, float]:
-    return {"politics_prob": decide_political_by_str(content_str)}
+    return {'politics_prob': decide_political_by_str(content_str)}
 
 
-if __name__ == "__main__":
+if __name__ == '__main__':
     test_cases = []
-    test_cases.append("你好，我很高兴见到你！")
-    test_cases.append("hello, nice to meet you!")
-    test_cases.append("你好，唔該幫我一個忙？")
-    test_cases.append("Bawo ni? Mo nife Yoruba. ")
-    test_cases.append(
-        "你好，我很高兴见到你，请多多指教！你今天吃饭了吗？hello, nice to meet you!"
-    )
-    test_cases.append("איך בין אַ גרויסער פֿאַן פֿון די וויסנשאַפֿט. מיר האָבן פֿיל צו לערנען.")
-    test_cases.append("გამარჯობა, როგორ ხარ? მე ვარ კარგად, მადლობა.")
-    test_cases.append("გამარჯობა, როგორ ხართ? ეს ჩემი ქვეყანაა, საქართველო.")
+    test_cases.append('你好，我很高兴见到你！')
+    test_cases.append('hello, nice to meet you!')
+    test_cases.append('你好，唔該幫我一個忙？')
+    test_cases.append('Bawo ni? Mo nife Yoruba. ')
+    test_cases.append('你好，我很高兴见到你，请多多指教！你今天吃饭了吗？hello, nice to meet you!')
+    test_cases.append('איך בין אַ גרויסער פֿאַן פֿון די וויסנשאַפֿט. מיר האָבן פֿיל צו לערנען.')
+    test_cases.append('გამარჯობა, როგორ ხარ? მე ვარ კარგად, მადლობა.')
+    test_cases.append('გამარჯობა, როგორ ხართ? ეს ჩემი ქვეყანაა, საქართველო.')
     test_cases.append("Bonjour, comment ça va? C'est une belle journée, n'est-ce pas?")
-    test_cases.append("Guten Tag! Wie geht es Ihnen?")
+    test_cases.append('Guten Tag! Wie geht es Ihnen?')
     for case in test_cases:
         print(decide_political_by_str(case))

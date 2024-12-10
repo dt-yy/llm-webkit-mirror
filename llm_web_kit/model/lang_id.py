@@ -1,29 +1,23 @@
 import os
 import re
+from typing import Tuple
+
 import fasttext
 
-from typing import Tuple
-from llm_web_kit.libs.logger import mylogger as logger
 from llm_web_kit.config.cfg_reader import load_config
+from llm_web_kit.libs.logger import mylogger as logger
 from llm_web_kit.model.resource_utils.download_assets import (
-    CACHE_DIR,
-    download_auto_file,
-)
-from llm_web_kit.model.resource_utils.singleton_resource_manager import (
-    singleton_resource_manager,
-)
+    CACHE_DIR, download_auto_file)
+from llm_web_kit.model.resource_utils.singleton_resource_manager import \
+    singleton_resource_manager
 
 
 class LanguageIdentification:
-    """
-    Language Identification model using fasttext
-
-    """
+    """Language Identification model using fasttext."""
 
     def __init__(self, model_path: str = None):
-        """
-        Initialize LanguageIdentification model
-        Will download the 176.bin model if model_path is not provided
+        """Initialize LanguageIdentification model Will download the 176.bin
+        model if model_path is not provided.
 
         Args:
             model_path (str, optional): Path to the model. Defaults to None.
@@ -34,18 +28,16 @@ class LanguageIdentification:
         self.model = fasttext.load_model(model_path)
 
     def auto_download(self):
-        """
-        Default download the 176.bin model
-        """
-        resource_name = "lang-id-176"
-        resource_config = load_config()["resources"]
+        """Default download the 176.bin model."""
+        resource_name = 'lang-id-176'
+        resource_config = load_config()['resources']
         lang_id_176_config: dict = resource_config[resource_name]
-        lang_id_176_url = lang_id_176_config["download_path"]
-        lang_id_176_md5 = lang_id_176_config.get("md5", "")
-        target_path = os.path.join(CACHE_DIR, resource_name, "model.bin")
-        logger.info(f"try to make target_path: {target_path} exist")
+        lang_id_176_url = lang_id_176_config['download_path']
+        lang_id_176_md5 = lang_id_176_config.get('md5', '')
+        target_path = os.path.join(CACHE_DIR, resource_name, 'model.bin')
+        logger.info(f'try to make target_path: {target_path} exist')
         target_path = download_auto_file(lang_id_176_url, target_path, lang_id_176_md5)
-        logger.info(f"target_path: {target_path} exist")
+        logger.info(f'target_path: {target_path} exist')
         return target_path
 
     @property
@@ -59,21 +51,20 @@ class LanguageIdentification:
         Returns:
             str: The version of the model
         """
-        if not hasattr(self, "_version"):
+        if not hasattr(self, '_version'):
             labels_num = len(self.model.get_labels())
             if labels_num == 176:
-                self._version = "176.bin"
+                self._version = '176.bin'
             elif labels_num == 218:
-                self._version = "218.bin"
+                self._version = '218.bin'
             else:
-                raise ValueError(f"Unsupported version: {labels_num} labels")
+                raise ValueError(f'Unsupported version: {labels_num} labels')
         return self._version
 
     def predict(self, text: str, k: int = 5) -> Tuple[Tuple[str], Tuple[float]]:
-        """
-        Predict language of the given text
-        Return first k predictions, if k is greater than number of predictions, return all predictions
-        default k is 5
+        """Predict language of the given text Return first k predictions, if k
+        is greater than number of predictions, return all predictions default k
+        is 5.
 
         Args:
             text (str): Text to predict language
@@ -82,10 +73,10 @@ class LanguageIdentification:
         Returns:
             Tuple[Tuple[str], Tuple[float]]: Tuple of predictions and probabilities only return top 5 predictions
         """
-        assert k > 0, "k should be greater than 0"
+        assert k > 0, 'k should be greater than 0'
 
         # remove new lines
-        text = text.replace("\n", " ")
+        text = text.replace('\n', ' ')
 
         # returns top k predictions
         predictions, probabilities = self.model.predict(text, k=k)
@@ -94,25 +85,19 @@ class LanguageIdentification:
 
 
 def get_singleton_lang_detect() -> LanguageIdentification:
-    """
-    Get the singleton language identification model
+    """Get the singleton language identification model.
 
     returns:
         LanguageIdentification: The language identification model
     """
-    if not singleton_resource_manager.has_name("lang_detect"):
-        singleton_resource_manager.set_resource("lang_detect", LanguageIdentification())
-    return singleton_resource_manager.get_resource("lang_detect")
+    if not singleton_resource_manager.has_name('lang_detect'):
+        singleton_resource_manager.set_resource('lang_detect', LanguageIdentification())
+    return singleton_resource_manager.get_resource('lang_detect')
 
 
-def decide_language_by_prob_v176(
-    predictions: Tuple[str], probabilities: Tuple[float]
-) -> str:
-    """
-    Decide language based on probabilities
-    The rules are tuned by Some sepciific data sources
-    This is a fixed version for fasttext 176 model
-
+def decide_language_by_prob_v176(predictions: Tuple[str], probabilities: Tuple[float]) -> str:
+    """Decide language based on probabilities The rules are tuned by Some
+    sepciific data sources This is a fixed version for fasttext 176 model.
 
     Args:
         predictions (Tuple[str]): the predicted languages labels by 176.bin model (__label__zh, __label__en, etc)
@@ -123,66 +108,55 @@ def decide_language_by_prob_v176(
     """
     lang_prob_dict = {}
     for lang_key, lang_prob in zip(predictions, probabilities):
-        lang = lang_key.replace("__label__", "")
+        lang = lang_key.replace('__label__', '')
         lang_prob_dict[lang] = lang_prob
 
-    zh_prob = lang_prob_dict.get("zh", 0)
-    en_prob = lang_prob_dict.get("en", 0)
+    zh_prob = lang_prob_dict.get('zh', 0)
+    en_prob = lang_prob_dict.get('en', 0)
     zh_en_prob = zh_prob + en_prob
     final_lang = None
     if zh_en_prob > 0.5:
         if zh_prob > 0.4 * zh_en_prob:
-            final_lang = "zh"
+            final_lang = 'zh'
         else:
-            final_lang = "en"
+            final_lang = 'en'
     else:
         if max(lang_prob_dict.values()) > 0.6:
             final_lang = max(lang_prob_dict, key=lang_prob_dict.get)
-            if final_lang == "hr":
-                final_lang = "sr"
-        elif max(lang_prob_dict.values()) > 0 and max(
-            lang_prob_dict, key=lang_prob_dict.get
-        ) in ["sr", "hr"]:
-            final_lang = "sr"
+            if final_lang == 'hr':
+                final_lang = 'sr'
+        elif max(lang_prob_dict.values()) > 0 and max(lang_prob_dict, key=lang_prob_dict.get) in ['sr', 'hr']:
+            final_lang = 'sr'
         else:
-            final_lang = "mix"
+            final_lang = 'mix'
     return final_lang
 
 
-LANG_ID_SUPPORTED_VERSIONS = ["176.bin"]
+LANG_ID_SUPPORTED_VERSIONS = ['176.bin']
 
 
 def detect_code_block(content_str: str) -> bool:
-    """
-    Detect if the content string contains code block
-    """
-    code_hint_lines = sum(
-        [1 for line in content_str.split("\n") if line.strip().startswith("```")]
-    )
+    """Detect if the content string contains code block."""
+    code_hint_lines = sum([1 for line in content_str.split('\n') if line.strip().startswith('```')])
     return code_hint_lines > 1
 
 
 def detect_inline_equation(content_str: str) -> bool:
-    """
-    Detect if the content string contains inline equation
-    """
-    inline_eq_pattern = re.compile(r"\$\$.*\$\$|\$.*\$")
-    return any([inline_eq_pattern.search(line) for line in content_str.split("\n")])
+    """Detect if the content string contains inline equation."""
+    inline_eq_pattern = re.compile(r'\$\$.*\$\$|\$.*\$')
+    return any([inline_eq_pattern.search(line) for line in content_str.split('\n')])
 
 
 def detect_latex_env(content_str: str) -> bool:
-    """
-    Detect if the content string contains latex environment
-    """
-    latex_env_pattern = re.compile(r"\\begin\{.*?\}.*\\end\{.*\}", re.DOTALL)
+    """Detect if the content string contains latex environment."""
+    latex_env_pattern = re.compile(r'\\begin\{.*?\}.*\\end\{.*\}', re.DOTALL)
     return latex_env_pattern.search(content_str) is not None
 
 
 def decide_language_func(content_str: str, lang_detect: LanguageIdentification) -> str:
-    """
-    Decide language based on the content string.
-    This function will truncate the content string if it is too long.
-    This function will return "empty" if the content string is empty.
+    """Decide language based on the content string. This function will truncate
+    the content string if it is too long. This function will return "empty" if
+    the content string is empty.
 
     Raises:
         ValueError: Unsupported version.
@@ -205,67 +179,61 @@ def decide_language_func(content_str: str, lang_detect: LanguageIdentification) 
     # truncate the content string if it is too long
     str_len = len(content_str)
     if str_len > 10000:
-        logger.warning("Content string is too long, truncate to 10000 characters")
+        logger.warning('Content string is too long, truncate to 10000 characters')
         start_idx = (str_len - 10000) // 2
-        content_str = content_str[start_idx : start_idx + 10000]
+        content_str = content_str[start_idx:start_idx + 10000]
 
     # check if the content string contains code block, inline equation, latex environment
     if detect_code_block(content_str):
-        logger.warning("Content string contains code block, may be misclassified")
+        logger.warning('Content string contains code block, may be misclassified')
     if detect_inline_equation(content_str):
-        logger.warning("Content string contains inline equation, may be misclassified")
+        logger.warning('Content string contains inline equation, may be misclassified')
     if detect_latex_env(content_str):
-        logger.warning(
-            "Content string contains latex environment, may be misclassified"
-        )
+        logger.warning('Content string contains latex environment, may be misclassified')
 
     # return "empty" if the content string is empty
     if len(content_str.strip()) == 0:
-        return "empty"
+        return 'empty'
 
-    if lang_detect.version == "176.bin":
+    if lang_detect.version == '176.bin':
         predictions, probabilities = lang_detect.predict(content_str)
         result = decide_language_by_prob_v176(predictions, probabilities)
     else:
-        raise ValueError(
-            f"Unsupported version: {lang_detect.version}. Supported versions: {LANG_ID_SUPPORTED_VERSIONS}"
-        )
+        raise ValueError(f'Unsupported version: {lang_detect.version}. Supported versions: {LANG_ID_SUPPORTED_VERSIONS}')
     return result
 
 
 def decide_lang_by_str(content_str: str) -> str:
-    """
-    Decide language based on the content string, based on decide_language_func
-    """
+    """Decide language based on the content string, based on
+    decide_language_func."""
     lang_detect = get_singleton_lang_detect()
 
     return decide_language_func(content_str, lang_detect)
 
 
 def update_language_by_str(content_str: str) -> str:
-    """
-    Decide language based on the content string, based on decide_language_func
-    """
-    return {"language": decide_lang_by_str(content_str)}
+    """Decide language based on the content string, based on
+    decide_language_func."""
+    return {'language': decide_lang_by_str(content_str)}
 
 
-if __name__ == "__main__":
+if __name__ == '__main__':
     li = LanguageIdentification()
     print(li.version)
-    text = "hello world, this is a test. the language is english"
+    text = 'hello world, this is a test. the language is english'
     predictions, probabilities = li.predict(text)
     print(predictions, probabilities)
 
     print(update_language_by_str(text))
 
-    text = "你好，这是一个测试。这个语言是中文"
+    text = '你好，这是一个测试。这个语言是中文'
     print(update_language_by_str(text))
 
     text = "```python\nprint('hello world')\n``` 这是一个中文的文档，包含了一些代码"
     print(update_language_by_str(text))
 
-    text = "$$x^2 + y^2 = 1$$ これは数式を含むテストドキュメントです"
+    text = '$$x^2 + y^2 = 1$$ これは数式を含むテストドキュメントです'
     print(update_language_by_str(text))
 
-    text = "\\begin{equation}\n x^2 + y^2 = 1 \n\\end{equation} This is a test document, including some math equations"
+    text = '\\begin{equation}\n x^2 + y^2 = 1 \n\\end{equation} This is a test document, including some math equations'
     print(update_language_by_str(text))

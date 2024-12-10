@@ -41,7 +41,7 @@
             }
         ]
     },
-    
+
     "content_safe_pipe": {
         "enable": true,
         "processor": [

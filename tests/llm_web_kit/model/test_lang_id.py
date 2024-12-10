@@ -1,17 +1,16 @@
-from unittest.mock import patch, MagicMock
-from llm_web_kit.model.lang_id import (
-    LanguageIdentification,
-    decide_language_by_prob_v176,
-    detect_code_block,
-    detect_inline_equation,
-    detect_latex_env,
-    decide_language_func,
-    decide_lang_by_str,
-    update_language_by_str
-)
+from unittest.mock import MagicMock, patch
+
+from llm_web_kit.model.lang_id import (LanguageIdentification,
+                                       decide_lang_by_str,
+                                       decide_language_by_prob_v176,
+                                       decide_language_func, detect_code_block,
+                                       detect_inline_equation,
+                                       detect_latex_env,
+                                       update_language_by_str)
 
 
 class TestLanguageIdentification:
+
     @patch('llm_web_kit.model.lang_id.fasttext.load_model')
     def test_init(self, mock_load_model):
         # Test with default model path
@@ -61,7 +60,8 @@ def test_decide_language_func():
 
 
 def test_decide_lang_by_str():
-    with patch('llm_web_kit.model.lang_id.get_singleton_lang_detect') as mock_get_singleton_lang_detect, patch('llm_web_kit.model.lang_id.decide_language_func') as mock_decide_language_func:
+    with patch('llm_web_kit.model.lang_id.get_singleton_lang_detect') as mock_get_singleton_lang_detect, patch(
+            'llm_web_kit.model.lang_id.decide_language_func') as mock_decide_language_func:
         mock_get_singleton_lang_detect.return_value = MagicMock()
         mock_decide_language_func.return_value = 'en'
         assert decide_lang_by_str('test text') == 'en'

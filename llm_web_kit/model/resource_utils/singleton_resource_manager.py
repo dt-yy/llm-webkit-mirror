@@ -1,4 +1,5 @@
 class SingletonResourceManager:
+
     def __init__(self):
         self.resources = {}
 
@@ -7,9 +8,9 @@ class SingletonResourceManager:
 
     def set_resource(self, name: str, resource):
         if not isinstance(name, str):
-            raise TypeError("name should be a string")
+            raise TypeError('name should be a string')
         if name in self.resources:
-            raise AssertionError(f"Resource {name} already exists")
+            raise AssertionError(f'Resource {name} already exists')
 
         self.resources[name] = resource
 
@@ -17,7 +18,7 @@ class SingletonResourceManager:
         if name in self.resources:
             return self.resources[name]
         else:
-            raise Exception(f"Resource {name} does not exist")
+            raise Exception(f'Resource {name} does not exist')
 
     def release_resource(self, name):
         if name in self.resources:
