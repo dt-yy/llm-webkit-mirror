@@ -10,7 +10,7 @@ class TestPipelineSuite(unittest.TestCase):
     def test_pipeline_init(self):
         """Test pipeline init."""
         # html
-        pipesuit = PipelineSuit(f"{__file__}/../assets/html_pipe_normal.jsonc")
+        pipesuit = PipelineSuit(f'{__file__}/../assets/html_pipe_normal.jsonc')
         self.assertIsNotNone(pipesuit)
         input_data = {'dataset_name': 'news', 'file_format': 'html'}
         data: DataJson = pipesuit.format(input_data)
@@ -22,7 +22,7 @@ class TestPipelineSuite(unittest.TestCase):
         assert data_e.get_dataset_name() == 'news'
         assert data_e.get_file_format() == 'html'
         # pdf
-        pipesuit = PipelineSuit(f"{__file__}/../assets/pdf_pipe_normal.jsonc")
+        pipesuit = PipelineSuit(f'{__file__}/../assets/pdf_pipe_normal.jsonc')
         self.assertIsNotNone(pipesuit)
         input_data = {'dataset_name': 'news', 'file_format': 'pdf'}
         data: DataJson = pipesuit.format(input_data)
@@ -34,7 +34,7 @@ class TestPipelineSuite(unittest.TestCase):
         assert data_e.get_dataset_name() == 'news'
         assert data_e.get_file_format() == 'pdf'
         # ebook
-        pipesuit = PipelineSuit(f"{__file__}/../assets/ebook_pipe_normal.jsonc")
+        pipesuit = PipelineSuit(f'{__file__}/../assets/ebook_pipe_normal.jsonc')
         self.assertIsNotNone(pipesuit)
         input_data = {'dataset_name': 'news', 'file_format': 'ebook', 'content_list': {'a': 1, 'b': 2}}
         data: DataJson = pipesuit.format(input_data)
