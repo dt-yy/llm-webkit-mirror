@@ -59,11 +59,11 @@ class FileTypeMatcher(object):
 
     def is_ebook_format(self, data_json: DataJson) -> bool:
         """Determine whether the file is an ebook file.
+
         Args:
             file_path (str): File Path.
             data_json (DataJson): Input json data.
         Returns:
             bool: If it is an ebook file, it returns True, otherwise it returns False
-
         """
         return data_json.get_file_format().lower() in FileFormatConstant.EBOOK

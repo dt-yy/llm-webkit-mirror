@@ -1,9 +1,10 @@
 # Copyright (c) Opendatalab. All rights reserved.
-"""Data extraction pre-processing program"""
+"""Data extraction pre-processing program."""
 from overrides import override
 
 from llm_web_kit.input.datajson import DataJson
-from llm_web_kit.pipeline.extractor.pre_extractor import BaseFileFormatFilterPreExtractor
+from llm_web_kit.pipeline.extractor.pre_extractor import \
+    BaseFileFormatFilterPreExtractor
 
 
 class PDFFileFormatFilterPreExtractor(BaseFileFormatFilterPreExtractor):
@@ -18,22 +19,20 @@ class PDFFileFormatFilterPreExtractor(BaseFileFormatFilterPreExtractor):
 
     @override
     def _filter_by_rule(self, data_json: DataJson) -> bool:
-        """
-        Filter data_json according to rules.
+        """Filter data_json according to rules.
+
         Args:
             data_json:
         Returns:
-
         """
         return self.is_pdf_format(data_json)
 
     @override
     def _do_pre_extract(self, data_json: DataJson) -> DataJson:
-        """
-        Pre-extraction data processing program.
+        """Pre-extraction data processing program.
+
         Args:
             data_json:
         Returns:
-
         """
         return data_json

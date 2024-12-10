@@ -1,5 +1,5 @@
 # Copyright (c) Opendatalab. All rights reserved.
-"""Actual data extraction main program"""
+"""Actual data extraction main program."""
 from overrides import override
 
 from llm_web_kit.input.datajson import DataJson
@@ -18,13 +18,12 @@ class PDFFileFormatExtractor(BaseFileFormatExtractor):
 
     @override
     def _filter_by_rule(self, data_json: DataJson) -> bool:
-        """
-        Filter data_json according to rules.
+        """Filter data_json according to rules.
+
         Args:
             data_json (ContentList): Determine whether content_list is the data you want to intercept and process.
         Returns:
             bool: If it is the data you want to process, return True, otherwise return False.
-
         """
         return self.is_pdf_format(data_json)
 

@@ -1,9 +1,10 @@
 # Copyright (c) Opendatalab. All rights reserved.
-"""Data extraction post-processing program"""
+"""Data extraction post-processing program."""
 from overrides import override
 
 from llm_web_kit.input.datajson import DataJson
-from llm_web_kit.pipeline.extractor.post_extractor import BaseFileFormatPostExtractor
+from llm_web_kit.pipeline.extractor.post_extractor import \
+    BaseFileFormatPostExtractor
 
 
 class PDFFileFormatPostExtractor(BaseFileFormatPostExtractor):
@@ -18,12 +19,11 @@ class PDFFileFormatPostExtractor(BaseFileFormatPostExtractor):
 
     @override
     def _filter_by_rule(self, data_json: DataJson) -> bool:
-        """
-        Filter data_json according to rules.
+        """Filter data_json according to rules.
+
         Args:
             data_json:
         Returns:
-
         """
         return self.is_pdf_format(data_json)
 

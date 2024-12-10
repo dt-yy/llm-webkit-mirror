@@ -1,5 +1,5 @@
 # Copyright (c) Opendatalab. All rights reserved.
-"""ebook formatter rule"""
+"""ebook formatter rule."""
 from overrides import override
 
 from llm_web_kit.input.datajson import DataJson
