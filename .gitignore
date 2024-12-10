@@ -40,5 +40,7 @@ output/
 **/temp.py
 
 # coverage file
-.coverage
+.coverage*
 coverage.xml
+
+llm_web_kit.egg-info/*
