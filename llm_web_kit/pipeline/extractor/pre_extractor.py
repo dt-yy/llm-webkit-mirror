@@ -12,7 +12,9 @@ AbstractPreExtractor
 """
 
 from abc import ABC, abstractmethod
+
 from overrides import override
+
 from llm_web_kit.input.datajson import DataJson
 from llm_web_kit.pipeline.extractor.base import FileTypeMatcher
 
@@ -43,8 +45,6 @@ class AbstractPreExtractor(ABC):
         else:
             return data_json
 
-
-    
     @abstractmethod
     def _filter_by_rule(self, data_json: DataJson) -> bool:
         """根据规则过滤content_list.
@@ -55,7 +55,7 @@ class AbstractPreExtractor(ABC):
         Returns:
             bool: 如果是希望处理的数据，返回True，否则返回False
         """
-        raise NotImplementedError("Subclass must implement abstract method")
+        raise NotImplementedError('Subclass must implement abstract method')
 
     @abstractmethod
     def _do_pre_extract(self, data_json: DataJson) -> DataJson:
@@ -67,7 +67,7 @@ class AbstractPreExtractor(ABC):
         Returns:
             dict: 返回处理后的数据
         """
-        raise NotImplementedError("Subclass must implement abstract method")
+        raise NotImplementedError('Subclass must implement abstract method')
 
 
 class BaseRuleFilterPreExtractor(AbstractPreExtractor):
@@ -90,63 +90,6 @@ class BaseFileFormatFilterPreExtractor(BaseRuleFilterPreExtractor, FileTypeMatch
 
     def __init__(self, config: dict, *args, **kwargs):
         super().__init__(config, *args, **kwargs)
-
-    
-class MDFileFormatFilterPreExtractor(BaseFileFormatFilterPreExtractor):
-    """实现一个基础的MD文件格式过滤器
-    例如，根据文件名的后缀拦截数据并进行基础的预处理
-
-    Args:
-        BaseFileFormatFilterPreExtractor (_type_): _description_
-    """
-    def __init__(self, config: dict, *args, **kwargs):
-        super().__init__(config, *args, **kwargs)
-
-    @override
-    def _filter_by_rule(self, data_json:DataJson) -> bool:
-        return self.is_md_format(data_json)
-
-    @override
-    def _do_pre_extract(self, data_json:DataJson) -> DataJson:
-        pass # TODO
-
-
-class TXTFileFormatFilterPreExtractor(BaseFileFormatFilterPreExtractor):
-    """实现一个基础的TEXT文件格式过滤器
-    例如，根据文件名的后缀拦截数据并进行基础的预处理
-
-    Args:
-        BaseFileFormatFilterPreExtractor (_type_): _description_
-    """
-    def __init__(self, config: dict, *args, **kwargs):
-        super().__init__(config, *args, **kwargs)
-
-    @override
-    def _filter_by_rule(self, data_json:DataJson) -> bool:
-        return self.is_txt_format(data_json)
-
-    @override
-    def _do_pre_extract(self, data_json:DataJson) -> DataJson:
-        pass # TODO
-
-
-class PDFFileFormatFilterPreExtractor(BaseFileFormatFilterPreExtractor):
-    """实现一个基础的PDF文件格式过滤器
-    例如，根据文件名的后缀拦截数据并进行基础的预处理
-
-    Args:
-        BaseFileFormatFilterPreExtractor (_type_): _description_
-    """
-    def __init__(self, config: dict, *args, **kwargs):
-        super().__init__(config, *args, **kwargs)
-
-    @override
-    def _filter_by_rule(self, data_json:DataJson) -> bool:
-        return self.is_pdf_format(data_json)
-
-    @override
-    def _do_pre_extract(self, data_json:DataJson) -> DataJson:
-        pass # TODO
 
 
 class NoOpPreExtractor(AbstractPreExtractor):
