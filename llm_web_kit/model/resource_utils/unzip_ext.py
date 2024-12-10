@@ -1,14 +1,14 @@
 import os
-import zipfile
 import shutil
 import tempfile
+import zipfile
 from typing import Optional
 
 
 def get_unzip_dir(zip_path: str) -> str:
-    """
-    Get the directory to unzip the zip file to.
-    If the zip file is /path/to/test.zip, the directory will be /path/to/test_unzip
+    """Get the directory to unzip the zip file to. If the zip file is.
+
+    /path/to/test.zip, the directory will be /path/to/test_unzip.
 
     Args:
         zip_path (str): The path to the zip file.
@@ -17,8 +17,8 @@ def get_unzip_dir(zip_path: str) -> str:
         str: The directory to unzip the zip file to.
     """
     zip_dir = os.path.dirname(zip_path)
-    base_name = os.path.basename(zip_path).replace(".zip", "")
-    return os.path.join(zip_dir, base_name + "_unzip")
+    base_name = os.path.basename(zip_path).replace('.zip', '')
+    return os.path.join(zip_dir, base_name + '_unzip')
 
 
 def unzip_local_file(
@@ -27,8 +27,7 @@ def unzip_local_file(
     password: Optional[str] = None,
     exist_ok: bool = False,
 ) -> str:
-    """
-    Unzip a zip file to a target directory
+    """Unzip a zip file to a target directory.
 
     Args:
         zip_path (str): The path to the zip file.
@@ -49,13 +48,13 @@ def unzip_local_file(
         if exist_ok:
             shutil.rmtree(target_dir)
         else:
-            raise Exception(f"Target directory {target_dir} already exists")
+            raise Exception(f'Target directory {target_dir} already exists')
 
-    with zipfile.ZipFile(zip_path, "r") as zip_ref:
+    with zipfile.ZipFile(zip_path, 'r') as zip_ref:
         if password:
             zip_ref.setpassword(password.encode())
         with tempfile.TemporaryDirectory() as temp_dir:
-            extract_dir = os.path.join(temp_dir, "temp")
+            extract_dir = os.path.join(temp_dir, 'temp')
             os.makedirs(extract_dir)
             zip_ref.extractall(extract_dir)
             shutil.copytree(extract_dir, target_dir)

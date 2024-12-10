@@ -13,15 +13,14 @@
 [![PyPI version](https://badge.fury.io/py/llm-web-kit.svg)](https://badge.fury.io/py/llm-web-kit)
 [![codecov](https://codecov.io/gh/ccprocessor/llm-webkit-mirror/graph/badge.svg?token=U4RY0R6JUV)](https://codecov.io/gh/ccprocessor/llm-webkit-mirror)
 
-
 <!-- language -->
 
 [English](README.md) | [简体中文](README_zh-CN.md)
 
-
 </div>
 
 # Changelog
+
 - 2024/11/25: Project Initialization
 
 <!-- TABLE OF CONTENT -->
@@ -69,18 +68,14 @@
 
 llm-web-kit is a python library that ...
 
-
 ## Key Features
 
 - Remove headers, footers, footnotes, page numbers, etc., to ensure semantic coherence.
 - Output text in human-readable order, suitable for single-column, multi-column, and complex layouts.
 
-
 ## Quick Start
 
-
 ## Usage
-
 
 # TODO
 
@@ -91,7 +86,6 @@ llm-web-kit is a python library that ...
 # contributors
 
 # License Information
-
 
 # Acknowledgments
 

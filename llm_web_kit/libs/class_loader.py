@@ -1,7 +1,8 @@
 import importlib
 
-def load_python_class_by_name(class_name: str, config:dict, init_kwargs: dict):
-    """根据类名动态加载类，并实例化一个对象
+
+def load_python_class_by_name(class_name: str, config: dict, init_kwargs: dict):
+    """根据类名动态加载类，并实例化一个对象.
 
     Args:
         class_name (str): 类名，格式为"模块名.pkg....类名", 例如"llm_web_kit.pipeline.formatter.html.HTMLFormatter"
