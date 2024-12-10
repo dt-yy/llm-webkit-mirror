@@ -11,6 +11,7 @@
 [![open issues](https://img.shields.io/github/issues-raw/opendatalab/llm-web-kit)](https://github.com/opendatalab/llm-web-kit/issues)
 [![issue resolution](https://img.shields.io/github/issues-closed-raw/opendatalab/llm-web-kit)](https://github.com/opendatalab/llm-web-kit/issues)
 [![PyPI version](https://badge.fury.io/py/llm-web-kit.svg)](https://badge.fury.io/py/llm-web-kit)
+[![codecov](https://codecov.io/gh/ccprocessor/llm-webkit-mirror/graph/badge.svg?token=U4RY0R6JUV)](https://codecov.io/gh/ccprocessor/llm-webkit-mirror)
 
 
 <!-- language -->

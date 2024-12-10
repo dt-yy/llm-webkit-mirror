@@ -38,3 +38,7 @@ _build/
 
 output/
 **/temp.py
+
+# coverage file
+.coverage
+coverage.xml

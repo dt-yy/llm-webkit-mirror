@@ -8,3 +8,5 @@ boto3==1.28.43
 transformers==4.40.2
 tqdm==4.67.1
 sentencepiece==0.1.97
+# coverage tools
+pytest-cov==6.0.0
