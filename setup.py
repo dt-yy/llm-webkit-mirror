@@ -22,15 +22,9 @@ setup(
     version='0.1.0',  # 版本号
     description='LLM Web Kit for processing and managing web content',
     packages=find_packages(exclude=['tests*']),
-    install_requires=parse_requirements('requirements.txt'),  # 项目依赖的第三方库
+    install_requires=parse_requirements('requirements/runtime.txt'),  # 项目依赖的第三方库
     extras_require={
-        'dev': [
-            'pytest',
-            'flake8',
-            'isort',
-            'yapf',
-            'pre-commit',
-        ],
+        'dev': parse_requirements('requirements/dev.txt'),
     },
     python_requires='>=3.10',
 )
