@@ -63,6 +63,7 @@ class BaseRuleFilterPostExtractor(AbstractPostExtractor):
     Args:
         AbstractPostExtractor (_type_): 一个抽象的数据提取器
     """
+    pass
 
 
 class BaseFileFormatPostExtractor(BaseRuleFilterPostExtractor, FileTypeMatcher):
@@ -71,96 +72,7 @@ class BaseFileFormatPostExtractor(BaseRuleFilterPostExtractor, FileTypeMatcher):
     Args:
         AbstractPostExtractor (_type_): 一个抽象的数据提取器
     """
-
-
-class MDPostExtractor(BaseFileFormatPostExtractor):
-    """一个从MD文件中提取数据的提取器.
-
-    Args:
-        BaseFileFormatPostExtractor (_type_): 一个基础的规则过滤提取器
-    """
-
-    @override
-    def _filter_by_rule(self, data_json: DataJson) -> bool:
-        """根据规则过滤content_list.
-
-        Args:
-            data_json (DataJson): 判断content_list是否是自己想要拦截处理的数据
-
-        Returns:
-            bool: 如果是希望处理的数据，返回True，否则返回False
-        """
-        return self.is_md_format(data_json)
-
-    @override
-    def _do_post_extract(self, data_json: DataJson) -> DataJson:
-        """实现真正的数据提取.
-
-        Args:
-            data_json (DataJson): 需要处理的数据集
-        """
-        # TODO
-        raise NotImplementedError('Subclass must implement abstract method')
-
-
-class TXTPostExtractor(BaseFileFormatPostExtractor):
-    """一个从TXT文件中提取数据的提取器.
-
-    Args:
-        BaseFileFormatPostExtractor (_type_): 一个基础的规则过滤提取器
-    """
-
-    @override
-    def _filter_by_rule(self, data_json: DataJson) -> bool:
-        """根据规则过滤content_list.
-
-        Args:
-            data_json (DataJson): 判断content_list是否是自己想要拦截处理的数据
-
-        Returns:
-            bool: 如果是希望处理的数据，返回True，否则返回False
-        """
-        return self.is_txt_format(data_json)
-
-    @override
-    def _do_post_extract(self, data_json: DataJson) -> DataJson:
-        """实现真正的数据提取.
-
-        Args:
-            data_json (DataJson): 需要处理的数据集
-        """
-        # TODO
-        raise NotImplementedError('Subclass must implement abstract method')
-
-
-class PDFPostExtractor(BaseFileFormatPostExtractor):
-    """一个从PDF文件中提取数据的提取器.
-
-    Args:
-        BaseFileFormatPostExtractor (_type_): 一个基础的规则过滤提取器
-    """
-
-    @override
-    def _filter_by_rule(self, data_json: DataJson) -> bool:
-        """根据规则过滤content_list.
-
-        Args:
-            data_json (DataJson): 判断content_list是否是自己想要拦截处理的数据
-
-        Returns:
-            bool: 如果是希望处理的数据，返回True，否则返回False
-        """
-        return self.is_pdf_format(data_json)
-
-    @override
-    def _do_post_extract(self, data_json: DataJson) -> DataJson:
-        """实现真正的数据提取.
-
-        Args:
-            data_json (DataJson): 需要处理的数据集
-        """
-        # TODO
-        raise NotImplementedError('Subclass must implement abstract method')
+    pass
 
 
 class NoOpPostExtractor(BaseRuleFilterPostExtractor):

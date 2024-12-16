@@ -47,7 +47,7 @@ class WebKitBaseException(Exception):
         self.__py_file_line_number = frame.f_lineno
 
     def __str__(self):
-        return f'{self.__py_filename}:{self.__py_file_line_number}#{self.err_code}#{self.message}#{self.custom_message}'
+        return f'{self.__py_filename}: {self.__py_file_line_number}#{self.err_code}#{self.message}#{self.custom_message}'
 
 
 ###############################################################################

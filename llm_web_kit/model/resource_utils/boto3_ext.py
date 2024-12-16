@@ -48,7 +48,7 @@ def get_s3_config(path: str):
     if bucket in config_dict['s3']:
         return config_dict['s3'][bucket]
     else:
-        raise ValueError(f'bucket {bucket} not found in config')
+        raise ValueError(f'bucket {bucket} not in config')
 
 
 def get_s3_client(path: Union[str, List[str]]):
