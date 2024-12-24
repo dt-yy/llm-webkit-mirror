@@ -38,7 +38,7 @@ MATH_TYPE_MAP = {
 }
 
 # 数学公式渲染器
-MATH_RENDERER_MAP = {
+MATH_RENDER_MAP = {
     'MATHJAX': 'mathjax',
     'KATEX': 'katex',
 }
@@ -63,37 +63,47 @@ class MathRecognizer(BaseHTMLElementRecognizer):
         示例：
         main_html_lst = [
             ('<p>This is a test.</p>', '<p>This is a test.</p>'),
-            ('<pre>Some text with a formula $$x = 5$$ in it.</pre>', '<pre>Some text with a formula $$x = 5$$ in it.</pre>'),
+            ('<pre>Some text with a formula $$x = 5$$ in it.</pre>',
+             '<pre>Some text with a formula $$x = 5$$ in it.</pre>'),
+            ('<p>爱因斯坦质能方程的公式是：<math>E=mc^2</math>其中<math>mc^2</math>代表了...E是能量。</p>',
+             '<p>爱因斯坦质能方程的公式是：<math>E=mc^2</math>其中<math>mc^2</math>代表了...E是能量。</p>')
         ]
         Returns:
         [
             ('<p>This is a test.</p>', '<p>This is a test.</p>'),
-            ('<ccmath type="latex" by="">Some text with a formula $$x = 5$$ in it.</ccmath>', '<pre>Some text with a formula $$x = 5$$ in it.</pre>'),
+            ('<ccmath type="latex" by="">Some text with a formula $$x = 5$$ in it.</ccmath>',
+             '<pre>Some text with a formula $$x = 5$$ in it.</pre>'),
+            ('<p>爱因斯坦质能方程的公式是：<ccmath type="mathml" by="mathjax">E=mc^2</ccmath>'
+             '其中<ccmath type="mathml" by="mathjax">mc^2</ccmath>代表了...E是能量。</p>',
+             '<p>爱因斯坦质能方程的公式是：<math>E=mc^2</math>其中<math>mc^2</math>'
+             '代表了...E是能量。</p>')
         ]
         """
         result = []
         for cc_html, o_html in main_html_lst:
             # 检查是否包含数学公式
-            contains_math, math_type, math_renderer = self.contains_math(cc_html)
+            contains_math, math_type = self.contains_math(cc_html)
             if contains_math and not self.is_cc_html(cc_html):
-                result.extend(self.process_ccmath_html(cc_html, o_html, math_type, math_renderer))
+                # 获取数学公式渲染器
+                math_render = self.get_math_render(raw_html)
+                result.extend(self.process_ccmath_html(cc_html, o_html, math_type, math_render))
             else:
                 result.append((cc_html, o_html))
 
         return result
 
-    def contains_math(self, html: str) -> Tuple[bool, str, str]:
+    def contains_math(self, html: str) -> Tuple[bool, str]:
         """判断html中是否包含数学公式."""
         if self.contains_mathjax(html):  # 先认为mathjax公式就是latex公式
-            return True, MATH_TYPE_MAP['LATEX'], MATH_RENDERER_MAP['MATHJAX']
+            return True, MATH_TYPE_MAP['LATEX']
 
-        return False, None, None
+        return False, None
 
     def is_cc_html(self, html: str) -> bool:
-        """判断html片段是否是cc标签."""  # 这里需要判断是否包含cc标签，应该需要一个全局通用方法
-        return html.startswith('<cccode')
+        """判断html片段是否是cc标签."""  # 这里需要判断是否包含自定义cc标签，应该需要一个全局通用方法
+        return html.startswith('<cc')
 
-    def process_ccmath_html(self, cc_html: str, o_html: str, math_type: str, math_renderer: str) -> List[Tuple[str, str]]:
+    def process_ccmath_html(self, cc_html: str, o_html: str, math_type: str, math_render: str) -> List[Tuple[str, str]]:
         """处理数学公式，将外层标签修改为 ccmath.
 
         Args:
@@ -109,7 +119,7 @@ class MathRecognizer(BaseHTMLElementRecognizer):
         # 确定数学公式的类型和处理器
 
         # 创建新的 ccmath 标签
-        new_cc_html = f'<ccmath type="{math_type}" by="{math_renderer}">{content}</ccmath>'
+        new_cc_html = f'<ccmath type="{math_type}" by="{math_render}">{content}</ccmath>'
 
         return [(new_cc_html, o_html)]
 
@@ -155,6 +165,31 @@ class MathRecognizer(BaseHTMLElementRecognizer):
                 return True
         return False
 
+    def get_math_render(self, html: str) -> str:
+        """获取数学公式渲染器.
+        示例:
+        MathJax:
+            <script src="https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.5/latest.js?config=TeX-MML-AM_CHTML"></script>
+        Katex:
+            <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/katex@0.13.11/dist/katex.min.css">
+
+        """
+        soup = BeautifulSoup(html, 'html.parser')
+        head = soup.head
+
+        if head:
+            # Check for MathJax
+            mathjax_script = head.find('script', {'src': lambda x: x and 'mathjax' in x.lower()})
+            if mathjax_script:
+                return MATH_RENDER_MAP['MATHJAX']
+
+            # Check for KaTeX
+            katex_link = head.find('link', {'href': lambda x: x and 'katex' in x.lower()})
+            if katex_link:
+                return MATH_RENDER_MAP['KATEX']
+
+        return None
+
 
 if __name__ == '__main__':
     math_recognizer = MathRecognizer()
@@ -162,8 +197,16 @@ if __name__ == '__main__':
         '<span class=mathjax>Some text with a formula $$x = 5$$ in it.</span>',
         '<span class=mathjax>Some text with a formula $$x = 5$$ in it.</span>'
     )]
+    raw_html = (
+        '<head> '
+        '<script src="https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.5/MathJax.js'
+        '?config=TeX-MML-AM_CHTML"> </script> '
+        '</head> '
+        '<p>This is a test.</p> '
+        '<span class=mathjax_display>$$a^2 + b^2 = c^2$$</span>'
+    )
     print(math_recognizer.recognize(
         'https://www.baidu.com',
         test_html,
-        ''
+        raw_html
     ))
