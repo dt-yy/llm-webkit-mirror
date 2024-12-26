@@ -1,9 +1,17 @@
+import html
 import re
 from typing import List, Tuple
 
+import lxml.etree
 from bs4 import BeautifulSoup
+from lxml.etree import Element
 from overrides import override
+from py_asciimath.translator.translator import ASCIIMath2Tex
 
+from llm_web_kit.libs.logger import logger
+from llm_web_kit.pipeline.extractor.html.magic_html.utils import (iter_node,
+                                                                  load_html)
+from llm_web_kit.pipeline.extractor.html.recognizer.common import text_strip
 from llm_web_kit.pipeline.extractor.html.recognizer.recognizer import \
     BaseHTMLElementRecognizer
 
@@ -42,6 +50,22 @@ MATH_RENDER_MAP = {
     'MATHJAX': 'mathjax',
     'KATEX': 'katex',
 }
+
+# 行内行间公式，MathJax中一般也可以通过配置来区分行内行间公式
+EQUATION_INLINE = 'equation-inline'
+EQUATION_DISPLAY = 'equation-display'
+latex_config = {
+    'inlineMath': [
+        ['$', '$'],
+        ['\\(', '\\)']
+    ],
+    'displayMath': [
+        ['\\[', '\\]'],
+        ['$$', '$$']
+    ],
+}
+
+asciimath2tex = ASCIIMath2Tex(log=False)
 
 
 class MathRecognizer(BaseHTMLElementRecognizer):
@@ -92,16 +116,60 @@ class MathRecognizer(BaseHTMLElementRecognizer):
 
         return result
 
+    @override
+    def to_content_list_node(self, content: str) -> dict:
+        """将content转换成content_list_node.
+        每种类型的html元素都有自己的content-list格式：参考 docs/specification/output_format/content_list_spec.md
+        例如代码的返回格式：
+        ```json
+            {
+                "type": "equation-inline", # 数学公式类型，一共equation-inline和equation-display两种
+                "raw_content": "<ccmath type="latex" by="mathjax">$u_{x_0}^{in}(x)$</ccmath>",
+                "content": {
+                    "math_content": "u_{x_0}^{in}(x)",
+                    "math_type": "latex",
+                    "by": "mathjax"
+                }
+            }
+            ```
+
+            Args:
+                content: str: 要转换的content
+
+        Returns:
+            dict: content_list_node
+        """
+        result = {}
+        tree = load_html(content)
+        if tree is None:
+            raise ValueError(f'Failed to load html: {content}')
+
+        if tree.tag != 'ccmath':
+            raise ValueError(f'No ccmath element found in content: {content}')
+        else:
+            # 获取math_content
+            math_content = tree.text  # TODO: 需要处理math_content两边的$符号
+            math_type = tree.get('type')
+            math_render = tree.get('by')
+            equation_type = self.get_equation_type(math_content)
+
+            result = {
+                'type': equation_type,
+                'raw_content': content,
+                'content': {
+                    'math_content': math_content,
+                    'math_type': math_type,
+                    'by': math_render
+                }
+            }
+        return result
+
     def contains_math(self, html: str) -> Tuple[bool, str]:
         """判断html中是否包含数学公式."""
         if self.contains_mathjax(html):  # 先认为mathjax公式就是latex公式
             return True, MATH_TYPE_MAP['LATEX']
 
         return False, None
-
-    def is_cc_html(self, html: str) -> bool:
-        """判断html片段是否是cc标签."""  # 这里需要判断是否包含自定义cc标签，应该需要一个全局通用方法
-        return html.startswith('<cc')
 
     def process_ccmath_html(self, cc_html: str, o_html: str, math_type: str, math_render: str) -> List[Tuple[str, str]]:
         """处理数学公式，将外层标签修改为 ccmath.
@@ -113,15 +181,39 @@ class MathRecognizer(BaseHTMLElementRecognizer):
         Returns:
             List[Tuple[str, str]]: 处理后的HTML对
         """
-        soup = BeautifulSoup(cc_html, 'html.parser')
-        content = soup.get_text(strip=True)
+        # node是从cc_html中解析出来的lxml节点
+        tree = load_html(cc_html)
+        if tree is None:
+            raise ValueError(f'Failed to load html: {cc_html}')
 
-        # 确定数学公式的类型和处理器
+        for node in iter_node(tree):
+            # 如果节点是span标签，并且class属性包含mathjax，MathJax，mathjax_display，MathJax_Display等
+            if (node.tag == 'span' and node.get('class') and
+               any('mathjax' in cls.lower() for cls in node.get('class').split())):
+                parent = node.getparent()
 
-        # 创建新的 ccmath 标签
-        new_cc_html = f'<ccmath type="{math_type}" by="{math_render}">{content}</ccmath>'
+                try:
+                    # Get the inner text of the mathjax tag
+                    text = node.text
+                    if text_strip(text):
+                        text = html.unescape(text)
+                        # Create a new ccmath tag
+                        new_cc_html = Element('ccmath')
+                        new_cc_html.text = text
+                        new_cc_html.set('type', math_type)
+                        new_cc_html.set('by', math_render)
+                        # Then, we need to replace the mathjax tag with the new span tag
+                        if parent is not None:
+                            if text_strip(node.tail):
+                                new_cc_html.tail = node.tail
+                                parent.replace(node, new_cc_html)
+                    else:
+                        logger.info(f'Processing mathjax tag: {node.text}')
+                        new_cc_html = node
+                except Exception as e:
+                    logger.error(f'Error processing mathjax tag: {e}')
 
-        return [(new_cc_html, o_html)]
+        return [(lxml.etree.tostring(new_cc_html, encoding='unicode'), o_html)]
 
     # def contains_mathml(self, html: str) -> bool:
     #     """检查html中是否包含mathml标签."""
@@ -172,21 +264,51 @@ class MathRecognizer(BaseHTMLElementRecognizer):
             <script src="https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.5/latest.js?config=TeX-MML-AM_CHTML"></script>
         Katex:
             <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/katex@0.13.11/dist/katex.min.css">
-
         """
-        soup = BeautifulSoup(html, 'html.parser')
-        head = soup.head
-
-        if head:
-            # Check for MathJax
-            mathjax_script = head.find('script', {'src': lambda x: x and 'mathjax' in x.lower()})
-            if mathjax_script:
+        tree = load_html(html)
+        if tree is None:
+            return None
+        # 查找head标签
+        head = tree.find('head')
+        if head is not None:
+            # 检查 MathJax
+            mathjax_script = head.find('.//script[@src]')
+            if mathjax_script is not None and 'mathjax' in mathjax_script.get('src', '').lower():
                 return MATH_RENDER_MAP['MATHJAX']
 
-            # Check for KaTeX
-            katex_link = head.find('link', {'href': lambda x: x and 'katex' in x.lower()})
-            if katex_link:
+            # 检查 KaTeX
+            katex_link = head.find('.//link[@href]')
+            if katex_link is not None and 'katex' in katex_link.get('href', '').lower():
                 return MATH_RENDER_MAP['KATEX']
+
+        return None
+
+    def get_equation_type(self, content: str) -> str:
+        """根据latex_config判断数学公式是行内还是行间公式.
+
+        Args:
+            html: 包含数学公式的HTML文本
+
+        Returns:
+            str: EQUATION_INLINE 或 EQUATION_DISPLAY
+
+        Examples:
+            >>> get_equation_type("这是行内公式 $x^2$ 测试")
+            'equation-inline'
+            >>> get_equation_type("这是行间公式 $$y=mx+b$$ 测试")
+            'equation-display'
+        """
+        def check_delimiters(delims_list):
+            for start, end in delims_list:
+                pattern = f'{re.escape(start)}.*?{re.escape(end)}'
+                if re.search(pattern, content, re.DOTALL):
+                    return True
+            return False
+        # 优先检查行间公式
+        if check_delimiters(latex_config['displayMath']):
+            return EQUATION_DISPLAY
+        if check_delimiters(latex_config['inlineMath']):
+            return EQUATION_INLINE
 
         return None
 
@@ -209,4 +331,7 @@ if __name__ == '__main__':
         'https://www.baidu.com',
         test_html,
         raw_html
+    ))
+    print(math_recognizer.to_content_list_node(
+        '<ccmath type="latex" by="mathjax">$u_{x_0}^{in}(x)$</ccmath>'
     ))
