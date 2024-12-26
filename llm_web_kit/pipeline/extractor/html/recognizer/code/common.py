@@ -30,10 +30,9 @@ def detect_language(node: etree._Element) -> Optional[str]:
     return None
 
 
-__total__ = 0
-
-
 def replace_node_by_cccode(node: etree._Element, by: str) -> None:
+    origin_html = etree.tostring(node).decode()
+
     language = detect_language(node)
 
     # 让使用 br 换行的代码可以正确换行
@@ -42,25 +41,20 @@ def replace_node_by_cccode(node: etree._Element, by: str) -> None:
         br.tail = ('\n' + br.tail) if br.tail else ('\n')  # type: ignore
 
     full_text = ''.join(node.itertext(None))
-    full_text = '\n'.join(
-        [
-            sub_text.replace(' ', ' ').rstrip()
-            for sub_text in full_text.strip().split('\n')
-        ]
-    )  # 去除每行的结尾空白符
+    chunks = [sub_text.replace(' ', ' ').rstrip() for sub_text in full_text.split('\n')]
+
+    while not chunks[0]:
+        chunks = chunks[1:]
+    while not chunks[len(chunks) - 1]:
+        chunks = chunks[:-1]
+
+    full_text = '\n'.join(chunks)
+    # print(full_text)
 
     node.clear(keep_tail=True)
     if language:
         node.set('language', language)
     node.set('by', by)
+    node.set('html', origin_html)
     node.tag = 'cccode'  # type: ignore
     node.text = full_text  # type: ignore
-
-    global __total__
-    # with open(
-    #     f"/home/SENSETIME/wuziming/llm-webkit-mirror/tests/llm_web_kit/pipeline/extractor/html/recognizer/assets/cccode/{__total__}",
-    #     "wt",
-    # ) as f:
-    #     f.write(full_text)
-    print(__total__)
-    __total__ += 1

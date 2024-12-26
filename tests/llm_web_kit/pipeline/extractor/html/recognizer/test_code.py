@@ -1,6 +1,8 @@
 import unittest
 from pathlib import Path
 
+from lxml import etree
+
 from llm_web_kit.pipeline.extractor.html.recognizer.cccode import \
     CodeRecognizer
 
@@ -77,7 +79,17 @@ TEST_CASES = [
             'assets/cccode/telerik.html',
             'https://www.telerik.com/forums/virtual-mode-custom-cell-datatemplate-problems',
         ),
-        'expected': [],
+        'expected': [
+            'assets/cccode/telerik-0.cs',
+            'assets/cccode/telerik-1.cs',
+            'assets/cccode/telerik-2.xml',
+            'assets/cccode/telerik-3.cs',
+            'assets/cccode/telerik-4.xml',
+            'assets/cccode/telerik-5.cs',
+            'assets/cccode/telerik-6.cs',
+            'assets/cccode/telerik-7.xml',
+            'assets/cccode/telerik-8.cs',
+        ],
     },
 ]
 
@@ -95,13 +107,13 @@ class TestMathRecognizer(unittest.TestCase):
             print(base_url)
             raw_html = raw_html_path.read_text()
             parts = self.rec.recognize(base_url, [(raw_html, raw_html)], raw_html)
-            parts = [part for part in parts if 'cccode' in part]
-            # self.assertEqual(len(parts), len(test_case["expected"]))
-            print(len(test_case['expected']))
-            for answer_path in test_case['expected']:
-                pass
-                # answer = base_dir.joinpath(answer_path).read_text()
-                # self.assertEqual()
+            parts = [part[0] for part in parts if 'cccode' in part[0]]
+            self.assertEqual(len(parts), len(test_case['expected']))
+            for expect_path, part in zip(test_case['expected'], parts):
+                expect = base_dir.joinpath(expect_path).read_text().strip()
+                answer = (etree.fromstring(part, None).text or '').strip()
+                self.assertEqual(expect, answer)
+            print(base_url, 'ok')
 
 
 if __name__ == '__main__':
