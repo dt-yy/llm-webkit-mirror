@@ -1,3 +1,4 @@
+import os
 from unittest.mock import MagicMock, patch
 
 from llm_web_kit.model.lang_id import (LanguageIdentification,
@@ -8,14 +9,18 @@ from llm_web_kit.model.lang_id import (LanguageIdentification,
                                        detect_latex_env,
                                        update_language_by_str)
 
+os.environ['LLM_WEB_KIT_CFG_PATH'] = os.path.join(os.path.dirname(__file__), 'assets/model_config.jsonc')
+
 
 class TestLanguageIdentification:
 
     @patch('llm_web_kit.model.lang_id.fasttext.load_model')
-    def test_init(self, mock_load_model):
+    @patch('llm_web_kit.model.lang_id.LanguageIdentification.auto_download')
+    def test_init(self, mock_auto_download, mock_load_model):
+        mock_auto_download.return_value = '/fake/model/path'
         # Test with default model path
         _ = LanguageIdentification()
-        mock_load_model.assert_called_once()
+        mock_load_model.assert_called_once_with('/fake/model/path')
 
         # Test with custom model path
         mock_load_model.reset_mock()
@@ -23,7 +28,8 @@ class TestLanguageIdentification:
         mock_load_model.assert_called_once_with('custom_model_path')
 
     @patch('llm_web_kit.model.lang_id.fasttext.load_model')
-    def test_predict(self, mock_load_model):
+    @patch('llm_web_kit.model.lang_id.LanguageIdentification.auto_download')
+    def test_predict(self, mock_auto_download, mock_load_model):
         lang_id = LanguageIdentification()
         lang_id.model.predict.return_value = (['label1', 'label2'], [0.9, 0.1])
         predictions, probabilities = lang_id.predict('test text')
