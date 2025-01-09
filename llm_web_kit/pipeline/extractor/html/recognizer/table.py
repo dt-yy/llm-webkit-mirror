@@ -4,7 +4,6 @@ from lxml.etree import _Element as HtmlElement
 from overrides import override
 
 from llm_web_kit.libs.doc_element_type import DocElementType
-from llm_web_kit.libs.logger import mylogger
 from llm_web_kit.pipeline.extractor.html.recognizer.recognizer import (
     BaseHTMLElementRecognizer, CCTag)
 
@@ -45,8 +44,10 @@ class TableRecognizer(BaseHTMLElementRecognizer):
         if not parsed_content:
             raise ValueError(f'table parsed_content{parsed_content}为空')
         table_type, table_body = self.__get_attribute(parsed_content)
+        if not table_type or table_body:
+            raise ValueError(f'get table attribute为空,table_body:{table_body},table_type:{table_type}')
         d = {
-            'type':  DocElementType.TABLE,
+            'type': DocElementType.TABLE,
             # "bbox": [],
             'raw_content': raw_html_segment,
             'content': {
@@ -62,79 +63,79 @@ class TableRecognizer(BaseHTMLElementRecognizer):
 
     def __is_simple_table(self, tree) -> bool:
         """处理table元素，判断是是否复杂：是否包含合并单元格."""
-        try:
-            cells = tree.xpath('//td | //th')
-            for cell in cells:
-                colspan = cell.get('colspan', '1')
-                rowspan = cell.get('rowspan', '1')
-                # 如果 colspan 或 rowspan 存在且大于1，则认为是合并单元格
-                if (int(colspan) > 1) or (int(rowspan) > 1):
-                    return False
-                else:
-                    return True
-        except Exception as e:
-            mylogger.error(f'Error evaluating XPath for simple table check span: {e}')
+        cells = tree.xpath('//td | //th')
+        if len(cells) == 0:
+            raise ValueError(f'table节点未通过xpath定位到td或者th标签, cell长度为{len(cells)}')
+        for cell in cells:
+            colspan_str = cell.get('colspan', 1)
+            rowspan_str = cell.get('rowspan', 1)
+            try:
+                # 尝试将属性值转换为整数
+                colspan = int(colspan_str)
+                rowspan = int(rowspan_str)
+            except ValueError:
+                raise ValueError(f'table的合并单元格属性值colspan:{colspan_str}或rowspan:{rowspan_str}不是有效的整数')
+            # 如果 colspan 或 rowspan 存在且大于1，则认为是合并单元格, 否则认为是简单格式的单元格
+            if (colspan > 1) or (rowspan > 1):
+                return False
+            elif (colspan == 1) and (rowspan == 1):
+                return True
+            else:
+                raise ValueError(f'table的合并单元格属性值colspan:{colspan}和rowspan:{rowspan}异常')
+
     def __is_table_contain_img(self, tree) -> bool:
         """判断table元素是否包含图片."""
-        try:
-            imgs = tree.xpath('//table//img')
-            if imgs:
-                return False
-            else:
-                return True
-        except Exception as e:
-            mylogger.error(f'Error evaluating XPath for simple table check img: {e}')
+        imgs = tree.xpath('//table//img')
+        if len(imgs) == 0:
+            return False
+        else:
+            return True
 
     def __is_table_nested(self, tree) -> bool:
         """判断table元素是否嵌套."""
-        try:
-            nested_tables = tree.xpath('//table//table')
-            if nested_tables:
-                return False
-            else:
-                return True
-        except Exception as e:
-            mylogger.error(f'Error evaluating XPath for simple table check nested table: {e}')
+        nested_tables = tree.xpath('//table//table')
+        if len(nested_tables) == 0:
+            return False
+        else:
+            return True
 
     def __extract_tables(self, ele: HtmlElement) -> List[str]:
         """提取html中的table元素."""
-        tree =self._build_html_tree(ele)
+        tree = self._build_html_tree(ele)
         self.__do_extract_tables(tree)
         new_html = self._element_to_html(tree)
         lst = self.html_split_by_tags(new_html, CCTag.CC_TABLE)
         return lst
 
-    def __get_table_type(self, child:HtmlElement) -> str:
+    def __get_table_type(self, child: HtmlElement) -> str:
         """获取table的类型."""
-        try:
+        flag = self.__is_simple_table(child) and self.__is_table_nested(child) and self.__is_table_contain_img(child)
+        if flag:
             table_type = 'simple'
-            if self.__is_simple_table(child) and self.__is_table_nested(child) and self.__is_table_contain_img(child):
-                table_type = 'simple'
-            else:
-                table_type = 'complex'
-            return table_type
-        except Exception as e:
-            mylogger.error(f'Error determining table type: {e}')
+        else:
+            table_type = 'complex'
+        return table_type
 
-    def __extract_table_element(self, ele:HtmlElement) -> str:
+    def __extract_table_element(self, ele: HtmlElement) -> str:
         """提取表格的元素."""
         for item in ele.iterchildren():
             return self._element_to_html(item)
 
-    def __do_extract_tables(self, root:HtmlElement) -> None:
+    def __do_extract_tables(self, root: HtmlElement) -> None:
         """递归处理所有子标签."""
         if root.tag in ['table']:
             table_raw_html = self._element_to_html(root)
             table_type = self.__get_table_type(root)
             tail_text = root.tail
             table_body = self.__extract_table_element(root)
-            cc_element = self._build_cc_element(CCTag.CC_TABLE, table_body, tail_text, table_type=table_type, html=table_raw_html)
+            cc_element = self._build_cc_element(
+                CCTag.CC_TABLE, table_body, tail_text, table_type=table_type, html=table_raw_html)
             self._replace_element(root, cc_element)
             return
         for child in root.iterchildren():
             self.__do_extract_tables(child)
 
-    def __get_attribute(self, html:str) -> Tuple[int, str]:
+    def __get_attribute(self, html: str) -> Tuple[int, str]:
         """获取element的属性."""
         ele = self._build_html_tree(html)
         # 找到cctable标签
@@ -146,6 +147,7 @@ class TableRecognizer(BaseHTMLElementRecognizer):
         else:
             raise ValueError(f'{html}中没有cctable标签')
 
+
 if __name__ == '__main__':
     recognizer = TableRecognizer()
     base_url = 'https://www.baidu.com'
@@ -153,8 +155,8 @@ if __name__ == '__main__':
         ('<cccode>hello</cccode>',
          '<code>hello</code>'),
         (
-        """<div><p>段落2</p><table><tr><td rowspan='2'>1</td><td>2</td></tr><tr><td>3</td></tr></table><p>段落2</p><table><tr><td rowspan='2'>1</td><td>2</td></tr><tr><td>3</td></tr></table></div>""",
-        """<div><p>段落2</p><table><tr><td rowspan='2'>1</td><td>2</td></tr><tr><td>3</td></tr></table><p>段落2</p><table><tr><td rowspan='2'>1</td><td>2</td></tr><tr><td>3</td></tr></table></div>""",
+            """<div><p>段落2</p><table><tr><td rowspan='2'>1</td><td>2</td></tr><tr><td>3</td></tr></table><p>段落2</p><table><tr><td rowspan='2'>1</td><td>2</td></tr><tr><td>3</td></tr></table></div>""",
+            """<div><p>段落2</p><table><tr><td rowspan='2'>1</td><td>2</td></tr><tr><td>3</td></tr></table><p>段落2</p><table><tr><td rowspan='2'>1</td><td>2</td></tr><tr><td>3</td></tr></table></div>""",
         )]
     raw_html = (
         """<div><p>段落2</p><table><tr><td rowspan='2'>1</td><td>2</td></tr>"""

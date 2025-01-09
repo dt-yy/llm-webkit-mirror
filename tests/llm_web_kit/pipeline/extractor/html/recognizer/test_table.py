@@ -54,6 +54,7 @@ class TestTableRecognizer(unittest.TestCase):
             parts = self.rec.recognize(base_url, [(raw_html, raw_html)], raw_html)
             self.assertEqual(len(parts), 2)
 
+
 if __name__ == '__main__':
     r = TestTableRecognizer()
     r.setUp()
