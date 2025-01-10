@@ -9,16 +9,16 @@ from llm_web_kit.pipeline.extractor.html.recognizer.ccmath import \
 from llm_web_kit.pipeline.extractor.html.recognizer.recognizer import CCTag
 
 TEST_CASES = [
-    # é©çƒ˜æ¹°éî„€ç´¡å¨´å¬­ç˜¯é¢ã„¤ç·¥
+    # ?¯M?îã?¯¼?ìÎêk?£µ?
     {
         'input': [
             (
-                ('<p>æ©æ¬æ§¸pé¨å‰‡ext<span class="mathjax_display">'
-                 '$$a^2 + b^2 = c^2$$</span>æ©æ¬æ§¸spané¨å‰‡ail<b>æ©æ¬æ§¸bé¨å‰‡ext</b>'
-                 'æ©æ¬æ§¸bé¨å‰‡ail</p>'),
-                ('<p>æ©æ¬æ§¸pé¨å‰‡ext<span class="mathjax_display">'
-                 '$$a^2 + b^2 = c^2$$</span>æ©æ¬æ§¸spané¨å‰‡ail<b>æ©æ¬æ§¸bé¨å‰‡ext</b>'
-                 'æ©æ¬æ§¸bé¨å‰‡ail</p>')
+                ('<p>?ÅÏåÎpôğ«hext<span class="mathjax_display">'
+                 '$$a^2 + b^2 = c^2$$</span>?ÅÏåÎspanôğ«hail<b>?ÅÏåÎbôğ«hext</b>'
+                 '?ÅÏåÎbôğ«hail</p>'),
+                ('<p>?ÅÏåÎpôğ«hext<span class="mathjax_display">'
+                 '$$a^2 + b^2 = c^2$$</span>?ÅÏåÎspanôğ«hail<b>?ÅÏåÎbôğ«hext</b>'
+                 '?ÅÏåÎbôğ«hail</p>')
             )
         ],
         'raw_html': (
@@ -26,20 +26,20 @@ TEST_CASES = [
             '<script src="https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.5/MathJax.js'
             '?config=TeX-MML-AM_CHTML"> </script> '
             '</head> '
-            '<p>æ©æ¬æ§¸pé¨å‰‡ext<span class="mathjax_display">$$a^2 + b^2 = c^2$$</span>æ©æ¬æ§¸spané¨å‰‡ail<b>æ©æ¬æ§¸bé¨å‰‡ext</b>æ©æ¬æ§¸bé¨å‰‡ail</p>'
+            '<p>?ÅÏåÎpôğ«hext<span class="mathjax_display">$$a^2 + b^2 = c^2$$</span>?ÅÏåÎspanôğ«hail<b>?ÅÏåÎbôğ«hext</b>?ÅÏåÎbôğ«hail</p>'
         ),
         'expected': [
             (
-                '<p>æ©æ¬æ§¸pé¨å‰‡ext</p>',
-                '<p>æ©æ¬æ§¸pé¨å‰‡ext</p>'
+                '<p>?ÅÏåÎpôğ«hext</p>',
+                '<p>?ÅÏåÎpôğ«hext</p>'
             ),
             (
-                '<p><ccmath-interline type="latex" by="mathjax" html=\'&lt;span class="mathjax_display"&gt;$$a^2 + b^2 = c^2$$&lt;/span&gt;æ©æ¬æ§¸spané¨å‰‡ail\'>$$a^2 + b^2 = c^2$$</ccmath-interline></p>',
-                '<span class="mathjax_display">$$a^2 + b^2 = c^2$$</span>æ©æ¬æ§¸spané¨å‰‡ail'
+                '<p><ccmath-interline type="latex" by="mathjax" html=\'&lt;span class="mathjax_display"&gt;$$a^2 + b^2 = c^2$$&lt;/span&gt;?ÅÏåÎspanôğ«hail\'>$$a^2 + b^2 = c^2$$</ccmath-interline></p>',
+                '<span class="mathjax_display">$$a^2 + b^2 = c^2$$</span>?ÅÏåÎspanôğ«hail'
             ),
             (
-                '<p>æ©æ¬æ§¸spané¨å‰‡ail<b>æ©æ¬æ§¸bé¨å‰‡ext</b>æ©æ¬æ§¸bé¨å‰‡ail</p>',
-                '<p>æ©æ¬æ§¸spané¨å‰‡ail<b>æ©æ¬æ§¸bé¨å‰‡ext</b>æ©æ¬æ§¸bé¨å‰‡ail</p>'
+                '<p>?ÅÏåÎspanôğ«hail<b>?ÅÏåÎbôğ«hext</b>?ÅÏåÎbôğ«hail</p>',
+                '<p>?ÅÏåÎspanôğ«hail<b>?ÅÏåÎbôğ«hext</b>?ÅÏåÎbôğ«hail</p>'
             )
         ]
     },
@@ -80,7 +80,7 @@ TEST_CASES = [
         ]
     },
 
-    # å®¸èŒ¬ç²¡é–å‘­æƒˆcccodeéå›©î„·
+    # ®fÓ³ÚêîÑ?Õ]cccodeÃñ??
     # {
     #     'input': [
     #         ('<cccode class=mathjax>Some text with a formula $$x = 5$$ in it.</cccode>',
@@ -92,7 +92,7 @@ TEST_CASES = [
     #          '<cccode class=mathjax>Some text with a formula $$x = 5$$ in it.</cccode>')
     #     ]
     # },
-    # html_listé–å‘­æƒˆæ¾¶æ°«é‡œhtmlé”›å®‘lass=MathJax_Display
+    # html_listîÑ?Õ]¿G²B°yhtml??lass=MathJax_Display
     # {
     #     'input': [
     #         ('<p>This is a test.</p>', '<p>This is a test.</p>'),
@@ -106,22 +106,22 @@ TEST_CASES = [
     #          '<span class=Mathjax_display>$$a^2 + b^2 = c^2$$</span>')
     #     ]
     # },
-    # raw_htmlé–å‘­æƒˆmathjaxå¨“å‰ç…‹é£ã„¥ç•¾æ¶”å¤›ç´class=mathjax_display
+    # raw_htmlîÑ?Õ]mathjax®U¤eŞzîé£¶æ®¯K?ÓQclass=mathjax_display
     # {
     #     'input': [
-    #         ('<p>æ©æ¬æ§¸pé¨å‰‡ext<span class=mathjax_display>$$a^2 + b^2 = c^2$$</span>æ©æ¬æ§¸spané¨å‰‡ail<b>æ©æ¬æ§¸bé¨å‰‡ext</b>æ©æ¬æ§¸bé¨å‰‡ail</p>'),
-    #         ('<p>æ©æ¬æ§¸pé¨å‰‡ext<span class=mathjax_display>$$a^2 + b^2 = c^2$$</span>æ©æ¬æ§¸spané¨å‰‡ail<b>æ©æ¬æ§¸bé¨å‰‡ext</b>æ©æ¬æ§¸bé¨å‰‡ail</p>')
+    #         ('<p>?ÅÏåÎpôğ«hext<span class=mathjax_display>$$a^2 + b^2 = c^2$$</span>?ÅÏåÎspanôğ«hail<b>?ÅÏåÎbôğ«hext</b>?ÅÏåÎbôğ«hail</p>'),
+    #         ('<p>?ÅÏåÎpôğ«hext<span class=mathjax_display>$$a^2 + b^2 = c^2$$</span>?ÅÏåÎspanôğ«hail<b>?ÅÏåÎbôğ«hext</b>?ÅÏåÎbôğ«hail</p>')
     #     ],
     #     'raw_html': (
     #         '<head> '
     #         '<script src="https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.5/MathJax.js'
     #         '?config=TeX-MML-AM_CHTML"> </script> '
     #         '</head> '
-    #         '<p>æ©æ¬æ§¸pé¨å‰‡ext<span class=mathjax_display>$$a^2 + b^2 = c^2$$</span>æ©æ¬æ§¸spané¨å‰‡ail<b>æ©æ¬æ§¸bé¨å‰‡ext</b>æ©æ¬æ§¸bé¨å‰‡ail</p>'
+    #         '<p>?ÅÏåÎpôğ«hext<span class=mathjax_display>$$a^2 + b^2 = c^2$$</span>?ÅÏåÎspanôğ«hail<b>?ÅÏåÎbôğ«hext</b>?ÅÏåÎbôğ«hail</p>'
     #     ),
     #     'expected': [
-    #         ('<p>æ©æ¬æ§¸pé¨å‰‡ext<ccmath type="latex" by="mathjax">$$a^2 + b^2 = c^2$$</ccmath>æ©æ¬æ§¸spané¨å‰‡ail<b>æ©æ¬æ§¸bé¨å‰‡ext</b>æ©æ¬æ§¸bé¨å‰‡ail</p>',
-    #          '<p>æ©æ¬æ§¸pé¨å‰‡ext<span class=mathjax_display>$$a^2 + b^2 = c^2$$</span>æ©æ¬æ§¸spané¨å‰‡ail<b>æ©æ¬æ§¸bé¨å‰‡ext</b>æ©æ¬æ§¸bé¨å‰‡ail</p>')
+    #         ('<p>?ÅÏåÎpôğ«hext<ccmath type="latex" by="mathjax">$$a^2 + b^2 = c^2$$</ccmath>?ÅÏåÎspanôğ«hail<b>?ÅÏåÎbôğ«hext</b>?ÅÏåÎbôğ«hail</p>',
+    #          '<p>?ÅÏåÎpôğ«hext<span class=mathjax_display>$$a^2 + b^2 = c^2$$</span>?ÅÏåÎspanôğ«hail<b>?ÅÏåÎbôğ«hext</b>?ÅÏåÎbôğ«hail</p>')
     #     ]
     # }
 ]
@@ -266,7 +266,7 @@ class TestMathRecognizer(unittest.TestCase):
             raw_html = raw_html_path.read_text()
             parts = self.math_recognizer.recognize(base_url, [(raw_html, raw_html)], raw_html)
             print(len(parts))
-            # çå”’artsé’æ¥„ã€ƒæ¶“î… îƒ‡æ¶“â‚¬æ¶“î„å“ç»±çŠ³å«¾éºãƒ¤ç¹šç€›æ¨ºåŸŒé‚å›¦æ¬¢é”›å±½ç”«é—…å¿”æº€é”Ÿï¿½?
+            # ?Ğóartsîâİä¡²®ş??®ş£á®ş???????Â·Ãs¾ìÑJóc????¨jîòÉá????
             # import random
             # with open('parts'+str(random.randint(1, 100))+".html", 'w') as f:
             #     for part in parts:
@@ -293,7 +293,7 @@ class TestMathRecognizer(unittest.TestCase):
                 )
                 self.assertEqual(output_node, test_case['expected'])
 
-        # å¨´å¬­ç˜¯å¨Œâ„ƒæ¹ccmathéå›©î„·é¨å‹¬å„é”Ÿï¿½?
+        # ?ìÎêk®[¢JÙóccmathÃñ??ôğ?????
         invalid_content = (
             'https://www.baidu.com',
             '<div>Some math content</div>',
