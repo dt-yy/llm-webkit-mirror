@@ -43,6 +43,43 @@ TEST_CASES = [
             )
         ]
     },
+    #2
+    {
+        'input': [
+            (
+                ('<p>this is p text<span class="katex" id="form1">'
+            '</span>this is span1 tail<span class="katex" id="form2"></span>this is span2 tail<b>this is b text</b>'
+            'this is b tail'
+            '<script>'
+            'var fotm = document.getElementById("form1")'
+            'katex.render("E = mc^2", fotm);'
+            'katex.render("a^2 + b^2 = c^2", form2);'
+            '</script>'
+            '</p>'),
+            (
+            '<p>this is p text<span class="katex" id="form1">'
+            '</span>this is span1 tail<span class="katex" id="form2"></span>this is span2 tail<b>this is b text</b>'
+            'this is b tail'
+            '<script>'
+            'var fotm = document.getElementById("form1")'
+            'katex.render("E = mc^2", fotm);'
+            'katex.render("a^2 + b^2 = c^2", form2);'
+            '</script>'
+            '</p>'),
+            )
+        ],
+        'raw_html': (
+            '<head> '
+            '<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/katex@0.13.11/dist/katex.min.css">'
+            '</head> '
+            '<p>this is p text<span class="katex">$E = mc^2$</span>this is span1 tail<span class="katex">$a^2 + b^2 = c^2$</span>this is span2 tail<b>this is b text</b>this is b tail<script>var fotm = document.getElementById("form1")katex.render("E = mc^2", fotm);katex.render("a^2 + b^2 = c^2", form2);</script></p>'
+        ),
+        'expected': [
+            ('<p>this is p text<ccmath-inline>$E = mc^2$</ccmath-inline>this is span1 tail<ccmath-inline>$a^2 + b^2 = c^2$</ccmath-inline>this is span2 tail<b>this is b text</b>this is b tail<script>var fotm = document.getElementById("form1")katex.render("E = mc^2", fotm);katex.render("a^2 + b^2 = c^2", form2);</script></p>', 
+             '<p>this is p text<ccmath-inline>$E = mc^2$</ccmath-inline>this is span1 tail<ccmath-inline>$a^2 + b^2 = c^2$</ccmath-inline>this is span2 tail<b>this is b text</b>this is b tail<script>var fotm = document.getElementById("form1")katex.render("E = mc^2", fotm);katex.render("a^2 + b^2 = c^2", form2);</script></p>')
+        ]
+    },
+
     # 已经包含cccode标签
     # {
     #     'input': [
@@ -229,7 +266,7 @@ class TestMathRecognizer(unittest.TestCase):
             raw_html = raw_html_path.read_text()
             parts = self.math_recognizer.recognize(base_url, [(raw_html, raw_html)], raw_html)
             print(len(parts))
-            # 将parts列表中第一个元素拼接保存到文件，带随机数
+            # 将parts列表中第一个元素拼接保存到文件，带随机�?
             # import random
             # with open('parts'+str(random.randint(1, 100))+".html", 'w') as f:
             #     for part in parts:
@@ -256,7 +293,7 @@ class TestMathRecognizer(unittest.TestCase):
                 )
                 self.assertEqual(output_node, test_case['expected'])
 
-        # 测试没有ccmath标签的情况
+        # 测试没有ccmath标签的情�?
         invalid_content = (
             'https://www.baidu.com',
             '<div>Some math content</div>',
@@ -294,7 +331,8 @@ class TestCCMATH(unittest.TestCase):
 if __name__ == '__main__':
     r = TestMathRecognizer()
     r.setUp()
-    r.test_math_recognizer_html()
+    r.test_math_recognizer()
+    #r.test_math_recognizer_html()
     # r.test_to_content_list_node()
     # html = r'<p class="lt-math-15120">\[\begin{array} {ll} {5 \cdot 3 = 15} &amp;{-5(3) = -15} \\ {5(-3) = -15} &amp;{(-5)(-3) = 15} \end{array}\]</p>'
     # tree = html_to_element(html)
