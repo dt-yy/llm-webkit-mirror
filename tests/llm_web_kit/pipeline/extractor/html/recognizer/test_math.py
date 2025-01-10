@@ -9,16 +9,16 @@ from llm_web_kit.pipeline.extractor.html.recognizer.ccmath import \
 from llm_web_kit.pipeline.extractor.html.recognizer.recognizer import CCTag
 
 TEST_CASES = [
-    # 基本公式测试用例
+    # 鍩烘湰鍏紡娴嬭瘯鐢ㄤ緥
     {
         'input': [
             (
-                ('<p>这是p的text<span class="mathjax_display">'
-                 '$$a^2 + b^2 = c^2$$</span>这是span的tail<b>这是b的text</b>'
-                 '这是b的tail</p>'),
-                ('<p>这是p的text<span class="mathjax_display">'
-                 '$$a^2 + b^2 = c^2$$</span>这是span的tail<b>这是b的text</b>'
-                 '这是b的tail</p>')
+                ('<p>杩欐槸p鐨則ext<span class="mathjax_display">'
+                 '$$a^2 + b^2 = c^2$$</span>杩欐槸span鐨則ail<b>杩欐槸b鐨則ext</b>'
+                 '杩欐槸b鐨則ail</p>'),
+                ('<p>杩欐槸p鐨則ext<span class="mathjax_display">'
+                 '$$a^2 + b^2 = c^2$$</span>杩欐槸span鐨則ail<b>杩欐槸b鐨則ext</b>'
+                 '杩欐槸b鐨則ail</p>')
             )
         ],
         'raw_html': (
@@ -26,20 +26,20 @@ TEST_CASES = [
             '<script src="https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.5/MathJax.js'
             '?config=TeX-MML-AM_CHTML"> </script> '
             '</head> '
-            '<p>这是p的text<span class="mathjax_display">$$a^2 + b^2 = c^2$$</span>这是span的tail<b>这是b的text</b>这是b的tail</p>'
+            '<p>杩欐槸p鐨則ext<span class="mathjax_display">$$a^2 + b^2 = c^2$$</span>杩欐槸span鐨則ail<b>杩欐槸b鐨則ext</b>杩欐槸b鐨則ail</p>'
         ),
         'expected': [
             (
-                '<p>这是p的text</p>',
-                '<p>这是p的text</p>'
+                '<p>杩欐槸p鐨則ext</p>',
+                '<p>杩欐槸p鐨則ext</p>'
             ),
             (
-                '<p><ccmath-interline type="latex" by="mathjax" html=\'&lt;span class="mathjax_display"&gt;$$a^2 + b^2 = c^2$$&lt;/span&gt;这是span的tail\'>$$a^2 + b^2 = c^2$$</ccmath-interline></p>',
-                '<span class="mathjax_display">$$a^2 + b^2 = c^2$$</span>这是span的tail'
+                '<p><ccmath-interline type="latex" by="mathjax" html=\'&lt;span class="mathjax_display"&gt;$$a^2 + b^2 = c^2$$&lt;/span&gt;杩欐槸span鐨則ail\'>$$a^2 + b^2 = c^2$$</ccmath-interline></p>',
+                '<span class="mathjax_display">$$a^2 + b^2 = c^2$$</span>杩欐槸span鐨則ail'
             ),
             (
-                '<p>这是span的tail<b>这是b的text</b>这是b的tail</p>',
-                '<p>这是span的tail<b>这是b的text</b>这是b的tail</p>'
+                '<p>杩欐槸span鐨則ail<b>杩欐槸b鐨則ext</b>杩欐槸b鐨則ail</p>',
+                '<p>杩欐槸span鐨則ail<b>杩欐槸b鐨則ext</b>杩欐槸b鐨則ail</p>'
             )
         ]
     },
@@ -80,7 +80,7 @@ TEST_CASES = [
         ]
     },
 
-    # 已经包含cccode标签
+    # 宸茬粡鍖呭惈cccode鏍囩
     # {
     #     'input': [
     #         ('<cccode class=mathjax>Some text with a formula $$x = 5$$ in it.</cccode>',
@@ -92,7 +92,7 @@ TEST_CASES = [
     #          '<cccode class=mathjax>Some text with a formula $$x = 5$$ in it.</cccode>')
     #     ]
     # },
-    # html_list包含多个html，class=MathJax_Display
+    # html_list鍖呭惈澶氫釜html锛宑lass=MathJax_Display
     # {
     #     'input': [
     #         ('<p>This is a test.</p>', '<p>This is a test.</p>'),
@@ -106,22 +106,22 @@ TEST_CASES = [
     #          '<span class=Mathjax_display>$$a^2 + b^2 = c^2$$</span>')
     #     ]
     # },
-    # raw_html包含mathjax渲染器定义，class=mathjax_display
+    # raw_html鍖呭惈mathjax娓叉煋鍣ㄥ畾涔夛紝class=mathjax_display
     # {
     #     'input': [
-    #         ('<p>这是p的text<span class=mathjax_display>$$a^2 + b^2 = c^2$$</span>这是span的tail<b>这是b的text</b>这是b的tail</p>'),
-    #         ('<p>这是p的text<span class=mathjax_display>$$a^2 + b^2 = c^2$$</span>这是span的tail<b>这是b的text</b>这是b的tail</p>')
+    #         ('<p>杩欐槸p鐨則ext<span class=mathjax_display>$$a^2 + b^2 = c^2$$</span>杩欐槸span鐨則ail<b>杩欐槸b鐨則ext</b>杩欐槸b鐨則ail</p>'),
+    #         ('<p>杩欐槸p鐨則ext<span class=mathjax_display>$$a^2 + b^2 = c^2$$</span>杩欐槸span鐨則ail<b>杩欐槸b鐨則ext</b>杩欐槸b鐨則ail</p>')
     #     ],
     #     'raw_html': (
     #         '<head> '
     #         '<script src="https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.5/MathJax.js'
     #         '?config=TeX-MML-AM_CHTML"> </script> '
     #         '</head> '
-    #         '<p>这是p的text<span class=mathjax_display>$$a^2 + b^2 = c^2$$</span>这是span的tail<b>这是b的text</b>这是b的tail</p>'
+    #         '<p>杩欐槸p鐨則ext<span class=mathjax_display>$$a^2 + b^2 = c^2$$</span>杩欐槸span鐨則ail<b>杩欐槸b鐨則ext</b>杩欐槸b鐨則ail</p>'
     #     ),
     #     'expected': [
-    #         ('<p>这是p的text<ccmath type="latex" by="mathjax">$$a^2 + b^2 = c^2$$</ccmath>这是span的tail<b>这是b的text</b>这是b的tail</p>',
-    #          '<p>这是p的text<span class=mathjax_display>$$a^2 + b^2 = c^2$$</span>这是span的tail<b>这是b的text</b>这是b的tail</p>')
+    #         ('<p>杩欐槸p鐨則ext<ccmath type="latex" by="mathjax">$$a^2 + b^2 = c^2$$</ccmath>杩欐槸span鐨則ail<b>杩欐槸b鐨則ext</b>杩欐槸b鐨則ail</p>',
+    #          '<p>杩欐槸p鐨則ext<span class=mathjax_display>$$a^2 + b^2 = c^2$$</span>杩欐槸span鐨則ail<b>杩欐槸b鐨則ext</b>杩欐槸b鐨則ail</p>')
     #     ]
     # }
 ]
@@ -266,7 +266,7 @@ class TestMathRecognizer(unittest.TestCase):
             raw_html = raw_html_path.read_text()
             parts = self.math_recognizer.recognize(base_url, [(raw_html, raw_html)], raw_html)
             print(len(parts))
-            # 将parts列表中第一个元素拼接保存到文件，带随机�?
+            # 灏唒arts鍒楄〃涓涓€涓厓绱犳嫾鎺ヤ繚瀛樺埌鏂囦欢锛屽甫闅忔満锟�?
             # import random
             # with open('parts'+str(random.randint(1, 100))+".html", 'w') as f:
             #     for part in parts:
@@ -293,7 +293,7 @@ class TestMathRecognizer(unittest.TestCase):
                 )
                 self.assertEqual(output_node, test_case['expected'])
 
-        # 测试没有ccmath标签的情�?
+        # 娴嬭瘯娌℃湁ccmath鏍囩鐨勬儏锟�?
         invalid_content = (
             'https://www.baidu.com',
             '<div>Some math content</div>',
@@ -332,7 +332,7 @@ if __name__ == '__main__':
     r = TestMathRecognizer()
     r.setUp()
     r.test_math_recognizer()
-    #r.test_math_recognizer_html()
+    r.test_math_recognizer_html()
     # r.test_to_content_list_node()
     # html = r'<p class="lt-math-15120">\[\begin{array} {ll} {5 \cdot 3 = 15} &amp;{-5(3) = -15} \\ {5(-3) = -15} &amp;{(-5)(-3) = 15} \end{array}\]</p>'
     # tree = html_to_element(html)
