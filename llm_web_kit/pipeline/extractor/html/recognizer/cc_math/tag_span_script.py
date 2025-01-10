@@ -6,18 +6,34 @@ from lxml.html import HtmlElement
 from llm_web_kit.libs.html_utils import build_cc_element, element_to_html,html_to_element
 from llm_web_kit.libs.logger import logger
 from llm_web_kit.pipeline.extractor.html.recognizer.cc_math.common import (
-    CCMATH, CCMATH_INTERLINE, text_strip)
+    CCMATH, CCMATH_INLINE, CCMATH_INTERLINE, EQUATION_INLINE,
+    EQUATION_INTERLINE, text_strip)
 
 
 def modify_tree(cm: CCMATH, math_render: str, o_html: str, node: HtmlElement, parent: HtmlElement):
-    formula_content = get_render_content(node,parent)
-    print(formula_content)
-    o_html = f'<span class="katex">{formula_content}</span>'
-    new_tag = CCMATH_INTERLINE
-    math_type = 'latex' #TODO 修改get_equation_type
-    if formula_content and text_strip(formula_content):
-            new_span = build_cc_element(html_tag_name=new_tag, text=formula_content, tail='', type=math_type, by=math_render, html=o_html)
-            parent.replace(node, new_span)
+    # 如果节点是span标签，并且class属性包含katex katex-display等
+    # 示例：
+    # <span class="katex" id="f1"></span>
+    #<script>
+    #katex.render("a^2 + b^2 = c^2", f1)
+    #</script>
+
+    try:
+        #TODO js渲染 统一输出行内格式
+        formula_content = get_render_content(node,parent)
+        o_html = f'<span class="katex">{formula_content}</span>'
+        equation_type, math_type = cm.get_equation_type(o_html)
+        if equation_type == EQUATION_INLINE:
+            new_tag = CCMATH_INLINE
+        elif equation_type == EQUATION_INTERLINE:
+            new_tag = CCMATH_INTERLINE
+        else:
+            raise ValueError(f'Unknown equation type: {equation_type}')
+        if formula_content and text_strip(formula_content):
+                new_span = build_cc_element(html_tag_name=new_tag, text=formula_content, tail=text_strip(node.tail), type=math_type, by=math_render, html=o_html)
+                parent.replace(node, new_span)
+    except Exception as e:
+        logger.error(f'Error processing katex class: {e}')
 
 
 def get_render_content(node: HtmlElement, parent: HtmlElement) -> str:
@@ -41,6 +57,6 @@ def get_render_content(node: HtmlElement, parent: HtmlElement) -> str:
             render_matches = render_pattern.findall(text)
             for formula_content, element_id in render_matches:
                 if element_id == replacement_id:
-                    return formula_content
+                    return f'${formula_content}$'
         return ""
     return ""
