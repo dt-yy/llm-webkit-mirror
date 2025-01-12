@@ -1,4 +1,4 @@
-﻿import unittest
+import unittest
 from pathlib import Path
 
 from llm_web_kit.libs.html_utils import html_to_element
@@ -9,16 +9,16 @@ from llm_web_kit.pipeline.extractor.html.recognizer.ccmath import \
 from llm_web_kit.pipeline.extractor.html.recognizer.recognizer import CCTag
 
 TEST_CASES = [
-    # ?疢?钽??煳阫?５?
+    # 基本公式测试用例
     {
         'input': [
             (
-                ('<p>?畔逦p麴玥ext<span class="mathjax_display">'
-                 '$$a^2 + b^2 = c^2$$</span>?畔逦span麴玥ail<b>?畔逦b麴玥ext</b>'
-                 '?畔逦b麴玥ail</p>'),
-                ('<p>?畔逦p麴玥ext<span class="mathjax_display">'
-                 '$$a^2 + b^2 = c^2$$</span>?畔逦span麴玥ail<b>?畔逦b麴玥ext</b>'
-                 '?畔逦b麴玥ail</p>')
+                ('<p>这是p的text<span class="mathjax_display">'
+                 '$$a^2 + b^2 = c^2$$</span>这是span的tail<b>这是b的text</b>'
+                 '这是b的tail</p>'),
+                ('<p>这是p的text<span class="mathjax_display">'
+                 '$$a^2 + b^2 = c^2$$</span>这是span的tail<b>这是b的text</b>'
+                 '这是b的tail</p>')
             )
         ],
         'raw_html': (
@@ -26,20 +26,20 @@ TEST_CASES = [
             '<script src="https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.5/MathJax.js'
             '?config=TeX-MML-AM_CHTML"> </script> '
             '</head> '
-            '<p>?畔逦p麴玥ext<span class="mathjax_display">$$a^2 + b^2 = c^2$$</span>?畔逦span麴玥ail<b>?畔逦b麴玥ext</b>?畔逦b麴玥ail</p>'
+            '<p>这是p的text<span class="mathjax_display">$$a^2 + b^2 = c^2$$</span>这是span的tail<b>这是b的text</b>这是b的tail</p>'
         ),
         'expected': [
             (
-                '<p>?畔逦p麴玥ext</p>',
-                '<p>?畔逦p麴玥ext</p>'
+                '<p>这是p的text</p>',
+                '<p>这是p的text</p>'
             ),
             (
-                '<p><ccmath-interline type="latex" by="mathjax" html=\'&lt;span class="mathjax_display"&gt;$$a^2 + b^2 = c^2$$&lt;/span&gt;?畔逦span麴玥ail\'>$$a^2 + b^2 = c^2$$</ccmath-interline></p>',
-                '<span class="mathjax_display">$$a^2 + b^2 = c^2$$</span>?畔逦span麴玥ail'
+                '<p><ccmath-interline type="latex" by="mathjax" html=\'&lt;span class="mathjax_display"&gt;$$a^2 + b^2 = c^2$$&lt;/span&gt;这是span的tail\'>$$a^2 + b^2 = c^2$$</ccmath-interline></p>',
+                '<span class="mathjax_display">$$a^2 + b^2 = c^2$$</span>这是span的tail'
             ),
             (
-                '<p>?畔逦span麴玥ail<b>?畔逦b麴玥ext</b>?畔逦b麴玥ail</p>',
-                '<p>?畔逦span麴玥ail<b>?畔逦b麴玥ext</b>?畔逦b麴玥ail</p>'
+                '<p>这是span的tail<b>这是b的text</b>这是b的tail</p>',
+                '<p>这是span的tail<b>这是b的text</b>这是b的tail</p>'
             )
         ]
     },
@@ -48,24 +48,24 @@ TEST_CASES = [
         'input': [
             (
                 ('<p>this is p text<span class="katex" id="form1">'
-            '</span>this is span1 tail<span class="katex" id="form2"></span>this is span2 tail<b>this is b text</b>'
-            'this is b tail'
-            '<script>'
-            'var fotm = document.getElementById("form1")'
-            'katex.render("E = mc^2", fotm);'
-            'katex.render("a^2 + b^2 = c^2", form2);'
-            '</script>'
-            '</p>'),
-            (
-            '<p>this is p text<span class="katex" id="form1">'
-            '</span>this is span1 tail<span class="katex" id="form2"></span>this is span2 tail<b>this is b text</b>'
-            'this is b tail'
-            '<script>'
-            'var fotm = document.getElementById("form1")'
-            'katex.render("E = mc^2", fotm);'
-            'katex.render("a^2 + b^2 = c^2", form2);'
-            '</script>'
-            '</p>'),
+                '</span>this is span1 tail<span class="katex" id="form2"></span>this is span2 tail<b>this is b text</b>'
+                'this is b tail'
+                '<script>'
+                'var fotm = document.getElementById("form1")'
+                'katex.render("E = mc^2", fotm);'
+                'katex.render("a^2 + b^2 = c^2", form2);'
+                '</script>'
+                '</p>'),
+                (
+                '<p>this is p text<span class="katex" id="form1">'
+                '</span>this is span1 tail<span class="katex" id="form2"></span>this is span2 tail<b>this is b text</b>'
+                'this is b tail'
+                '<script>'
+                'var fotm = document.getElementById("form1")'
+                'katex.render("E = mc^2", fotm);'
+                'katex.render("a^2 + b^2 = c^2", form2);'
+                '</script>'
+                '</p>')
             )
         ],
         'raw_html': (
@@ -75,12 +75,13 @@ TEST_CASES = [
             '<p>this is p text<span class="katex">$E = mc^2$</span>this is span1 tail<span class="katex">$a^2 + b^2 = c^2$</span>this is span2 tail<b>this is b text</b>this is b tail<script>var fotm = document.getElementById("form1")katex.render("E = mc^2", fotm);katex.render("a^2 + b^2 = c^2", form2);</script></p>'
         ),
         'expected': [
-            ('<p>this is p text<ccmath-inline>$E = mc^2$</ccmath-inline>this is span1 tail<ccmath-inline>$a^2 + b^2 = c^2$</ccmath-inline>this is span2 tail<b>this is b text</b>this is b tail<script>var fotm = document.getElementById("form1")katex.render("E = mc^2", fotm);katex.render("a^2 + b^2 = c^2", form2);</script></p>', 
-             '<p>this is p text<ccmath-inline>$E = mc^2$</ccmath-inline>this is span1 tail<ccmath-inline>$a^2 + b^2 = c^2$</ccmath-inline>this is span2 tail<b>this is b text</b>this is b tail<script>var fotm = document.getElementById("form1")katex.render("E = mc^2", fotm);katex.render("a^2 + b^2 = c^2", form2);</script></p>')
+            (
+                '<p>this is p text<ccmath-inline>$E = mc^2$</ccmath-inline>this is span1 tail<ccmath-inline>$a^2 + b^2 = c^2$</ccmath-inline>this is span2 tail<b>this is b text</b>this is b tail<script>var fotm = document.getElementById("form1")katex.render("E = mc^2", fotm);katex.render("a^2 + b^2 = c^2", form2);</script></p>', 
+                '<p>this is p text<ccmath-inline>$E = mc^2$</ccmath-inline>this is span1 tail<ccmath-inline>$a^2 + b^2 = c^2$</ccmath-inline>this is span2 tail<b>this is b text</b>this is b tail<script>var fotm = document.getElementById("form1")katex.render("E = mc^2", fotm);katex.render("a^2 + b^2 = c^2", form2);</script></p>'
+            )
         ]
     },
-
-    # 甪映陉钛?誡cccode民??
+    # 已经包含cccode标签
     # {
     #     'input': [
     #         ('<cccode class=mathjax>Some text with a formula $$x = 5$$ in it.</cccode>',
@@ -92,7 +93,7 @@ TEST_CASES = [
     #          '<cccode class=mathjax>Some text with a formula $$x = 5$$ in it.</cccode>')
     #     ]
     # },
-    # html_list钛?誡縂睟皔html??lass=MathJax_Display
+    # html_list包含多个html，class=MathJax_Display
     # {
     #     'input': [
     #         ('<p>This is a test.</p>', '<p>This is a test.</p>'),
@@ -106,22 +107,22 @@ TEST_CASES = [
     #          '<span class=Mathjax_display>$$a^2 + b^2 = c^2$$</span>')
     #     ]
     # },
-    # raw_html钛?誡mathjax甎込铋６娈疜?観class=mathjax_display
+    # raw_html包含mathjax渲染器定义，class=mathjax_display
     # {
     #     'input': [
-    #         ('<p>?畔逦p麴玥ext<span class=mathjax_display>$$a^2 + b^2 = c^2$$</span>?畔逦span麴玥ail<b>?畔逦b麴玥ext</b>?畔逦b麴玥ail</p>'),
-    #         ('<p>?畔逦p麴玥ext<span class=mathjax_display>$$a^2 + b^2 = c^2$$</span>?畔逦span麴玥ail<b>?畔逦b麴玥ext</b>?畔逦b麴玥ail</p>')
+    #         ('<p>这是p的text<span class=mathjax_display>$$a^2 + b^2 = c^2$$</span>这是span的tail<b>这是b的text</b>这是b的tail</p>'),
+    #         ('<p>这是p的text<span class=mathjax_display>$$a^2 + b^2 = c^2$$</span>这是span的tail<b>这是b的text</b>这是b的tail</p>')
     #     ],
     #     'raw_html': (
     #         '<head> '
     #         '<script src="https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.5/MathJax.js'
     #         '?config=TeX-MML-AM_CHTML"> </script> '
     #         '</head> '
-    #         '<p>?畔逦p麴玥ext<span class=mathjax_display>$$a^2 + b^2 = c^2$$</span>?畔逦span麴玥ail<b>?畔逦b麴玥ext</b>?畔逦b麴玥ail</p>'
+    #         '<p>这是p的text<span class=mathjax_display>$$a^2 + b^2 = c^2$$</span>这是span的tail<b>这是b的text</b>这是b的tail</p>'
     #     ),
     #     'expected': [
-    #         ('<p>?畔逦p麴玥ext<ccmath type="latex" by="mathjax">$$a^2 + b^2 = c^2$$</ccmath>?畔逦span麴玥ail<b>?畔逦b麴玥ext</b>?畔逦b麴玥ail</p>',
-    #          '<p>?畔逦p麴玥ext<span class=mathjax_display>$$a^2 + b^2 = c^2$$</span>?畔逦span麴玥ail<b>?畔逦b麴玥ext</b>?畔逦b麴玥ail</p>')
+    #         ('<p>这是p的text<ccmath type="latex" by="mathjax">$$a^2 + b^2 = c^2$$</ccmath>这是span的tail<b>这是b的text</b>这是b的tail</p>',
+    #          '<p>这是p的text<span class=mathjax_display>$$a^2 + b^2 = c^2$$</span>这是span的tail<b>这是b的text</b>这是b的tail</p>')
     #     ]
     # }
 ]
@@ -266,7 +267,7 @@ class TestMathRecognizer(unittest.TestCase):
             raw_html = raw_html_path.read_text()
             parts = self.math_recognizer.recognize(base_url, [(raw_html, raw_html)], raw_html)
             print(len(parts))
-            # ?畜arts钼蒌〔??ａ???????路胹眷袹骳????╦铗舍????
+            # 将parts列表中第一个元素拼接保存到文件，带随机数
             # import random
             # with open('parts'+str(random.randint(1, 100))+".html", 'w') as f:
             #     for part in parts:
@@ -293,7 +294,7 @@ class TestMathRecognizer(unittest.TestCase):
                 )
                 self.assertEqual(output_node, test_case['expected'])
 
-        # ?煳阫甗袤ccmath民??麴?????
+        # 测试没有ccmath标签的情况
         invalid_content = (
             'https://www.baidu.com',
             '<div>Some math content</div>',
@@ -331,7 +332,6 @@ class TestCCMATH(unittest.TestCase):
 if __name__ == '__main__':
     r = TestMathRecognizer()
     r.setUp()
-    r.test_math_recognizer()
     r.test_math_recognizer_html()
     # r.test_to_content_list_node()
     # html = r'<p class="lt-math-15120">\[\begin{array} {ll} {5 \cdot 3 = 15} &amp;{-5(3) = -15} \\ {5(-3) = -15} &amp;{(-5)(-3) = 15} \end{array}\]</p>'
