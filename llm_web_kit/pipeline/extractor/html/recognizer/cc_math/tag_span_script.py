@@ -1,5 +1,7 @@
 import re
+
 from lxml.html import HtmlElement
+
 from llm_web_kit.libs.html_utils import build_cc_element, replace_element
 from llm_web_kit.libs.logger import logger
 from llm_web_kit.pipeline.extractor.html.recognizer.cc_math.common import (
@@ -8,16 +10,9 @@ from llm_web_kit.pipeline.extractor.html.recognizer.cc_math.common import (
 
 
 def modify_tree(cm: CCMATH, math_render: str, o_html: str, node: HtmlElement, parent: HtmlElement):
-    # 如果节点是span标签，并且class属性包含katex katex-display等
-    # 示例：
-    # <span class="katex" id="f1"></span>
-    # <script>
-    # katex.render("a^2 + b^2 = c^2", f1)
-    # </script>
-
     try:
-        # TODO js渲染 统一输出行内格式
-        formula_content = get_render_content(node,parent)
+        formula_content = get_render_content(node, parent)
+        formula_content = f'${formula_content}$'
         o_html = f'<span class="katex">{formula_content}</span>'
         equation_type, math_type = cm.get_equation_type(o_html)
         if equation_type == EQUATION_INLINE:
@@ -34,15 +29,12 @@ def modify_tree(cm: CCMATH, math_render: str, o_html: str, node: HtmlElement, pa
 
 
 def get_render_content(node: HtmlElement, parent: HtmlElement) -> str:
-    """
-    根据node节点及其父节点，查找对应的script脚本中与该span节点id匹配的渲染内容并返回。
-    如果未找到则返回空字符串。
-    """
+    """根据node节点及其父节点，查找对应的script脚本中与该span节点id匹配的渲染内容并返回。 如果未找到则返回空字符串。"""
     id_value = node.get('id')
     if id_value:
         script_elements = parent.xpath('.//script')
         if not script_elements:
-            return ""
+            return ''
         for script in script_elements:
             text = script.text_content()
             if not text:
@@ -54,6 +46,6 @@ def get_render_content(node: HtmlElement, parent: HtmlElement) -> str:
             render_matches = render_pattern.findall(text)
             for formula_content, element_id in render_matches:
                 if element_id == replacement_id:
-                    return f'${formula_content}$'
-        return ""
-    return ""
+                    return formula_content
+        return ''
+    return ''
