@@ -264,7 +264,7 @@ class TestMathRecognizer(unittest.TestCase):
         for test_case in TEST_CASES_HTML:
             raw_html_path = base_dir.joinpath(test_case['input'][0])
             base_url = test_case['base_url']
-            raw_html = raw_html_path.read_text()
+            raw_html = raw_html_path.read_text(encoding='utf-8')
             parts = self.math_recognizer.recognize(base_url, [(raw_html, raw_html)], raw_html)
             print(len(parts))
             # 将parts列表中第一个元素拼接保存到文件，带随机数
@@ -275,12 +275,12 @@ class TestMathRecognizer(unittest.TestCase):
             parts = [part[0] for part in parts if CCTag.CC_MATH_INTERLINE in part[0]]
             self.assertEqual(len(parts), len(test_case['expected']))
             for expect_path, part in zip(test_case['expected'], parts):
-                expect = base_dir.joinpath(expect_path).read_text().strip()
+                expect = base_dir.joinpath(expect_path).read_text(encoding='utf-8').strip()
                 a_tree = html_to_element(part)
                 a_result = a_tree.xpath(f'.//{CCTag.CC_MATH_INTERLINE}')[0]
                 answer = a_result.text
-                print('part::::::::', part)
-                print('answer::::::::', answer)
+                print('part::::::::', part.encode('utf-8'))
+                print('answer::::::::', answer.encode('utf-8'))
                 # print('expect::::::::', expect)
                 self.assertEqual(expect, answer)
 
@@ -332,6 +332,7 @@ class TestCCMATH(unittest.TestCase):
 if __name__ == '__main__':
     r = TestMathRecognizer()
     r.setUp()
+    r.test_math_recognizer()
     r.test_math_recognizer_html()
     # r.test_to_content_list_node()
     # html = r'<p class="lt-math-15120">\[\begin{array} {ll} {5 \cdot 3 = 15} &amp;{-5(3) = -15} \\ {5(-3) = -15} &amp;{(-5)(-3) = 15} \end{array}\]</p>'
