@@ -14,12 +14,12 @@ def modify_tree(cm: CCMATH, math_render: str, o_html: str, node: HtmlElement, pa
     # 如果节点是span标签，并且class属性包含katex katex-display等
     # 示例：
     # <span class="katex" id="f1"></span>
-    #<script>
-    #katex.render("a^2 + b^2 = c^2", f1)
-    #</script>
+    # <script>
+    # katex.render("a^2 + b^2 = c^2", f1)
+    # </script>
 
     try:
-        #TODO js渲染 统一输出行内格式
+        # TODO js渲染 统一输出行内格式
         formula_content = get_render_content(node,parent)
         o_html = f'<span class="katex">{formula_content}</span>'
         equation_type, math_type = cm.get_equation_type(o_html)
@@ -30,8 +30,8 @@ def modify_tree(cm: CCMATH, math_render: str, o_html: str, node: HtmlElement, pa
         else:
             raise ValueError(f'Unknown equation type: {equation_type}')
         if formula_content and text_strip(formula_content):
-                new_span = build_cc_element(html_tag_name=new_tag, text=formula_content, tail=text_strip(node.tail), type=math_type, by=math_render, html=o_html)
-                replace_element(node, new_span)
+            new_span = build_cc_element(html_tag_name=new_tag, text=formula_content, tail=text_strip(node.tail), type=math_type, by=math_render, html=o_html)
+            replace_element(node, new_span)
     except Exception as e:
         logger.error(f'Error processing katex class: {e}')
 

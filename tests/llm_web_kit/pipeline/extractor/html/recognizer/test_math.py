@@ -43,29 +43,29 @@ TEST_CASES = [
             )
         ]
     },
-    #2
+    # 2
     {
         'input': [
             (
                 ('<p>this is p text<span class="katex" id="form1">'
-                '</span>this is span1 tail<span class="katex" id="form2"></span>this is span2 tail<b>this is b text</b>'
-                'this is b tail'
-                '<script>'
-                'var fotm = document.getElementById("form1")'
-                'katex.render("E = mc^2", fotm);'
-                'katex.render("a^2 + b^2 = c^2", form2);'
-                '</script>'
-                '</p>'),
+                 '</span>this is span1 tail<span class="katex" id="form2"></span>this is span2 tail<b>this is b text</b>'
+                 'this is b tail'
+                 '<script>'
+                 'var fotm = document.getElementById("form1")'
+                 'katex.render("E = mc^2", fotm);'
+                 'katex.render("a^2 + b^2 = c^2", form2);'
+                 '</script>'
+                 '</p>'),
                 (
-                '<p>this is p text<span class="katex" id="form1">'
-                '</span>this is span1 tail<span class="katex" id="form2"></span>this is span2 tail<b>this is b text</b>'
-                'this is b tail'
-                '<script>'
-                'var fotm = document.getElementById("form1")'
-                'katex.render("E = mc^2", fotm);'
-                'katex.render("a^2 + b^2 = c^2", form2);'
-                '</script>'
-                '</p>')
+                 '<p>this is p text<span class="katex" id="form1">'
+                 '</span>this is span1 tail<span class="katex" id="form2"></span>this is span2 tail<b>this is b text</b>'
+                 'this is b tail'
+                 '<script>'
+                 'var fotm = document.getElementById("form1")'
+                 'katex.render("E = mc^2", fotm);'
+                 'katex.render("a^2 + b^2 = c^2", form2);'
+                 '</script>'
+                 '</p>')
             )
         ],
         'raw_html': (
@@ -76,7 +76,7 @@ TEST_CASES = [
         ),
         'expected': [
             (
-                '<p>this is p text<ccmath-inline>$E = mc^2$</ccmath-inline>this is span1 tail<ccmath-inline>$a^2 + b^2 = c^2$</ccmath-inline>this is span2 tail<b>this is b text</b>this is b tail<script>var fotm = document.getElementById("form1")katex.render("E = mc^2", fotm);katex.render("a^2 + b^2 = c^2", form2);</script></p>', 
+                '<p>this is p text<ccmath-inline>$E = mc^2$</ccmath-inline>this is span1 tail<ccmath-inline>$a^2 + b^2 = c^2$</ccmath-inline>this is span2 tail<b>this is b text</b>this is b tail<script>var fotm = document.getElementById("form1")katex.render("E = mc^2", fotm);katex.render("a^2 + b^2 = c^2", form2);</script></p>',
                 '<p>this is p text<ccmath-inline>$E = mc^2$</ccmath-inline>this is span1 tail<ccmath-inline>$a^2 + b^2 = c^2$</ccmath-inline>this is span2 tail<b>this is b text</b>this is b tail<script>var fotm = document.getElementById("form1")katex.render("E = mc^2", fotm);katex.render("a^2 + b^2 = c^2", form2);</script></p>'
             )
         ]
