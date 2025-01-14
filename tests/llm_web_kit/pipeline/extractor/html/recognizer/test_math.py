@@ -103,6 +103,13 @@ TEST_CASES_HTML = [
         'base_url': 'https://math.libretexts.org/Under_Construction/Purgatory/Remixer_University/Username%3A_pseeburger/MTH_098_Elementary_Algebra/1%3A_Foundations/1.5%3A_Multiply_and_Divide_Integers',
         'expected': 'assets/ccmath/libretexts_1_p_latex_mathjax_1.html'
     },
+    # {
+    #     'input': [
+    #         'assets/ccmath/mathjax_tex_chtml.html',
+    #     ],
+    #     'base_url': 'https://math.libretexts.org/Under_Construction/Purgatory/Remixer_University/Username%3A_pseeburger/MTH_098_Elementary_Algebra/1%3A_Foundations/1.5%3A_Multiply_and_Divide_Integers',
+    #     'expected': 'assets/ccmath/mathjax_tex_chtml_1.html'
+    # },
     {
         'input': [
             'assets/ccmath/wikipedia_1_math_annotation.html',
@@ -152,6 +159,10 @@ TEST_EQUATION_TYPE = [
     # },
     {
         'input': '<p>Matrices: <code>[[a,b],[c,d]]</code> </p>',
+        'expected': (None, None)
+    },
+    {
+        'input': '<p>这是p的text</p>',
         'expected': (None, None)
     }
 ]
@@ -238,7 +249,6 @@ class TestMathRecognizer(unittest.TestCase):
             base_url = test_case['base_url']
             raw_html = raw_html_path.read_text()
             parts = self.math_recognizer.recognize(base_url, [(raw_html, raw_html)], raw_html)
-            # print(parts)
             # 将parts列表中第一个元素拼接保存到文件，带随机数
             # import random
             # with open('parts'+str(random.randint(1, 100))+".html", 'w') as f:
@@ -257,6 +267,7 @@ class TestMathRecognizer(unittest.TestCase):
                 # print('answer::::::::', answer)
                 # print('expect::::::::', expect)
                 self.assertEqual(expect, answer)
+            # self.write_to_html(answers,test_case['input'][0])
 
     def write_to_html(self,answers,file_name):
         file_name = file_name.split('.')[0]
@@ -322,6 +333,7 @@ if __name__ == '__main__':
     r.setUp()
     # r.test_math_recognizer()
     r.test_math_recognizer_html()
+    # r.test_math_recognizer()
     # r.test_to_content_list_node()
     # html = r'<p class="lt-math-15120">\[\begin{array} {ll} {5 \cdot 3 = 15} &amp;{-5(3) = -15} \\ {5(-3) = -15} &amp;{(-5)(-3) = 15} \end{array}\]</p>'
     # tree = html_to_element(html)
