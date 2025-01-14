@@ -92,57 +92,33 @@ TEST_CASES = [
 
 TEST_CASES_HTML = [
     # math-container, latex + mathjax
-    # {
-    #     'input': ['assets/ccmath/stackexchange_1_span-math-container_latex_mathjax.html'],
-    #     'base_url': 'https://worldbuilding.stackexchange.com/questions/162264/is-there-a-safe-but-weird-distance-from-black-hole-merger',
-    #     'expected': [
-    #         'assets/ccmath/stackexchange_1_interline_1.html',
-    #         'assets/ccmath/stackexchange_1_interline_2.html',
-    #     ],
-    # },
-    # {
-    #     'input': [
-    #         'assets/ccmath/libretexts_1_p_latex_mathjax.html',
-    #     ],
-    #     'base_url': 'https://math.libretexts.org/Under_Construction/Purgatory/Remixer_University/Username%3A_pseeburger/MTH_098_Elementary_Algebra/1%3A_Foundations/1.5%3A_Multiply_and_Divide_Integers',
-    #     'expected': [
-    #         # 'assets/ccmath/libretexts_1_interline_1.html',
-    #     ],
-    # },
-    # {
-    #     'input': [
-    #         'assets/ccmath/wikipedia_1_math_annotation.html',
-    #     ],
-    #     'base_url': 'https://en.m.wikipedia.org/wiki/Equicontinuity',
-    #     'expected': [
-    #         # 'assets/ccmath/wikipedia_1_interline_1.html',
-    #     ],
-    # },
-    # {
-    #     'input': [
-    #         'assets/ccmath/mathjax-mml-chtml.html',
-    #     ],
-    #     'base_url': 'https://mathjax.github.io/MathJax-demos-web/tex-chtml.html',
-    #     'expected': [
-    #         'assets/ccmath/mathjax-mml-chtml_interline_1.html',
-    #         'assets/ccmath/mathjax-mml-chtml_interline_2.html',
-    #         'assets/ccmath/mathjax-mml-chtml_interline_3.html',
-    #         'assets/ccmath/mathjax-mml-chtml_interline_4.html',
-    #         'assets/ccmath/mathjax-mml-chtml_interline_5.html',
-    #         'assets/ccmath/mathjax-mml-chtml_interline_6.html',
-    #         'assets/ccmath/mathjax-mml-chtml_interline_7.html',
-    #         'assets/ccmath/mathjax-mml-chtml_interline_8.html',
-    #     ],
-    # },
+    {
+        'input': ['assets/ccmath/stackexchange_1_span-math-container_latex_mathjax.html'],
+        'base_url': 'https://worldbuilding.stackexchange.com/questions/162264/is-there-a-safe-but-weird-distance-from-black-hole-merger',
+        'expected': 'assets/ccmath/stackexchange_1_span-math-container_latex_mathjax_1.html'
+    },
+    {
+        'input': [
+            'assets/ccmath/libretexts_1_p_latex_mathjax.html',
+        ],
+        'base_url': 'https://math.libretexts.org/Under_Construction/Purgatory/Remixer_University/Username%3A_pseeburger/MTH_098_Elementary_Algebra/1%3A_Foundations/1.5%3A_Multiply_and_Divide_Integers',
+        'expected': 'assets/ccmath/libretexts_1_p_latex_mathjax_1.html'
+    },
+    {
+        'input': [
+            'assets/ccmath/wikipedia_1_math_annotation.html',
+        ],
+        'base_url': 'https://en.m.wikipedia.org/wiki/Equicontinuity',
+        'expected': 'assets/ccmath/wikipedia_1_math_annotation_1.html'
+    },
+    {
+        'input': [
+            'assets/ccmath/mathjax-mml-chtml.html',
+        ],
+        'base_url': 'https://mathjax.github.io/MathJax-demos-web/tex-chtml.html',
+        'expected': 'assets/ccmath/mathjax-mml-chtml_1.html'
+    },
     # katex latex+katex
-    # {
-    #     'input': ['assets/ccmath/katex_interline.html'],
-    #     'base_url': '',
-    #     'expected': [
-    #         'assets/ccmath/katex_interline_1.html',
-    #         'assets/ccmath/katex_interline_2.html',
-    #     ],
-    # },
     {
         'input': ['assets/ccmath/katex_mathjax.html'],
         'base_url': '',
@@ -267,6 +243,12 @@ class TestMathRecognizer(unittest.TestCase):
                 # print('expect::::::::', expect)
                 self.assertEqual(expect, answer)
 
+    def write_to_html(self,answers,file_name):
+        file_name = file_name.split('.')[0]
+        with open(base_dir.joinpath(f'{file_name}_1.html'), 'w', encoding='utf-8') as file:
+            for formula in answers:
+                file.write(formula + '\n')
+
     def test_to_content_list_node(self):
         for test_case in TEST_CONTENT_LIST_NODE:
             with self.subTest(input=test_case['input']):
@@ -317,7 +299,7 @@ class TestCCMATH(unittest.TestCase):
 if __name__ == '__main__':
     r = TestMathRecognizer()
     r.setUp()
-    # r.test_math_recognizer()
+    r.test_math_recognizer()
     r.test_math_recognizer_html()
     # r.test_to_content_list_node()
     # html = r'<p class="lt-math-15120">\[\begin{array} {ll} {5 \cdot 3 = 15} &amp;{-5(3) = -15} \\ {5(-3) = -15} &amp;{(-5)(-3) = 15} \end{array}\]</p>'
