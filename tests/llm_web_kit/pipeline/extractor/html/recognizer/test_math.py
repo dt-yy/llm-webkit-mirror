@@ -132,6 +132,15 @@ TEST_CASES_HTML = [
             'assets/ccmath/mathjax-mml-chtml_interline_7.html',
             'assets/ccmath/mathjax-mml-chtml_interline_8.html',
         ],
+    },
+    {
+        'input': [
+            'assets/ccmath/mathtex_script_type.html',
+        ],
+        'base_url': 'https://github.com/KaTeX/KaTeX/tree/main/contrib/mathtex-script-type',
+        'expected': [
+            'assets/ccmath/mathtex_script_type_interline_1.html',
+        ],
     }
 ]
 

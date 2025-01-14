@@ -6,7 +6,7 @@ from overrides import override
 from llm_web_kit.libs.doc_element_type import DocElementType
 from llm_web_kit.libs.html_utils import element_to_html, iter_node
 from llm_web_kit.pipeline.extractor.html.recognizer.cc_math import (
-    tag_math, tag_span_mathcontainer, tag_span_mathjax)
+    tag_math, tag_script_tex, tag_span_mathcontainer, tag_span_mathjax)
 from llm_web_kit.pipeline.extractor.html.recognizer.cc_math.common import \
     CCMATH
 from llm_web_kit.pipeline.extractor.html.recognizer.recognizer import (
@@ -135,7 +135,7 @@ class MathRecognizer(BaseHTMLElementRecognizer):
 
             # 6. script[type="math/tex"]
             if node.tag == 'script' and node.get('type') and 'math/tex' in node.get('type'):
-                pass
+                tag_script_tex.modify_tree(cm, math_render, original_html, node, parent)
 
             # 7. script[type="math/asciimath"]
             if node.tag == 'script' and node.get('type') and 'math/asciimath' in node.get('type'):
@@ -175,10 +175,13 @@ if __name__ == '__main__':
         (
             ('<p>这是p的text<span class="mathjax_display">'
                 '$$a^2 + b^2 = c^2$$</span>这是span的tail<b>这是b的text</b>'
-                '这是b的tail</p>'),
+                '这是b的tail</p>'
+                r'<script type="math/tex">x+\sqrt{1-x^2}</script>'
+                '<script type="math/tex; mode=display">E=mc^2</script>'),
             ('<p>这是p的text<span class="mathjax_display">'
                 '$$a^2 + b^2 = c^2$$</span>这是span的tail<b>这是b的text</b>'
-                '这是b的tail</p>')
+                '这是b的tail</p>'
+                r'<script type="math/tex">x+\sqrt{1-x^2}</script>')
         )
     ]
     raw_html = (
