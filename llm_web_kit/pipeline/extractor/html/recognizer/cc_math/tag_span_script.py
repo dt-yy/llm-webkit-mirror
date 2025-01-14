@@ -1,8 +1,10 @@
 import re
+from copy import deepcopy
 
 from lxml.html import HtmlElement
 
-from llm_web_kit.libs.html_utils import build_cc_element, replace_element
+from llm_web_kit.libs.html_utils import (build_cc_element, element_to_html,
+                                         replace_element)
 from llm_web_kit.libs.logger import logger
 from llm_web_kit.pipeline.extractor.html.recognizer.cc_math.common import (
     CCMATH, CCMATH_INLINE, CCMATH_INTERLINE, EQUATION_INLINE,
@@ -11,33 +13,52 @@ from llm_web_kit.pipeline.extractor.html.recognizer.cc_math.common import (
 
 def modify_tree(cm: CCMATH, math_render: str, o_html: str, node: HtmlElement, parent: HtmlElement):
     try:
-        math_annotation = node.xpath('.//annotation[@encoding="application/x-tex"]')
-        if math_annotation:
-            formula_content = math_annotation[0].text
-        else:
-            katex_html = node.xpath('.//span[@class="katex-html"]')
-            if katex_html:
-                katex_text = katex_html[0].text_content()
-                formula_match = re.search(r'\$\$.+?\$\$', katex_text)
-                if formula_match:
-                    formula_content = formula_match.group(0)
-                else:
-                    formula_content = ''
-            else:
-                formula_content = ''
-        if not formula_content:
-            formula_content = get_render_content(node,parent)
-        formula_content = f'$${formula_content}$$'
-        o_html = f'<span class="katex">{formula_content}</span>'
+        annotation_tags = node.xpath('.//annotation[@encoding="application/x-tex"]')
         equation_type, math_type = cm.get_equation_type(o_html)
         if equation_type == EQUATION_INLINE:
             new_tag = CCMATH_INLINE
+            display = False
         elif equation_type == EQUATION_INTERLINE:
             new_tag = CCMATH_INTERLINE
+            display = True
         else:
             raise ValueError(f'Unknown equation type: {equation_type}')
-        if formula_content and text_strip(formula_content):
-            new_span = build_cc_element(html_tag_name=new_tag, text=formula_content, tail=text_strip(node.tail), type=math_type, by=math_render, html=o_html)
+        if len(annotation_tags) > 0:
+            annotation_tag = annotation_tags[0]
+            text = annotation_tag.text
+            wrapped_text = cm.wrap_math(r'{}'.format(text), display=display)
+            style_value = parent.get('style')
+            if style_value:
+                normalized_style_value = style_value.lower().strip().replace(' ', '').replace(';', '')
+                if 'display: none' in normalized_style_value:
+                    parent.style = ''
+            new_span = build_cc_element(html_tag_name=new_tag, text=wrapped_text, tail=text_strip(node.tail), type=math_type, by=math_render, html=o_html)
+            replace_element(node, new_span)
+        elif text_strip(get_render_content(node,parent)):
+            # TODO 需要寻找测试案例 测试
+            wrapped_text = get_render_content(node,parent)
+            if text_strip(wrapped_text):
+                wrapped_text = cm.wrap_math(r'{}'.format(wrapped_text), display=display)
+                new_span = build_cc_element(html_tag_name=new_tag, text=wrapped_text, tail=text_strip(node.tail), type=math_type, by=math_render, html=o_html)
+                replace_element(node, new_span)
+        else:
+            # Try translating to LaTeX
+            tmp_node = deepcopy(node)
+            tmp_node.tail = None
+            mathml = element_to_html(tmp_node)
+            # If this includes xmlns:mml, then we need to replace all
+            # instances of mml: with nothing
+            if 'xmlns:mml' in mathml:
+                mathml = mathml.replace('mml:', '')
+                # replace xmlns:mml="..." with nothing
+                mathml = re.sub(r'xmlns:mml=".*?"', '', mathml)
+            # if 'xmlns=' in mathml:
+            #     mathml = re.sub(r"xmlns='.*?'", '', mathml)
+            # TODO: 这样转换方法有很多错误，见测试用例mathjax-mml-chtml.html，需要优化
+            latex = cm.mml_to_latex(mathml)
+            wrapped_text = cm.wrap_math(r'{}'.format(latex), display=display)
+            # Set the html of the new span tag to the text
+            new_span = build_cc_element(html_tag_name=new_tag, text=wrapped_text, tail=text_strip(node.tail), type=math_type, by=math_render, html=o_html)
             replace_element(node, new_span)
     except Exception as e:
         logger.error(f'Error processing katex class: {e}')

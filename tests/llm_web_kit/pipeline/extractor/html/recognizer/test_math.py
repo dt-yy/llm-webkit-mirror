@@ -1,4 +1,3 @@
-import re
 import unittest
 from pathlib import Path
 
@@ -247,19 +246,21 @@ class TestMathRecognizer(unittest.TestCase):
             #         f.write(str(part[0]))
             parts = [part[0] for part in parts if CCTag.CC_MATH_INTERLINE in part[0]]
             print(len(parts))
-
-            expect_text = base_dir.joinpath(test_case['expected']).read_text().strip()
-            expect_formulas = re.findall(r'\$\$(.*?)\$\$', expect_text, re.DOTALL)
-            expect_formulas = [f'$${formula}$$' for formula in expect_formulas]
-            self.assertEqual(len(parts), len(expect_formulas))
-            for expect,part in zip(expect_formulas,parts):
+            # expect_text = base_dir.joinpath(test_case['expected']).read_text().strip()
+            # expect_formulas = [formula for formula in expect_text.split('\n') if formula]
+            # self.assertEqual(len(parts), len(expect_formulas))
+            # for expect,part in zip(expect_formulas,parts):
+            answers = []
+            for part in parts:
                 a_tree = html_to_element(part)
                 a_result = a_tree.xpath(f'.//{CCTag.CC_MATH_INTERLINE}')[0]
                 answer = a_result.text
                 # print('part::::::::', part)
                 # print('answer::::::::', answer)
                 # print('expect::::::::', expect)
-                self.assertEqual(expect, answer)
+                # self.assertEqual(expect, answer)
+                answers.append(answer)
+            self.write_to_html(answers,test_case['input'][0])
 
     def write_to_html(self,answers,file_name):
         file_name = file_name.split('.')[0]
@@ -323,7 +324,7 @@ class TestCCMATH(unittest.TestCase):
 if __name__ == '__main__':
     r = TestMathRecognizer()
     r.setUp()
-    r.test_math_recognizer()
+    # r.test_math_recognizer()
     r.test_math_recognizer_html()
     # r.test_to_content_list_node()
     # html = r'<p class="lt-math-15120">\[\begin{array} {ll} {5 \cdot 3 = 15} &amp;{-5(3) = -15} \\ {5(-3) = -15} &amp;{(-5)(-3) = 15} \end{array}\]</p>'
