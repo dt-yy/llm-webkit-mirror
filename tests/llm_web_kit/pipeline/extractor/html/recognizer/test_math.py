@@ -246,21 +246,17 @@ class TestMathRecognizer(unittest.TestCase):
             #         f.write(str(part[0]))
             parts = [part[0] for part in parts if CCTag.CC_MATH_INTERLINE in part[0]]
             print(len(parts))
-            # expect_text = base_dir.joinpath(test_case['expected']).read_text().strip()
-            # expect_formulas = [formula for formula in expect_text.split('\n') if formula]
-            # self.assertEqual(len(parts), len(expect_formulas))
-            # for expect,part in zip(expect_formulas,parts):
-            answers = []
-            for part in parts:
+            expect_text = base_dir.joinpath(test_case['expected']).read_text().strip()
+            expect_formulas = [formula for formula in expect_text.split('\n') if formula]
+            self.assertEqual(len(parts), len(expect_formulas))
+            for expect,part in zip(expect_formulas,parts):
                 a_tree = html_to_element(part)
                 a_result = a_tree.xpath(f'.//{CCTag.CC_MATH_INTERLINE}')[0]
                 answer = a_result.text
                 # print('part::::::::', part)
                 # print('answer::::::::', answer)
                 # print('expect::::::::', expect)
-                # self.assertEqual(expect, answer)
-                answers.append(answer)
-            self.write_to_html(answers,test_case['input'][0])
+                self.assertEqual(expect, answer)
 
     def write_to_html(self,answers,file_name):
         file_name = file_name.split('.')[0]
