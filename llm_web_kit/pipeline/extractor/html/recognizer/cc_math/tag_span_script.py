@@ -11,8 +11,23 @@ from llm_web_kit.pipeline.extractor.html.recognizer.cc_math.common import (
 
 def modify_tree(cm: CCMATH, math_render: str, o_html: str, node: HtmlElement, parent: HtmlElement):
     try:
-        formula_content = get_render_content(node, parent)
-        formula_content = f'${formula_content}$'
+        math_annotation = node.xpath('.//annotation[@encoding="application/x-tex"]')
+        if math_annotation:
+            formula_content = math_annotation[0].text
+        else:
+            katex_html = node.xpath('.//span[@class="katex-html"]')
+            if katex_html:
+                katex_text = katex_html[0].text_content()
+                formula_match = re.search(r'\$\$.+?\$\$', katex_text)
+                if formula_match:
+                    formula_content = formula_match.group(0)
+                else:
+                    formula_content = ''
+            else:
+                formula_content = ''
+        if not formula_content:
+            formula_content = get_render_content(node,parent)
+        formula_content = f'$${formula_content}$$'
         o_html = f'<span class="katex">{formula_content}</span>'
         equation_type, math_type = cm.get_equation_type(o_html)
         if equation_type == EQUATION_INLINE:
@@ -39,7 +54,8 @@ def get_render_content(node: HtmlElement, parent: HtmlElement) -> str:
             text = script.text_content()
             if not text:
                 continue
-            get_element_pattern = re.compile(r'var\s+(\w+)\s*=\s*document\.getElementById\s*\(\s*"{}"\s*\)\s*'.format(id_value))
+            text = text.replace("\'", '')
+            get_element_pattern = re.compile(r'var\s+(\w+)\s*=\s*document\.getElementById\s*\(\s*{}\s*\)\s*'.format(id_value))
             render_pattern = re.compile(r'katex.render\s*\(\s*"([^"]*)"\s*,\s*(\w+)\s*\)\s*')
             get_element_matches = get_element_pattern.findall(text)
             replacement_id = get_element_matches[0] if get_element_matches else id_value
