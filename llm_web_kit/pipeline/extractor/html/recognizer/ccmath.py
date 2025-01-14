@@ -6,7 +6,7 @@ from overrides import override
 from llm_web_kit.libs.doc_element_type import DocElementType
 from llm_web_kit.libs.html_utils import element_to_html, iter_node
 from llm_web_kit.pipeline.extractor.html.recognizer.cc_math import (
-    tag_math, tag_script_tex, tag_span_mathcontainer, tag_span_mathjax)
+    tag_common_modify, tag_math)
 from llm_web_kit.pipeline.extractor.html.recognizer.cc_math.common import \
     CCMATH
 from llm_web_kit.pipeline.extractor.html.recognizer.recognizer import (
@@ -127,15 +127,15 @@ class MathRecognizer(BaseHTMLElementRecognizer):
 
             # 4. class 为 math-container，默认为latex
             if node.tag == 'span' and node.get('class') and 'math-container' in node.get('class'):
-                tag_span_mathcontainer.modify_tree(cm, math_render, original_html, node, parent)
+                tag_common_modify.modify_tree(cm, math_render, original_html, node, parent)
 
             # 5. class 为 wp-katex-eq
             if node.tag == 'span' and node.get('class') and 'wp-katex-eq' in node.get('class'):
                 pass
 
-            # 6. script[type="math/tex"]
+            # 6. script[type="math/tex"], TODO: 需要进行wrap_math
             if node.tag == 'script' and node.get('type') and 'math/tex' in node.get('type'):
-                tag_script_tex.modify_tree(cm, math_render, original_html, node, parent)
+                tag_common_modify.modify_tree(cm, math_render, original_html, node, parent)
 
             # 7. script[type="math/asciimath"]
             if node.tag == 'script' and node.get('type') and 'math/asciimath' in node.get('type'):
@@ -164,7 +164,11 @@ class MathRecognizer(BaseHTMLElementRecognizer):
             # 13. class 为 mathjax
             if (node.tag == 'span' and node.get('class') and
                any('mathjax' in cls.lower() for cls in node.get('class').split())):
-                tag_span_mathjax.modify_tree(cm, math_render, original_html, node, parent)
+                tag_common_modify.modify_tree(cm, math_render, original_html, node, parent)
+
+            # 14. 只处理只有一层的p标签
+            if node.tag == 'p' and len(node.getchildren()) == 0:
+                tag_common_modify.modify_tree(cm, math_render, original_html, node, parent)
 
         return self.html_split_by_tags(element_to_html(tree), [CCTag.CC_MATH_INTERLINE])
 

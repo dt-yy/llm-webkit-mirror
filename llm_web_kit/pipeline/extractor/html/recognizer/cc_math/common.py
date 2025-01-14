@@ -68,7 +68,9 @@ latex_config = {
         ['\\[', '\\]'],
         ['$$', '$$'],
         ['\\begin{equation}', '\\end{equation}'],
-        ['\\begin{align}', '\\end{align}']
+        ['\\begin{align}', '\\end{align}'],
+        ['\\begin{alignat}', '\\end{alignat}'],
+        ['\\begin{array}', '\\end{array}'],
     ],
 }
 
@@ -147,6 +149,13 @@ class CCMATH():
             >>> get_equation_type("<span>这是行间公式 $$y=mx+b$$ 测试</span>")
             ('equation-interline', 'latex')
         """
+        def check_delimiters(delims_list, s):
+            for start, end in delims_list:
+                pattern = f'{re.escape(start)}.*?{re.escape(end)}'
+                if re.search(pattern, s, re.DOTALL):
+                    return True
+            return False
+
         tree = html_to_element(html)
         if tree is None:
             raise ValueError(f'Failed to load html: {html}')
@@ -162,12 +171,6 @@ class CCMATH():
 
             # 再检查latex
             if text := text_strip(node.text):
-                def check_delimiters(delims_list, s):
-                    for start, end in delims_list:
-                        pattern = f'{re.escape(start)}.*?{re.escape(end)}'
-                        if re.search(pattern, s, re.DOTALL):
-                            return True
-                    return False
                 # 优先检查行间公式
                 if check_delimiters(latex_config['displayMath'], text):
                     return EQUATION_INTERLINE, MathType.LATEX
@@ -229,4 +232,5 @@ if __name__ == '__main__':
     print(cm.get_equation_type('<span>$$a^2 + b^2 = c^2$$</span>'))
     print(cm.get_equation_type('<math xmlns="http://www.w3.org/1998/Math/MathML" display="block"><mi>a</mi><mo>&#x2260;</mo><mn>0</mn></math>'))
     print(cm.get_equation_type('<math xmlns="http://www.w3.org/1998/Math/MathML"><mi>a</mi><mo>&#x2260;</mo><mn>0</mn></math>'))
+    print(cm.get_equation_type('<p>这是p的text</p>'))
     print(cm.wrap_math(r'{\displaystyle \operatorname {Var} (X)=\operatorname {E} \left[(X-\mu)^{2}\right].}'))
