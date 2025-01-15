@@ -1,24 +1,27 @@
 import unittest
 
-from llm_web_kit.exception.exception import (ErrorMsg, LlmWebKitBaseException,
-                                             PipelineInputExp)
+from llm_web_kit.exception.exception import ErrorMsg, LlmWebKitBaseActException
 
 
 class TestException(unittest.TestCase):
     """test Exception."""
+
+    def process_positive_number(self, value):
+        """
+        test case for except
+        Args:
+            n:
+        Returns:
+        """
+        if value < 0:
+            raise LlmWebKitBaseActException('Value cannot be negative')
+        return value * 2
+
     def test_llmwebkitbaseexp(self):
         """test llm webkitexp."""
-        try:
-            raise LlmWebKitBaseException(1000, 'check pipeline config file of this dataset')
-        except LlmWebKitBaseException as e:
-            print(e)
-
-    def test_pipelineinputexp(self):
-        """test pipeline input exp."""
-        try:
-            raise PipelineInputExp(custom_message='pipelint init exp')
-        except LlmWebKitBaseException as e:
-            print(e)
+        with self.assertRaises(LlmWebKitBaseActException) as cm:
+            self.process_positive_number(-1)
+        self.assertEqual(str(cm.exception.err_code), str(1000))
 
     def test_ErrorMsg(self):
         """test error msg."""
