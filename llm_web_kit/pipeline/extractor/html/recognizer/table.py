@@ -3,10 +3,10 @@ from typing import List, Tuple
 from lxml.html import HtmlElement
 from overrides import override
 
+from llm_web_kit.exception.exception import HtmlTableRecognizerExp
 from llm_web_kit.libs.doc_element_type import DocElementType
 from llm_web_kit.pipeline.extractor.html.recognizer.recognizer import (
     BaseHTMLElementRecognizer, CCTag)
-from llm_web_kit.exception.exception import HtmlTableRecognizerExp
 
 
 class TableRecognizer(BaseHTMLElementRecognizer):
