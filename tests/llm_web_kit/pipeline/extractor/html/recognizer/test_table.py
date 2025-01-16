@@ -51,7 +51,6 @@ class TestTableRecognizer(unittest.TestCase):
     def test_only_involve_table(self):
         """只包含表格的Html解析."""
         for test_case in TEST_CASES:
-
             raw_html_path = base_dir.joinpath(test_case['input'][2])
             base_url = test_case['input'][1]
             raw_html = raw_html_path.read_text()
@@ -86,8 +85,8 @@ class TestTableRecognizer(unittest.TestCase):
             assert result['type'] == json.loads(expect_json)['type']
             assert result['content']['is_complex'] == json.loads(expect_json)['content']['is_complex']
             assert result['raw_content'] == json.loads(expect_json)['raw_content']
-            assert result['content']['html'].startswith("<table>") == True
-            assert result['content']['html'].strip(r"\n\n").endswith("</table>")== True
+            self.assertTrue(result['content']['html'].startswith('<table>'))
+            self.assertFalse(result['content']['html'].strip(r'\n\n').endswith('</table>'))
 
     def test_table_to_content_list_node_complex(self):
         """测试table的 complex table to content list node方法."""
@@ -103,9 +102,3 @@ class TestTableRecognizer(unittest.TestCase):
             assert result['content']['is_complex'] == json.loads(expect_json)['content']['is_complex']
             assert result['raw_content'] == json.loads(expect_json)['raw_content']
             assert result['content']['html'].strip() == json.loads(expect_json)['content']['html']
-
-
-if __name__ == '__main__':
-    r = TestTableRecognizer()
-    r.setUp()
-    r.test_table_to_content_list_node_complex()

@@ -143,29 +143,10 @@ class TableRecognizer(BaseHTMLElementRecognizer):
             raise ValueError(f'{html}中没有cctable标签')
 
     def __get_content_list_table_type(self, table_type):
-        """
-        complex|simple 转为True|False
-        """
+        """complex|simple 转为True|False."""
         is_complex = False
-        if table_type == "simple":
+        if table_type == 'simple':
             is_complex = False
-        elif table_type == "complex":
+        elif table_type == 'complex':
             is_complex = True
         return is_complex
-
-if __name__ == '__main__':
-    recognizer = TableRecognizer()
-    base_url = 'https://www.baidu.com'
-    main_html_lst = [
-        ('<cccode>hello</cccode>',
-         '<code>hello</code>'),
-        (
-            """<div><p>段落2</p><table><tr><td rowspan='2'>1</td><td>2</td></tr><tr><td>3</td></tr></table><p>段落2</p><table><tr><td rowspan='2'>1</td><td>2</td></tr><tr><td>3</td></tr></table></div>""",
-            """<div><p>段落2</p><table><tr><td rowspan='2'>1</td><td>2</td></tr><tr><td>3</td></tr></table><p>段落2</p><table><tr><td rowspan='2'>1</td><td>2</td></tr><tr><td>3</td></tr></table></div>""",
-        )]
-    raw_html = (
-        """<div><p>段落2</p><table><tr><td rowspan='2'>1</td><td>2</td></tr>"""
-        """<tr><td>3</td></tr></table><p>段落2</p><table><tr>"""
-        """<td rowspan='2'>1</td><td>2</td></tr><tr><td>3</td></tr></table></div>"""
-    )
-    print(recognizer.recognize(base_url, main_html_lst, raw_html=''))
