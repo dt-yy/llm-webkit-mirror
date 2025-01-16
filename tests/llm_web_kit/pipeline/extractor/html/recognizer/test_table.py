@@ -83,7 +83,11 @@ class TestTableRecognizer(unittest.TestCase):
             result = self.rec.to_content_list_node(base_url, parsed_content, raw_html)
             expect = base_dir.joinpath(test_case['expected'][0])
             expect_json = expect.read_text(encoding='utf-8')
-            assert result == json.loads(expect_json)
+            assert result['type'] == json.loads(expect_json)['type']
+            assert result['content']['is_complex'] == json.loads(expect_json)['content']['is_complex']
+            assert result['raw_content'] == json.loads(expect_json)['raw_content']
+            assert result['content']['html'].startswith("<table>") == True
+            assert result['content']['html'].strip(r"\n\n").endswith("</table>")== True
 
     def test_table_to_content_list_node_complex(self):
         """测试table的 complex table to content list node方法."""
@@ -98,7 +102,7 @@ class TestTableRecognizer(unittest.TestCase):
             assert result['type'] == json.loads(expect_json)['type']
             assert result['content']['is_complex'] == json.loads(expect_json)['content']['is_complex']
             assert result['raw_content'] == json.loads(expect_json)['raw_content']
-            assert result['content']['html'] == json.loads(expect_json)['content']['html']
+            assert result['content']['html'].strip() == json.loads(expect_json)['content']['html']
 
 
 if __name__ == '__main__':

@@ -42,8 +42,6 @@ class TableRecognizer(BaseHTMLElementRecognizer):
         if not parsed_content:
             raise ValueError(f'table parsed_content{parsed_content}为空')
         table_type, table_body = self.__get_attribute(parsed_content)
-        if not table_type or not table_body:
-            raise ValueError(f'get table attribute为空,table_body:{table_body},table_type:{table_type}')
         d = {
             'type': DocElementType.TABLE,
             # "bbox": [],
@@ -138,11 +136,22 @@ class TableRecognizer(BaseHTMLElementRecognizer):
         ele = self._build_html_tree(html)
         if ele is not None and ele.tag == CCTag.CC_TABLE:
             table_type = ele.attrib.get('table_type')
-            tale_body = ele.text
-            return table_type, tale_body
+            table_flag = self.__get_content_list_table_type(table_type)
+            tale_body = ele.attrib.get('html')
+            return table_flag, tale_body
         else:
             raise ValueError(f'{html}中没有cctable标签')
 
+    def __get_content_list_table_type(self, table_type):
+        """
+        complex|simple 转为True|False
+        """
+        is_complex = False
+        if table_type == "simple":
+            is_complex = False
+        elif table_type == "complex":
+            is_complex = True
+        return is_complex
 
 if __name__ == '__main__':
     recognizer = TableRecognizer()
