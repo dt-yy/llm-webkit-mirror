@@ -86,7 +86,7 @@ class TestTableRecognizer(unittest.TestCase):
             assert result['content']['is_complex'] == json.loads(expect_json)['content']['is_complex']
             assert result['raw_content'] == json.loads(expect_json)['raw_content']
             self.assertTrue(result['content']['html'].startswith('<table>'))
-            self.assertFalse(result['content']['html'].strip(r'\n\n').endswith('</table>'))
+            self.assertTrue(result['content']['html'].strip(r'\n\n').endswith('</table>'))
 
     def test_table_to_content_list_node_complex(self):
         """测试table的 complex table to content list node方法."""
