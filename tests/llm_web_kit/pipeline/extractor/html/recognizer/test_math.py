@@ -132,11 +132,11 @@ TEST_CASES_HTML = [
         'expected': 'assets/ccmath/geoenergymath_img_1.html'
     },
     # # katex latex+katex
-    # {
-    #     'input': ['assets/ccmath/katex_mathjax.html'],
-    #     'base_url': 'https://www.intmath.com/cg5/katex-mathjax-comparison.php',
-    #     'expected': 'assets/ccmath/katex_mathjax_1.html'
-    # },
+    {
+        'input': ['assets/ccmath/katex_mathjax.html'],
+        'base_url': 'https://www.intmath.com/cg5/katex-mathjax-comparison.php',
+        'expected': 'assets/ccmath/katex_mathjax_1.html'
+    },
 ]
 
 TEST_EQUATION_TYPE = [
@@ -281,14 +281,11 @@ class TestMathRecognizer(unittest.TestCase):
             expect_text = base_dir.joinpath(test_case['expected']).read_text().strip()
             expect_formulas = [formula for formula in expect_text.split('\n') if formula]
             self.assertEqual(len(parts), len(expect_formulas))
-            answers = []
             for expect, part in zip(expect_formulas, parts):
                 a_tree = html_to_element(part)
                 a_result = a_tree.xpath(f'.//{CCTag.CC_MATH_INTERLINE}')[0]
                 answer = a_result.text.replace('\n', '')
-                answers.append(answer)
                 # print('part::::::::', part)
-                print(answer)
                 # print('expect::::::::', expect)
                 self.assertEqual(expect, answer)
             # self.write_to_html(answers, test_case['input'][0])
