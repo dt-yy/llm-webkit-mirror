@@ -2,7 +2,7 @@ import json
 import unittest
 from pathlib import Path
 
-from llm_web_kit.libs.html_utils import html_to_element, element_to_html
+from llm_web_kit.libs.html_utils import html_to_element
 from llm_web_kit.pipeline.extractor.html.recognizer.recognizer import CCTag
 from llm_web_kit.pipeline.extractor.html.recognizer.table import \
     TableRecognizer
@@ -49,7 +49,7 @@ class TestTableRecognizer(unittest.TestCase):
         for test_case in TEST_CASES:
             raw_html_path = base_dir.joinpath(test_case['input'][1])
             base_url = test_case['input'][1]
-            raw_html = raw_html_path.read_text(encoding="utf-8")
+            raw_html = raw_html_path.read_text(encoding='utf-8')
             parts = self.rec.recognize(base_url, [(raw_html, raw_html)], raw_html)
             self.assertEqual(len(parts), 1)
 
@@ -62,16 +62,13 @@ class TestTableRecognizer(unittest.TestCase):
             parts = self.rec.recognize(base_url, [(raw_html, raw_html)], raw_html)
             self.assertEqual(len(parts), 2)
             table_body = html_to_element(parts[1][0]).text_content()
-            assert table_body == r"<table><tr><td>Mrs S Hindle</td></tr><tr><td>Show</td><td>CC</td><td>RCC</td></tr><tr><td>Driffield 5th October 2006</td><td>CH. Ricksbury Royal Hero</td><td>CH. Keyingham Branwell</td></tr><tr><td>Manchester 16th January 2008</td><td>CH. Lochbuie Geordie</td><td>Merryoth Maeve</td></tr><tr><td>Darlington 20th September 2009</td><td>CH. Maibee Make Believe</td><td>CH. Loranka Just Like Heaven JW</td></tr><tr><td>Blackpool 22nd June 2012</td><td>CH. Loranka Sherrie Baby</td><td>Dear Magic Touch De La Fi Au Songeur</td></tr><tr><td>Welsh Kennel Club 2014</td><td>Brymarden Carolina Sunrise</td><td>Ch. Wandris Evan Elp Us</td></tr><tr><td>Welsh Kennel Club 2014</td><td>Ch. Charnell Clematis of Salegreen</td><td>CH. Byermoor Queens Maid</td></tr></table>"
+            assert table_body == r'<table><tr><td>Mrs S Hindle</td></tr><tr><td>Show</td><td>CC</td><td>RCC</td></tr><tr><td>Driffield 5th October 2006</td><td>CH. Ricksbury Royal Hero</td><td>CH. Keyingham Branwell</td></tr><tr><td>Manchester 16th January 2008</td><td>CH. Lochbuie Geordie</td><td>Merryoth Maeve</td></tr><tr><td>Darlington 20th September 2009</td><td>CH. Maibee Make Believe</td><td>CH. Loranka Just Like Heaven JW</td></tr><tr><td>Blackpool 22nd June 2012</td><td>CH. Loranka Sherrie Baby</td><td>Dear Magic Touch De La Fi Au Songeur</td></tr><tr><td>Welsh Kennel Club 2014</td><td>Brymarden Carolina Sunrise</td><td>Ch. Wandris Evan Elp Us</td></tr><tr><td>Welsh Kennel Club 2014</td><td>Ch. Charnell Clematis of Salegreen</td><td>CH. Byermoor Queens Maid</td></tr></table>'
 
     def test_table_include_img_label(self):
-        """
-        table是否包含img标签
-        """
+        """table是否包含img标签."""
         for test_case in TEST_CASES:
             raw_html_path = base_dir.joinpath(test_case['input'][6])
             base_url = test_case['input'][1]
-            expect_path = base_dir.joinpath(test_case['expected'][2])
             raw_html = raw_html_path.read_text()
             parts = self.rec.recognize(base_url, [(raw_html, raw_html)], raw_html)
             assert len(parts) == 3
@@ -80,26 +77,22 @@ class TestTableRecognizer(unittest.TestCase):
             assert simple_table_type['table_type'] == 'complex'
 
     def test_cc_simple_table(self):
-        """
-        cc中简单表格
-        """
+        """cc中简单表格."""
         for test_case in TEST_CASES:
             raw_html_path = base_dir.joinpath(test_case['input'][7])
             base_url = test_case['input'][8]
-            raw_html = raw_html_path.read_text(encoding="utf-8")
+            raw_html = raw_html_path.read_text(encoding='utf-8')
             parts = self.rec.recognize(base_url, [(raw_html, raw_html)], raw_html)
             assert len(parts) == 3
             content = html_to_element(parts[1][0]).text_content()
-            assert content == r"<table>\n<tbody>\n<tr>\n<td>Рейтинг:</td>\n<td>Рейтинг&lt;br&gt;5.00&lt;br&gt;из 5 на основе опроса&lt;br&gt;3&lt;br&gt;пользователей</td>\n</tr>\n<tr>\n<td>Тип товара:</td>\n<td>&lt;br&gt;Препараты для омоложения</td>\n</tr>\n<tr>\n<td>Форма:</td>\n<td>Крем</td>\n</tr><tr>\n<td>Объем:</td>\n<td>50 мл</td>\n</tr><tr>\n<td>Рецепт:</td>\n<td>Отпускается без рецепта</td>\n</tr>\n<tr>\n<td>Способ хранения:</td>\n<td>Хранить при температуре 4-20°</td>\n</tr>\n<tr>\n<td>Примечание:</td>\n<td>Беречь от детей</td>\n</tr>\n<tr>\n<td>Оплата:</td>\n<td>Наличными/банковской картой</td>\n</tr>\n<tr>\n<td>Доступность в Северске:</td>\n<td>В наличии</td>\n</tr>\n<tr>\n<td>Доставка:</td>\n<td>2-7 Дней</td>\n</tr>\n<tr>\n<td>Цена:</td>\n<td>84&lt;br&gt;₽</td>\n</tr>\n</tbody>\n</table>\n"
+            assert content == r'<table>\n<tbody>\n<tr>\n<td>Рейтинг:</td>\n<td>Рейтинг&lt;br&gt;5.00&lt;br&gt;из 5 на основе опроса&lt;br&gt;3&lt;br&gt;пользователей</td>\n</tr>\n<tr>\n<td>Тип товара:</td>\n<td>&lt;br&gt;Препараты для омоложения</td>\n</tr>\n<tr>\n<td>Форма:</td>\n<td>Крем</td>\n</tr><tr>\n<td>Объем:</td>\n<td>50 мл</td>\n</tr><tr>\n<td>Рецепт:</td>\n<td>Отпускается без рецепта</td>\n</tr>\n<tr>\n<td>Способ хранения:</td>\n<td>Хранить при температуре 4-20°</td>\n</tr>\n<tr>\n<td>Примечание:</td>\n<td>Беречь от детей</td>\n</tr>\n<tr>\n<td>Оплата:</td>\n<td>Наличными/банковской картой</td>\n</tr>\n<tr>\n<td>Доступность в Северске:</td>\n<td>В наличии</td>\n</tr>\n<tr>\n<td>Доставка:</td>\n<td>2-7 Дней</td>\n</tr>\n<tr>\n<td>Цена:</td>\n<td>84&lt;br&gt;₽</td>\n</tr>\n</tbody>\n</table>\n'
 
     def test_cc_complex_table(self):
-        """
-        cc跨行跨列的表格
-        """
+        """cc跨行跨列的表格."""
         for test_case in TEST_CASES:
             raw_html_path = base_dir.joinpath(test_case['input'][8])
             base_url = test_case['input'][8]
-            raw_html = raw_html_path.read_text(encoding="utf-8")
+            raw_html = raw_html_path.read_text(encoding='utf-8')
             parts = self.rec.recognize(base_url, [(raw_html, raw_html)], raw_html)
             assert len(parts) == 3
             content = html_to_element(parts[1][0]).text_content()
@@ -144,9 +137,6 @@ class TestTableRecognizer(unittest.TestCase):
             expect_path = base_dir.joinpath(test_case['expected'][1])
             raw_html = raw_html_path.read_text(encoding='utf-8')
             result = self.rec.to_content_list_node(expect_path, raw_html, raw_html)
-            fr = open(expect_path, "r", encoding="utf-8")
+            fr = open(expect_path, 'r', encoding='utf-8')
             expect_result = json.loads(fr.read())
             assert result == expect_result
-
-
-

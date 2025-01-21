@@ -2,6 +2,7 @@ from typing import List, Tuple
 
 from lxml.html import HtmlElement
 from overrides import override
+
 from llm_web_kit.exception.exception import HtmlTableRecognizerExp
 from llm_web_kit.libs.doc_element_type import DocElementType
 from llm_web_kit.pipeline.extractor.html.recognizer.recognizer import (
@@ -118,7 +119,7 @@ class TableRecognizer(BaseHTMLElementRecognizer):
             return self._element_to_html(item)
 
     def __simplify_td_th_content(self, elem):
-        """简化 <td> 和 <th> 内容，仅保留文本内容"""
+        """简化 <td> 和 <th> 内容，仅保留文本内容."""
         if elem.tag in ['td', 'th'] and len(elem.xpath('.//table')) == 0:
             text = '<br>'.join([text for text in elem.itertext()]).strip()
             for child in list(elem):
@@ -129,9 +130,7 @@ class TableRecognizer(BaseHTMLElementRecognizer):
                 self.__simplify_td_th_content(item)
 
     def __get_table_body(self, table_root):
-        """
-        获取并处理table body，返回处理后的HTML字符串。
-        """
+        """获取并处理table body，返回处理后的HTML字符串。"""
         allowed_attributes = ['colspan', 'rowspan']
         for child in list(table_root.iterchildren()):
             if child.tag is not None:
