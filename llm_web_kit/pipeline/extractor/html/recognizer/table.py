@@ -1,8 +1,7 @@
 from typing import List, Tuple
-
 from lxml.html import HtmlElement
 from overrides import override
-
+import html
 from llm_web_kit.exception.exception import HtmlTableRecognizerExp
 from llm_web_kit.libs.doc_element_type import DocElementType
 from llm_web_kit.pipeline.extractor.html.recognizer.recognizer import (
@@ -60,19 +59,17 @@ class TableRecognizer(BaseHTMLElementRecognizer):
 
     def __is_simple_table(self, tree) -> bool:
         """处理table元素，判断是是否复杂：是否包含合并单元格."""
-        cells = tree.xpath('//td | //th')
+        cells = tree.xpath(".//td") + tree.xpath(".//th")
         if len(cells) == 0:
             raise HtmlTableRecognizerExp(f'table节点未通过xpath定位到td或者th标签, cell长度为{len(cells)}')
         for cell in cells:
-            colspan_str = cell.get('colspan', 1)
-            rowspan_str = cell.get('rowspan', 1)
+            colspan_str = cell.get('colspan', "1")
+            rowspan_str = cell.get('rowspan', "1")
             try:
-                # 尝试将属性值转换为整数
                 colspan = int(colspan_str)
                 rowspan = int(rowspan_str)
             except ValueError as e:
                 raise HtmlTableRecognizerExp(f'table的合并单元格属性值colspan:{colspan_str}或rowspan:{rowspan_str}不是有效的整数') from e
-            # 如果 colspan 或 rowspan 存在且大于1，则认为是合并单元格, 否则认为是简单格式的单元格
             if (colspan > 1) or (rowspan > 1):
                 return False
             elif (colspan == 1) and (rowspan == 1):
