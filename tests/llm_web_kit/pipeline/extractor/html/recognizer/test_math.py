@@ -1,6 +1,7 @@
 import unittest
 from pathlib import Path
 
+from llm_web_kit.exception.exception import HtmlMathRecognizerExp
 from llm_web_kit.libs.html_utils import html_to_element
 from llm_web_kit.pipeline.extractor.html.recognizer.cc_math.common import \
     CCMATH
@@ -34,7 +35,7 @@ TEST_CASES = [
                 '<p>这是p的text</p>'
             ),
             (
-                '<p><ccmath-interline type="latex" by="mathjax" html=\'&lt;span class="mathjax_display"&gt;$$a^2 + b^2 = c^2$$&lt;/span&gt;这是span的tail\'>a^2 + b^2 = c^2</ccmath-interline></p>',
+                '<p><ccmath-interline type="latex" by="mathjax" html=\'&lt;span class="mathjax_display"&gt;$$a^2 + b^2 = c^2$$&lt;/span&gt;这是span的tail\'>$$a^2 + b^2 = c^2$$</ccmath-interline></p>',
                 '<span class="mathjax_display">$$a^2 + b^2 = c^2$$</span>这是span的tail'
             ),
             (
@@ -131,12 +132,21 @@ TEST_CASES_HTML = [
         'base_url': 'https://geoenergymath.com/2017/03/04/the-chandler-wobble-challenge/',
         'expected': 'assets/ccmath/geoenergymath_img_1.html'
     },
-    # # katex latex+katex
-    # {
-    #     'input': ['assets/ccmath/katex_mathjax.html'],
-    #     'base_url': 'https://www.intmath.com/cg5/katex-mathjax-comparison.php',
-    #     'expected': 'assets/ccmath/katex_mathjax_1.html'
-    # },
+    {
+        'input': ['assets/ccmath/katex_mathjax.html'],
+        'base_url': 'https://www.intmath.com/cg5/katex-mathjax-comparison.php',
+        'expected': 'assets/ccmath/katex_mathjax_1.html'
+    },
+    {
+        'input': ['assets/ccmath/asciimath.html'],
+        'base_url': 'https://www.intmath.com/cg5/katex-mathjax-comparison.php',
+        'expected': 'assets/ccmath/asciimath_1.html'
+    },
+    {
+        'input': ['assets/ccmath/mathtex_script_type.html'],
+        'base_url': 'https://www.intmath.com/cg5/katex-mathjax-comparison.php',
+        'expected': 'assets/ccmath/mathtex_script_type_1.html'
+    },
 ]
 
 TEST_EQUATION_TYPE = [
@@ -185,7 +195,7 @@ TEST_CONTENT_LIST_NODE = [
             'type': 'equation-interline',
             'raw_content': '<span class="math-container">$$h \\approx {{GM} \\over c^2} \\times {1 \\over r} \\times {v^2 \\over c^2}$$</span>',
             'content': {
-                'math_content': '$$h \\approx {{GM} \\over c^2} \\times {1 \\over r} \\times {v^2 \\over c^2}$$',
+                'math_content': 'h \\approx {{GM} \\over c^2} \\times {1 \\over r} \\times {v^2 \\over c^2}',
                 'math_type': 'latex',
                 'by': 'mathjax'
             }
@@ -207,6 +217,13 @@ TEST_GET_MATH_RENDER = [
         ],
         'base_url': 'https://math.libretexts.org/Under_Construction/Purgatory/Remixer_University/Username%3A_pseeburger/MTH_098_Elementary_Algebra/1%3A_Foundations/1.5%3A_Multiply_and_Divide_Integers',
         'expected': 'mathjax',
+    },
+    {
+        'input': [
+            'assets/ccmath/math_katex_latex_2.html',
+        ],
+        'base_url': 'https://www.intmath.com/cg5/katex-mathjax-comparison.php',
+        'expected': 'katex',
     }
 ]
 
@@ -268,6 +285,7 @@ class TestMathRecognizer(unittest.TestCase):
     def test_math_recognizer_html(self):
         for test_case in TEST_CASES_HTML:
             raw_html_path = base_dir.joinpath(test_case['input'][0])
+            print('raw_html_path::::::::', raw_html_path)
             base_url = test_case['base_url']
             raw_html = raw_html_path.read_text()
             parts = self.math_recognizer.recognize(base_url, [(raw_html, raw_html)], raw_html)
@@ -281,15 +299,13 @@ class TestMathRecognizer(unittest.TestCase):
             expect_text = base_dir.joinpath(test_case['expected']).read_text().strip()
             expect_formulas = [formula for formula in expect_text.split('\n') if formula]
             self.assertEqual(len(parts), len(expect_formulas))
-            answers = []
             for expect, part in zip(expect_formulas, parts):
                 a_tree = html_to_element(part)
                 a_result = a_tree.xpath(f'.//{CCTag.CC_MATH_INTERLINE}')[0]
-                answer = a_result.text.replace('\n', '')
-                answers.append(answer)
+                answer = a_result.text.replace('\n', '').strip()
                 # print('part::::::::', part)
-                print(answer)
-                # print('expect::::::::', expect)
+                print('expect::::::::', expect)
+                print('answer::::::::', answer)
                 self.assertEqual(expect, answer)
             # self.write_to_html(answers, test_case['input'][0])
 
@@ -316,7 +332,7 @@ class TestMathRecognizer(unittest.TestCase):
             '<div>Some math content</div>',
             '<div>Some math content</div>'
         )
-        with self.assertRaises(ValueError) as exc_info:
+        with self.assertRaises(HtmlMathRecognizerExp) as exc_info:
             self.math_recognizer.to_content_list_node(
                 invalid_content[0],
                 invalid_content[1],
