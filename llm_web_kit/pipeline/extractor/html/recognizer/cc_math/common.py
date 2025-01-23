@@ -121,6 +121,11 @@ class CCMATH():
             return s.replace('$', '')
         return s
 
+    def wrap_math_space(self, s):
+        """转义空格."""
+        s = s.strip()
+        return s.replace('&space;', ' ')
+
     def extract_asciimath(s: str) -> str:
         parsed = asciimath2tex.translate(s)
         return parsed
