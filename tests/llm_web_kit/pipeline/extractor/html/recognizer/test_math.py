@@ -125,12 +125,23 @@ TEST_CASES_HTML = [
         'base_url': 'https://mathjax.github.io/MathJax-demos-web/tex-chtml.html',
         'expected': 'assets/ccmath/mathjax-mml-chtml_1.html'
     },
+    # img latex.php
     {
-        'input': [
-            'assets/ccmath/geoenergymath_img.html',
-        ],
+        'input': ['assets/ccmath/geoenergymath_img.html'],
         'base_url': 'https://geoenergymath.com/2017/03/04/the-chandler-wobble-challenge/',
         'expected': 'assets/ccmath/geoenergymath_img_1.html'
+    },
+    # # img codecogs.com
+    {
+        'input': ['assets/ccmath/img_codecogs_com.html'],
+        'base_url': 'https://up-skill.me/math/find-interquartile-range.html',
+        'expected': 'assets/ccmath/img_codecogs_com_1.html'
+    },
+    # img mimetex.cgi
+    {
+        'input': ['assets/ccmath/img_mimetex_cgi.html'],
+        'base_url': 'https://math.eretrandre.org/tetrationforum/showthread.php?tid=965',
+        'expected': 'assets/ccmath/img_mimetex_cgi_1.html'
     },
     {
         'input': ['assets/ccmath/katex_mathjax.html'],
