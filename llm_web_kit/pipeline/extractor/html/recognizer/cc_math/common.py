@@ -36,19 +36,17 @@ LATEX_IMAGE_CLASS_NAMES = [
     'latexblockcenter',
 ]
 
+LATEX_IMAGE_SRC_NAMES = [
+    'codecogs.com',
+    'latex.php',
+    '/images/math/codecogs',
+    'mimetex.cgi',
+    'mathtex.cgi',
+]
+
 # ccmath标签，区分行内行间公式
 CCMATH_INTERLINE = CCTag.CC_MATH_INTERLINE
 CCMATH_INLINE = CCTag.CC_MATH_INLINE
-
-# 数学公式的正则表达式模式
-LATEX_PATTERNS = [
-    r'\$\$(.*?)\$\$',  # 匹配 $$...$$
-    r'\$(.*?)\$',      # 匹配 $...$
-    r'\\begin{equation}(.*?)\\end{equation}',  # 匹配 equation 环境
-    r'\\begin{align}(.*?)\\end{align}',        # 匹配 align 环境
-    r'\\[(.*?)\\]',    # 匹配 \[...\]
-    r'\\((.*?)\\)',    # 匹配 \(...\)
-]
 
 
 # 数学标记语言
@@ -80,6 +78,8 @@ latex_config = {
         ['\\begin{align}', '\\end{align}'],
         ['\\begin{alignat}', '\\end{alignat}'],
         ['\\begin{array}', '\\end{array}'],
+        # 添加通用的begin/end匹配
+        ['\\begin{.*?}', '\\end{.*?}'],
     ],
 }
 
@@ -120,6 +120,11 @@ class CCMATH():
         if s.startswith('$') and s.endswith('$'):
             return s.replace('$', '')
         return s
+
+    def wrap_math_space(self, s):
+        """转义空格."""
+        s = s.strip()
+        return s.replace('&space;', ' ')
 
     def extract_asciimath(s: str) -> str:
         parsed = asciimath2tex.translate(s)
@@ -255,6 +260,8 @@ if __name__ == '__main__':
     print(cm.get_equation_type('<math xmlns="http://www.w3.org/1998/Math/MathML" display="block"><mi>a</mi><mo>&#x2260;</mo><mn>0</mn></math>'))
     print(cm.get_equation_type('<math xmlns="http://www.w3.org/1998/Math/MathML"><mi>a</mi><mo>&#x2260;</mo><mn>0</mn></math>'))
     print(cm.get_equation_type('<p>这是p的text</p>'))
+    print(cm.get_equation_type(r'<p>\begin{align} a^2+b=c\end{align}</p>'))
+    print(cm.get_equation_type(r'<p>\begin{abc} a^2+b=c\end{abc}</p>'))
     print(cm.wrap_math(r'{\displaystyle \operatorname {Var} (X)=\operatorname {E} \left[(X-\mu)^{2}\right].}'))
     print(cm.wrap_math(r'$$a^2 + b^2 = c^2$$'))
     print(cm.wrap_math_md(r'{\displaystyle \operatorname {Var} (X)=\operatorname {E} \left[(X-\mu)^{2}\right].}'))
