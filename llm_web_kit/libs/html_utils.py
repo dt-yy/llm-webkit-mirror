@@ -119,22 +119,25 @@ def html_to_markdown_table(table_html_source: str) -> str:
         cols = row.xpath('.//th | .//td')
         max_cols = max(max_cols, len(cols))
 
+    if max_cols == 0:
+        return ''
     markdown_table = []
 
     # 检查第一行是否是表头并获取表头内容
     first_row_tags = rows[0].xpath('.//th | .//td')
     headers = [tag.text_content().strip() for tag in first_row_tags]
-
-    # 如果表头没有内容则跳过
-    if not any(headers):
-        return ''
-
     # 如果表头存在，添加表头和分隔符，并保证表头与最大列数对齐
     if headers:
         while len(headers) < max_cols:
             headers.append('')  # 补充空白表头
         markdown_table.append('| ' + ' | '.join(headers) + ' |')
         markdown_table.append('|---' * max_cols + '|')
+    else:
+        # 如果没有明确的表头，创建默认表头
+        default_headers = [''] * max_cols
+        markdown_table.append('| ' + ' | '.join(default_headers) + ' |')
+        markdown_table.append('|---' * max_cols + '|')
+
     # 添加表格内容，跳过已被用作表头的第一行（如果有的话）
     for row in rows[1:]:
         columns = [td.text_content().strip() for td in row.xpath('.//td | .//th')]

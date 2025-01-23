@@ -154,9 +154,9 @@ class TestHtmlUtils(unittest.TestCase):
 
     def test_html_to_markdown_table6(self):
         """没有表头的table转md."""
-        table_html = '<table><tr><td>3</td></tr><tr><td>4</td></tr></table>'
+        table_html = '<table><tr></tr><tr><td>4</td></tr></table>'
         result = html_to_markdown_table(table_html)
-        assert result == '| 3 |\n|---|\n| 4 |'
+        assert result == '|  |\n|---|\n| 4 |'
 
     def test_table5(self):
         """测试html转换成markdown表格.测试空表格."""
