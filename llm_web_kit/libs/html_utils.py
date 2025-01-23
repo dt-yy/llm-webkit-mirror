@@ -127,8 +127,7 @@ def html_to_markdown_table(table_html_source: str) -> str:
 
     # 如果表头没有内容则跳过
     if not any(headers):
-        rows.pop(0)  # 假设第一行是表头，若无内容则移除
-        headers = []  # 清空headers以便重新检测是否有其他表头行
+        return ''
 
     # 如果表头存在，添加表头和分隔符，并保证表头与最大列数对齐
     if headers:
@@ -136,7 +135,6 @@ def html_to_markdown_table(table_html_source: str) -> str:
             headers.append('')  # 补充空白表头
         markdown_table.append('| ' + ' | '.join(headers) + ' |')
         markdown_table.append('|---' * max_cols + '|')
-
     # 添加表格内容，跳过已被用作表头的第一行（如果有的话）
     for row in rows[1:]:
         columns = [td.text_content().strip() for td in row.xpath('.//td | .//th')]

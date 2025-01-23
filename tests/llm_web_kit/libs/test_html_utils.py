@@ -152,6 +152,12 @@ class TestHtmlUtils(unittest.TestCase):
         result = html_to_markdown_table(table_html)
         assert result == '| Mrs S Hindle |  |  |\n|---|---|---|\n| Show | CC | RCC |\n| Driffield 5th October 2006 | CH. Ricksbury Royal Hero | CH. Keyingham Branwell |\n| Manchester 16th January 2008 | CH. Lochbuie Geordie | Merryoth Maeve |\n| Darlington 20th September 2009 | CH. Maibee Make Believe | CH. Loranka Just Like Heaven JW |\n| Blackpool 22nd June 2012 | CH. Loranka Sherrie Baby | Dear Magic Touch De La Fi Au Songeur |\n| Welsh Kennel Club 2014 | Brymarden Carolina Sunrise | Ch. Wandris Evan Elp Us |\n| Welsh Kennel Club 2014 | Ch. Charnell Clematis of Salegreen | CH. Byermoor Queens Maid |'
 
+    def test_html_to_markdown_table6(self):
+        """没有表头的table转md."""
+        table_html = '<table><tr><td>3</td></tr><tr><td>4</td></tr></table>'
+        result = html_to_markdown_table(table_html)
+        assert result == '| 3 |\n|---|\n| 4 |'
+
     def test_table5(self):
         """测试html转换成markdown表格.测试空表格."""
         html = """
