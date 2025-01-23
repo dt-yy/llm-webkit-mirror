@@ -1,4 +1,4 @@
-
+import html
 from copy import deepcopy
 
 from lxml.html import HtmlElement, HTMLParser, fromstring, tostring
@@ -105,25 +105,44 @@ def html_to_markdown_table(table_html_source: str) -> str:
     Args:
         table_html_source: 被<table>标签包裹的html代码片段(含<table>标签)
 
-    Returns:  如果这个表格内没有任何文字性内容，则返回空字符串
+    Returns: 如果这个表格内没有任何文字性内容，则返回空字符串
     """
+    # 解析HTML
     table_el = html_to_element(table_html_source)
     rows = table_el.xpath('.//tr')
+    if not rows:
+        return ''
+
+    # 确定最大列数
+    max_cols = 0
+    for row in rows:
+        cols = row.xpath('.//th | .//td')
+        max_cols = max(max_cols, len(cols))
+
     markdown_table = []
 
-    # 检查第一行是否是表头
-    first_row_tags = rows[0].xpath('.//th | .//td')  # 2个数组合并，防止有人<td><th>混用
+    # 检查第一行是否是表头并获取表头内容
+    first_row_tags = rows[0].xpath('.//th | .//td')
     headers = [tag.text_content().strip() for tag in first_row_tags]
-    if not any(headers):
-        return ''
-    # 添加表头
-    markdown_table.append('| ' + ' | '.join(headers) + ' |')
-    # 添加表头下的分隔符
-    markdown_table.append('|' + '|'.join(['---'] * len(headers)) + '|')
 
-    # 添加表格内容，跳过第一行如果它被当作表头
+    # 如果表头没有内容则跳过
+    if not any(headers):
+        rows.pop(0)  # 假设第一行是表头，若无内容则移除
+        headers = []  # 清空headers以便重新检测是否有其他表头行
+
+    # 如果表头存在，添加表头和分隔符，并保证表头与最大列数对齐
+    if headers:
+        while len(headers) < max_cols:
+            headers.append('')  # 补充空白表头
+        markdown_table.append('| ' + ' | '.join(headers) + ' |')
+        markdown_table.append('|---' * max_cols + '|')
+
+    # 添加表格内容，跳过已被用作表头的第一行（如果有的话）
     for row in rows[1:]:
         columns = [td.text_content().strip() for td in row.xpath('.//td | .//th')]
+        # 如果这一行的列数少于最大列数，则补充空白单元格
+        while len(columns) < max_cols:
+            columns.append('')
         markdown_table.append('| ' + ' | '.join(columns) + ' |')
 
     md_str = '\n'.join(markdown_table)
@@ -144,3 +163,15 @@ def table_cells_count(table_html_source: str) -> int:
     cells = table_el.xpath('.//td | .//th')
     number_of_cells = len(cells)
     return number_of_cells
+
+
+def convert_html_to_entity(html_source) -> str:
+    """html中的特殊字符转成实体标记."""
+    table_entity = html.escape(html_source)
+    return table_entity
+
+
+def convert_html_entity_to_str(html_str):
+    """将HTML实体转换回原始字符."""
+    result = html.unescape(html_str)
+    return result
