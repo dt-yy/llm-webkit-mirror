@@ -159,9 +159,7 @@ class TestHtmlUtils(unittest.TestCase):
         assert result == '|  |\n|---|\n| 4 |'
 
     def test_html_to_markdown_table7(self):
-        """
-
-        """
+        """"""
         html = """
         <table cellpadding="0" cellspacing="0" border="0" width="100%" style="margin-bottom:3px">
 <tr valign="bottom">
@@ -172,7 +170,7 @@ class TestHtmlUtils(unittest.TestCase):
     </table>
         """
         result = html_to_markdown_table(html)
-        assert result == "|  |  |\n|---|---|\n| xxx | ttt |"
+        assert result == '|  |  |\n|---|---|\n| xxx | ttt |'
 
     def test_table5(self):
         """测试html转换成markdown表格.测试空表格."""
