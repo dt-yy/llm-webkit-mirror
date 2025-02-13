@@ -3,6 +3,7 @@ import os
 from overrides import override
 
 from llm_web_kit.input.datajson import DataJson
+from llm_web_kit.libs.html_utils import html_to_element
 from llm_web_kit.libs.path_lib import get_proj_root_dir
 from llm_web_kit.pipeline.extractor.pre_extractor import \
     BaseFileFormatFilterPreExtractor
@@ -20,12 +21,26 @@ class HTMLFileFormatFilterPreExtractor(BaseFileFormatFilterPreExtractor):
 
     @override
     def _filter_by_rule(self, data_json: DataJson) -> bool:
-        return self.is_html_format(data_json)
+        if self.__remove_format_table(data_json) and self.is_html_format(data_json):
+            return True
+        else:
+            return False
 
     @override
     def _do_pre_extract(self, data_json: DataJson) -> DataJson:
         pass  # TODO
         return data_json
+
+    def __remove_format_table(self, data_json: DataJson):
+        """remove 排版table."""
+        html_content = data_json.__getitem__('html')
+        html_str = html_to_element(html_content)
+        first_structure = html_str.xpath('/html/body/table') != []
+        second_structure = html_str.xpath('/html/body/center/table') != []
+        if bool(first_structure and second_structure):
+            return True
+        else:
+            return False
 
 
 class TestHTMLFileFormatFilterPreExtractor(HTMLFileFormatFilterPreExtractor):
