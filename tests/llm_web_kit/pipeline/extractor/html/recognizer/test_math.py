@@ -125,6 +125,13 @@ TEST_CASES_HTML = [
         'base_url': 'https://www.intmath.com/cg5/katex-mathjax-comparison.php',
         'expected': 'assets/ccmath/mathtex_script_type_1.html'
     },
+    {
+        'input': [
+            'assets/ccmath/mathjax-mml-chtml_prefix.html',
+        ],
+        'base_url': 'https://mathjax.github.io/MathJax-demos-web/tex-chtml.html',
+        'expected': 'assets/ccmath/mathjax-mml-chtml_prefix_1.html'
+    },
 ]
 
 TEST_EQUATION_TYPE = [
