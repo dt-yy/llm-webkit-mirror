@@ -47,7 +47,7 @@ class HTMLFileFormatFilterTablePreExtractor(HTMLFileFormatFilterPreExtractor):
 
     def __remove_format_table(self, data_json: DataJson):
         """remove 排版table."""
-        html_content = data_json.__getitem__('html')
+        html_content = data_json['html']
         html_str = html_to_element(html_content)
         first_structure = html_str.xpath('/html/body/table') != []
         second_structure = html_str.xpath('/html/body/center/table') != []
