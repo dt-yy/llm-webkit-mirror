@@ -1,6 +1,6 @@
 from overrides import override
 
-from llm_web_kit.input.datajson import DataJson
+from llm_web_kit.input.datajson import DataJson, DataJsonKey, Statics
 from llm_web_kit.libs.doc_element_type import DocElementType, ParagraphTextType
 from llm_web_kit.libs.text_utils import normalize_text_segment
 from llm_web_kit.pipeline.extractor.post_extractor import \
@@ -96,3 +96,47 @@ class HTMLStripSpacePostExtractor(BaseFileFormatPostExtractor):
             if text_type == ParagraphTextType.TEXT:
                 segment['c'] = normalize_text_segment(text)
         return paragraph
+
+
+class ContentListStaticsPostExtractor(BaseFileFormatPostExtractor):
+    """对content_list中的元素进行统计.
+
+    Args:
+        BaseFileFormatPostExtractor (_type_): 一个基础的规则过滤提取器
+    Returns:
+        DataJson: 返回处理后的数据集，新增statics字段，示例：
+        {
+            "statics": {
+                "list": 1,
+                "list.text": 2,
+                "list.equation-inline": 1,
+                "paragraph": 2,
+                "paragraph.text": 2,
+                "equation-interline": 1
+            }
+        }
+    """
+
+    @override
+    def _filter_by_rule(self, data_json: DataJson) -> bool:
+        """根据规则过滤content_list.
+
+        Args:
+            data_json (DataJson): 判断content_list是否是自己想要拦截处理的数据
+
+        Returns:
+            bool: 如果是希望处理的数据，返回True，否则返回False
+        """
+        return True
+
+    @override
+    def _do_post_extract(self, data_json: DataJson) -> DataJson:
+        """对content_list中的元素进行统计.
+
+        Args:
+            data_json (DataJson): 需要处理的数据集
+        """
+        content_list = data_json.get_content_list()
+        statics_obj = Statics()
+        data_json.__setitem__(DataJsonKey.STATICS, statics_obj.get_statics(content_list))
+        return data_json

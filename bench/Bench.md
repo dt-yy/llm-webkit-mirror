@@ -15,7 +15,7 @@ python eval.py
 
 # 评估报告及评估指标
 
-每一个评测结果包含`summary.json`和`detail.json`两个文件，`summary.json`是评估指标的汇总，`detail.json`是评估指标的详细结果。
+每一个评测结果包含`summary.json`和`detail.json`两个文件，`summary.json`是整个评测集的汇总结果，`detail.json`是单个网页的详细结果。
 
 # 评估报告示例
 
@@ -34,12 +34,12 @@ python eval.py
             "type_acc": 0.9997, # 元素类型识别准确性
             "content_acc": 0.9997 # 元素内容识别准确性
         },
-        "Math": {
+        "equation-interline": {
             "count": 52, # 元素数量
             "type_acc": 0.9997, # 元素类型识别准确性
             "content_acc": 0.9997 # 元素内容识别准确性
         },
-        "Code": {
+        "code": {
             "count": 5, # 元素数量
             "type_acc": 0.9997, # 元素类型识别准确性
             "content_acc": 0.9997 # 元素内容识别准确性
@@ -70,12 +70,12 @@ python eval.py
                         "type_acc": 0.9997, # 元素类型识别准确性
                         "content_acc": 0.9997 # 元素内容识别准确性
                     },
-                    "Math": {
+                    "equation-interline": {
                         "count": 52, # 元素数量
                         "type_acc": 0.9997, # 元素类型识别准确性
                         "content_acc": 0.9997 # 元素内容识别准确性
                     },
-                    "Code": {
+                    "code": {
                         "count": 5, # 元素数量
                         "type_acc": 0.9997, # 元素类型识别准确性
                         "content_acc": 0.9997 # 元素内容识别准确性
@@ -85,7 +85,7 @@ python eval.py
             },
             ...
         ],
-        "error": [
+        "error": [ # 抽取失败的网页
             {
                 "file_path": "html/ccmath/1.html", # 评测文件路径
                 "error_reason": "type_error", # 错误原因
