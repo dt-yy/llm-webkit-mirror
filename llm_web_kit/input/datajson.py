@@ -455,7 +455,7 @@ class Statics:
         Returns:
             dict: 每个元素的类型的数量
         """
-        result = {}
+        self.__clear__()
 
         def process_list_items(items, parent_type):
             """递归处理列表项
@@ -469,29 +469,29 @@ class Statics:
             elif isinstance(items, dict) and 't' in items:
                 # 到达最终的文本/公式元素
                 item_type = f"{parent_type}.{items['t']}"
-                current_count = result.get(item_type, 0)
-                result[item_type] = current_count + 1
+                current_count = self.statics.get(item_type, 0)
+                self.statics[item_type] = current_count + 1
 
         for page in contentlist._get_data():  # page是每一页的内容列表
             for element in page:  # element是每个具体元素
                 # 1. 统计基础元素
                 element_type = element['type']
-                current_count = result.get(element_type, 0)
-                result[element_type] = current_count + 1
+                current_count = self.statics.get(element_type, 0)
+                self.statics[element_type] = current_count + 1
 
                 # 2. 统计复合元素内部结构
                 if element_type == DocElementType.PARAGRAPH:
                     # 段落内部文本类型统计
                     for item in element['content']:
                         item_type = f"{DocElementType.PARAGRAPH}.{item['t']}"
-                        current_count = result.get(item_type, 0)
-                        result[item_type] = current_count + 1
+                        current_count = self.statics.get(item_type, 0)
+                        self.statics[item_type] = current_count + 1
 
                 elif element_type == DocElementType.LIST:
                     # 使用递归函数处理列表项
                     process_list_items(element['content']['items'], DocElementType.LIST)
 
-        return result
+        return self.statics
 
 
 class DataJson(StructureChecker):
