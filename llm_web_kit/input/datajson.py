@@ -15,7 +15,7 @@ class DataJsonKey(object):
     DATASET_NAME = 'dataset_name'
     FILE_FORMAT = 'data_source_category'
     CONTENT_LIST = 'content_list'
-    METADATA = 'meta_data'
+    METAINFO = 'meta_info'
     STATICS = 'statics'
 
 

@@ -28,7 +28,7 @@ python run.py
     "create_time": "20250212_113509",  # 评测任务创建时间
     "finish_time": "20250212_113632",  # 评测任务完成时间
     "total": 52002,  # 总评测文件数量
-    "result": { # 评测结果
+    "result_summary": { # 评测结果
         "Overall": {
             "count": 52000, # 元素数量
             "type_acc": 0.9997, # 元素类型识别准确性
@@ -45,9 +45,9 @@ python run.py
             "content_acc": 0.9997 # 元素内容识别准确性
         },
         ...
-        "error": {
-            "count": 2, # 错误数量
-        }
+    },
+    "error_summary": {
+        "count": 2, # 错误数量
     }
 }
 ```
@@ -61,7 +61,7 @@ python run.py
     "create_time": "20250212_113509",  # 评测任务创建时间
     "finish_time": "20250212_113632",  # 评测任务完成时间
     "detail": {
-        "success": [
+        "success_result": [
             {
                 "file_path": "html/ccmath/1.html",  # 评测文件路径
                 "result": { # 评测结果
@@ -85,7 +85,7 @@ python run.py
             },
             ...
         ],
-        "error": [ # 抽取失败的网页
+        "error_result": [ # 抽取失败的网页
             {
                 "file_path": "html/ccmath/1.html", # 评测文件路径
                 "error_reason": "type_error", # 错误原因

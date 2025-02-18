@@ -20,7 +20,7 @@ def eval_ours_extract_html(pipeline_config: dict, html_data_path: str, filePath:
     # Test extraction
     result = pipeline.extract(input_data)
     content_list = result.get_content_list()
-    statics = result.get(DataJsonKey.METADATA, {}).get(DataJsonKey.STATICS, {})
+    statics = result.get(DataJsonKey.METAINFO, {}).get(DataJsonKey.STATICS, {})
     main_html = content_list.to_main_html()
     content = content_list.to_nlp_md()
     return content, content_list._get_data(), main_html, statics

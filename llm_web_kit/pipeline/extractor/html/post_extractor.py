@@ -141,7 +141,7 @@ class ContentListStaticsPostExtractor(BaseFileFormatPostExtractor):
         """
         content_list = data_json.get_content_list()
         statics_obj = Statics()
-        meta_data = data_json.get(DataJsonKey.METADATA, {})
+        meta_data = data_json.get(DataJsonKey.METAINFO, {})
         meta_data[DataJsonKey.STATICS] = statics_obj.get_statics(content_list)
-        data_json.__setitem__(DataJsonKey.METADATA, meta_data)
+        data_json.__setitem__(DataJsonKey.METAINFO, meta_data)
         return data_json
