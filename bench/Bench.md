@@ -10,7 +10,7 @@
 # 使用方法
 
 ```
-python eval.py
+python run.py
 ```
 
 # 评估报告及评估指标

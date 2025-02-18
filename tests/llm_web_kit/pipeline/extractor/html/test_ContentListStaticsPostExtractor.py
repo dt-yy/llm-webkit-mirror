@@ -1,6 +1,6 @@
 import unittest
 
-from llm_web_kit.input.datajson import DataJson
+from llm_web_kit.input.datajson import DataJson, DataJsonKey
 from llm_web_kit.pipeline.extractor.html.post_extractor import \
     ContentListStaticsPostExtractor
 
@@ -59,11 +59,11 @@ class TestContentListStaticsPostExtractor(unittest.TestCase):
 
     def test_content_list_statics_post_extractor(self):
         data_json = DataJson(self.data_json)
-        self.extractor.post_extract(data_json).get_statics()
-        self.assertEqual(data_json['statics']['list'], 1)
-        self.assertEqual(data_json['statics']['list.text'], 4)
-        self.assertEqual(data_json['statics']['list.equation-inline'], 2)
-        self.assertEqual(data_json['statics']['paragraph'], 1)
-        self.assertEqual(data_json['statics']['paragraph.text'], 2)
-        self.assertEqual(data_json['statics']['paragraph.equation-inline'], 1)
-        self.assertEqual(data_json['statics']['equation-interline'], 1)
+        self.extractor.post_extract(data_json)
+        self.assertEqual(data_json.get(DataJsonKey.METADATA, {}).get(DataJsonKey.STATICS, {}).get('list'), 1)
+        self.assertEqual(data_json.get(DataJsonKey.METADATA, {}).get(DataJsonKey.STATICS, {}).get('list.text'), 4)
+        self.assertEqual(data_json.get(DataJsonKey.METADATA, {}).get(DataJsonKey.STATICS, {}).get('list.equation-inline'), 2)
+        self.assertEqual(data_json.get(DataJsonKey.METADATA, {}).get(DataJsonKey.STATICS, {}).get('paragraph'), 1)
+        self.assertEqual(data_json.get(DataJsonKey.METADATA, {}).get(DataJsonKey.STATICS, {}).get('paragraph.text'), 2)
+        self.assertEqual(data_json.get(DataJsonKey.METADATA, {}).get(DataJsonKey.STATICS, {}).get('paragraph.equation-inline'), 1)
+        self.assertEqual(data_json.get(DataJsonKey.METADATA, {}).get(DataJsonKey.STATICS, {}).get('equation-interline'), 1)

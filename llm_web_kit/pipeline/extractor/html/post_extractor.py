@@ -1,7 +1,8 @@
 from overrides import override
 
-from llm_web_kit.input.datajson import DataJson, DataJsonKey, Statics
+from llm_web_kit.input.datajson import DataJson, DataJsonKey
 from llm_web_kit.libs.doc_element_type import DocElementType, ParagraphTextType
+from llm_web_kit.libs.statics import Statics
 from llm_web_kit.libs.text_utils import normalize_text_segment
 from llm_web_kit.pipeline.extractor.post_extractor import \
     BaseFileFormatPostExtractor
@@ -106,13 +107,15 @@ class ContentListStaticsPostExtractor(BaseFileFormatPostExtractor):
     Returns:
         DataJson: 返回处理后的数据集，新增statics字段，示例：
         {
-            "statics": {
-                "list": 1,
-                "list.text": 2,
-                "list.equation-inline": 1,
-                "paragraph": 2,
-                "paragraph.text": 2,
-                "equation-interline": 1
+            "meta_data": {
+                "statics": {
+                    "list": 1,
+                    "list.text": 2,
+                    "list.equation-inline": 1,
+                    "paragraph": 2,
+                    "paragraph.text": 2,
+                    "equation-interline": 1
+                }
             }
         }
     """
@@ -138,5 +141,7 @@ class ContentListStaticsPostExtractor(BaseFileFormatPostExtractor):
         """
         content_list = data_json.get_content_list()
         statics_obj = Statics()
-        data_json.__setitem__(DataJsonKey.STATICS, statics_obj.get_statics(content_list))
+        meta_data = data_json.get(DataJsonKey.METADATA, {})
+        meta_data[DataJsonKey.STATICS] = statics_obj.get_statics(content_list)
+        data_json.__setitem__(DataJsonKey.METADATA, meta_data)
         return data_json

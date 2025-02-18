@@ -3,9 +3,7 @@ import json
 import os
 from pathlib import Path
 
-from eval.magic_html import eval_magic_html
 from eval.ours import eval_ours_extract_html
-from eval.unstructured_eval import eval_unstructured
 
 from llm_web_kit.dataio.filebase import (FileBasedDataReader,
                                          FileBasedDataWriter)
@@ -41,8 +39,10 @@ def main():
 
             # 评估
             if args.tool == 'magic_html':
+                from eval.magic_html import eval_magic_html
                 output = eval_magic_html(html, fileName)
             elif args.tool == 'unstructured':
+                from eval.unstructured_eval import eval_unstructured
                 output = eval_unstructured(html, fileName)
             elif args.tool == 'ours':
                 print(pipelineConfigPath)

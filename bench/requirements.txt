@@ -1,0 +1,2 @@
+magic_html==0.1.2
+unstructured==0.11.8
