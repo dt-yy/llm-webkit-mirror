@@ -7,6 +7,7 @@ from eval.ours import eval_ours_extract_html
 
 from llm_web_kit.dataio.filebase import (FileBasedDataReader,
                                          FileBasedDataWriter)
+from llm_web_kit.libs.statics import Statics
 
 # 选项参数
 parser = argparse.ArgumentParser()
@@ -52,6 +53,7 @@ def main():
                 out['content_list'] = content_list
                 out['main_html'] = main_html
                 out['statics'] = statics
+                Statics(statics).print()
             else:
                 raise ValueError(f'Invalid tool: {args.tool}')
 
