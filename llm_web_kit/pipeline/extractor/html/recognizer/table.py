@@ -61,8 +61,8 @@ class TableRecognizer(BaseHTMLElementRecognizer):
     from lxml import html
 
     def __is_table_empty(self, table) -> bool:
-        """
-        检查表格是否为空（递归检查嵌套元素）
+        """检查表格是否为空（递归检查嵌套元素）
+
         :param table: lxml.html.HtmlElement 对象，表示一个 <table> 元素
         :return: 如果表格为空，返回 True；否则返回 False
         """
@@ -73,7 +73,7 @@ class TableRecognizer(BaseHTMLElementRecognizer):
             # 检查所有子元素
             for child in elem.iterchildren():
                 # 如果是嵌套表格，递归检查表格是否为空
-                if child.tag == "table":
+                if child.tag == 'table':
                     if not self.__is_table_empty(child):
                         return False
                 # 其他元素需要递归检查
@@ -84,7 +84,7 @@ class TableRecognizer(BaseHTMLElementRecognizer):
                 return False
             return True
         # 检查所有单元格
-        for cell in table.xpath(".//td | .//th"):
+        for cell in table.xpath('.//td | .//th'):
             # 检查单元格内容
             if cell.text and cell.text.strip():
                 return False
@@ -136,7 +136,7 @@ class TableRecognizer(BaseHTMLElementRecognizer):
         """获取table的类型."""
         empty_flag = self.__is_table_empty(child)
         if empty_flag:
-            return "empty"
+            return 'empty'
         flag = self.__is_simple_table(child) and self.__is_table_nested(child)
         if flag:
             table_type = 'simple'
@@ -162,7 +162,7 @@ class TableRecognizer(BaseHTMLElementRecognizer):
 
     def __get_table_body(self, table_type, table_root):
         """获取并处理table body，返回处理后的HTML字符串。"""
-        if table_type == "empty":
+        if table_type == 'empty':
             return None
         allowed_attributes = ['colspan', 'rowspan']
         for child in list(table_root.iterchildren()):

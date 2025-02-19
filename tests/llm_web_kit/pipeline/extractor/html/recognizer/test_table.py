@@ -20,7 +20,7 @@ TEST_CASES = [
             'assets/recognizer/table_simple_cc.html',
             'assets/recognizer/table_include_rowspan_colspan.html',
             'assets/recognizer/table_involve_equation.html',
-            "assets/recognizer/table_include_code.html"
+            'assets/recognizer/table_include_code.html'
 
         ),
         'expected': [
@@ -155,9 +155,7 @@ class TestTableRecognizer(unittest.TestCase):
             assert parts is not None
 
     def test_table_involve_code(self):
-        """
-        test table involve code, code被提取出去了
-        """
+        """test table involve code, code被提取出去了."""
         for test_case in TEST_CASES:
             raw_html_path = base_dir.joinpath(test_case['input'][10])
             base_url = 'https://en.m.wikipedia.org/wiki/Variance'
