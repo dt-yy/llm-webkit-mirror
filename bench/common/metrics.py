@@ -1,14 +1,11 @@
-from pydantic import BaseModel
+from typing import Dict
 
 from llm_web_kit.libs.statics import Statics
 
-
-class Result(BaseModel):
-    def __init__(self):
-        pass
+MetricsResult = Dict[str, Dict[str, float]]
 
 
-class Evaluator:
+class Metrics:
     def __init__(self):
         pass
 
