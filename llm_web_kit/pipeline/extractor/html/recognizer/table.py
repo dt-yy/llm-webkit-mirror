@@ -58,8 +58,6 @@ class TableRecognizer(BaseHTMLElementRecognizer):
         """判断html片段是否是cc标签."""
         return BaseHTMLElementRecognizer.is_cc_html(cc_html)
 
-    from lxml import html
-
     def __is_table_empty(self, table) -> bool:
         """检查表格是否为空（递归检查嵌套元素）
 
