@@ -165,7 +165,7 @@ class TableRecognizer(BaseHTMLElementRecognizer):
         allowed_attributes = ['colspan', 'rowspan']
         for child in list(table_root.iterchildren()):
             if child.tag is not None:
-                self.__get_table_body(child)
+                self.__get_table_body(table_type, child)
         for ele in table_root.iter('td', 'th'):
             self.__simplify_td_th_content(ele)
         if len(table_root.attrib) > 0:
