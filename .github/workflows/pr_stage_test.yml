@@ -54,7 +54,7 @@ jobs:
   pr_st_test:
     runs-on: ubuntu-latest
     env:
-      LLM_WEB_KIT_CFG_PATH: ${{ github.workspace }}/llm_web_kit/bench/config/ours_config.jsonc
+      LLM_WEB_KIT_CFG_PATH: ${{ github.workspace }}/bench/config/ours_config.jsonc
       PYTHONPATH: $PYTHONPATH:${{ github.workspace }}
     strategy:
       matrix:
@@ -75,4 +75,4 @@ jobs:
           pip install -r requirements/runtime.txt
           pip install -r requirements/dev.txt
       - name: Run st tests
-        run: pytest --cov --cov-report=xml ./tests/st
+        run: pytest -v ./tests/st
