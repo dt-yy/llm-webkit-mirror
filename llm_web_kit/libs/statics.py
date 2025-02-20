@@ -95,5 +95,11 @@ class Statics:
                 elif element_type == DocElementType.LIST:
                     # 使用递归函数处理列表项
                     process_list_items(element['content']['items'], DocElementType.LIST)
+                elif element_type == DocElementType.TABLE:
+                    # 统计复杂表格数量
+                    if element.get('content', {}).get('is_complex', False):
+                        item_type = f'{DocElementType.TABLE}.complex'
+                        current_count = self.statics.get(item_type, 0)
+                        self.statics[item_type] = current_count + 1
 
         return self.statics
