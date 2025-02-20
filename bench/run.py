@@ -57,6 +57,7 @@ def main():
         for fileName in files:
             summary.total += 1
             url = files[fileName]['url']
+            page_layout_type = files[fileName]['layout_type']
             filepath = files[fileName]['origin_filepath']
             html = reader.read(f'{root}/data/{filepath}').decode('utf-8')
 
@@ -72,13 +73,12 @@ def main():
                     print(pipelineConfigPath)
                     print(pipeline_data_path)
                     print(f'{root}/data/{filepath}')
-                    output, content_list, main_html, statics = eval_ours_extract_html(pipelineConfigPath, pipeline_data_path, f'{root}/data/{filepath}')
+                    output, content_list, main_html, statics = eval_ours_extract_html(pipelineConfigPath, pipeline_data_path, f'{root}/data/{filepath}', page_layout_type)
                     out['content_list'] = content_list
                     out['main_html'] = main_html
                     out['statics'] = statics
                     Statics(statics).print()
                     statics_total.merge_statics(statics)
-                    # statics_total.print()
                 except Exception as e:
                     summary.error_summary['count'] += 1
                     detail.result_detail['error_result'].append(Error_Item(
@@ -94,6 +94,7 @@ def main():
             writer.write(f'{outputPath}/{args.tool}/{fileName}.jsonl', json.dumps(out).encode('utf-8') + b'\n')
     summary.finish()
     detail.finish()
+    statics_total.print()
     return summary, detail
 
 

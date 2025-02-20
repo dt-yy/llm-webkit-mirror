@@ -5,7 +5,7 @@ from llm_web_kit.input.datajson import DataJson, DataJsonKey
 from llm_web_kit.pipeline.pipeline_suit import PipelineSuit
 
 
-def eval_ours_extract_html(pipeline_config: dict, html_data_path: str, filePath: str) -> Tuple[str, List[Dict], str, dict]:
+def eval_ours_extract_html(pipeline_config: dict, html_data_path: str, filePath: str, page_layout_type: str) -> Tuple[str, List[Dict], str, dict]:
     pipeline = PipelineSuit(pipeline_config)
     assert pipeline is not None
 
@@ -16,6 +16,7 @@ def eval_ours_extract_html(pipeline_config: dict, html_data_path: str, filePath:
         # Create DataJson from test data
         input_data = DataJson(test_data)
         input_data.__setitem__('path', filePath)
+        input_data.__setitem__('page_layout_type', page_layout_type)
 
     # Test extraction
     result = pipeline.extract(input_data)
