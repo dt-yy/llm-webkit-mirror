@@ -452,3 +452,27 @@ class DataJson(StructureChecker):
 
     def get(self, key:str, default=None):
         return self.__json_data.get(key, default)
+
+    def to_json(self, pretty=False) -> str:
+        """
+        把datajson对象转化为json字符串， content_list对象作为json的content_list键值
+        Args:
+            pretty (bool): 是否格式化json字符串
+        Returns:
+            str: json字符串
+        """
+        json_dict = self.__json_data.copy()
+        json_dict[DataJsonKey.CONTENT_LIST] = self.get_content_list()._get_data()
+        if pretty:
+            return json.dumps(json_dict, indent=2, ensure_ascii=False)
+        return json.dumps(json_dict, ensure_ascii=False)
+
+    def to_dict(self) -> dict:
+        """
+        把datajson对象转化为dict对象
+        Returns:
+            dict: dict对象
+        """
+        json_dict = self.__json_data.copy()
+        json_dict[DataJsonKey.CONTENT_LIST] = self.get_content_list()._get_data()
+        return json_dict
