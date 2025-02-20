@@ -57,7 +57,6 @@ def main():
         for fileName in files:
             summary.total += 1
             url = files[fileName]['url']
-            page_layout_type = files[fileName]['layout_type']
             filepath = files[fileName]['origin_filepath']
             html = reader.read(f'{root}/data/{filepath}').decode('utf-8')
 
@@ -73,7 +72,7 @@ def main():
                     print(pipelineConfigPath)
                     print(pipeline_data_path)
                     print(f'{root}/data/{filepath}')
-                    output, content_list, main_html, statics = eval_ours_extract_html(pipelineConfigPath, pipeline_data_path, f'{root}/data/{filepath}', page_layout_type)
+                    output, content_list, main_html, statics = eval_ours_extract_html(pipelineConfigPath, pipeline_data_path, f'{root}/data/{filepath}')
                     out['content_list'] = content_list
                     out['main_html'] = main_html
                     out['statics'] = statics
