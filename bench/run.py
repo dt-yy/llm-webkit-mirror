@@ -3,13 +3,11 @@ import json
 import os
 from pathlib import Path
 
-from eval.magic_html import eval_magic_html
 from eval.ours import eval_ours_extract_html
-from eval.unstructured_eval import eval_unstructured
-from utils.statics import Statics
 
 from llm_web_kit.dataio.filebase import (FileBasedDataReader,
                                          FileBasedDataWriter)
+from llm_web_kit.libs.statics import Statics
 
 # 选项参数
 parser = argparse.ArgumentParser()
@@ -24,7 +22,6 @@ sourcePath = os.path.join(root, 'data/all.json')
 outputPath = os.path.join(root, 'output')
 pipelineConfigPath = os.path.join(root, 'config/ours_config.jsonc')
 pipeline_data_path = os.path.join(root, 'config/ours_data_config.jsonl')
-statics_obj = Statics()
 
 reader = FileBasedDataReader('')
 writer = FileBasedDataWriter('')
@@ -43,18 +40,20 @@ def main():
 
             # 评估
             if args.tool == 'magic_html':
+                from eval.magic_html import eval_magic_html
                 output = eval_magic_html(html, fileName)
             elif args.tool == 'unstructured':
+                from eval.unstructured_eval import eval_unstructured
                 output = eval_unstructured(html, fileName)
             elif args.tool == 'ours':
                 print(pipelineConfigPath)
                 print(pipeline_data_path)
                 print(f'{root}/data/{filepath}')
-                output, content_list, main_html, statics = eval_ours_extract_html(pipelineConfigPath, pipeline_data_path, f'{root}/data/{filepath}', statics_obj)
+                output, content_list, main_html, statics = eval_ours_extract_html(pipelineConfigPath, pipeline_data_path, f'{root}/data/{filepath}')
                 out['content_list'] = content_list
                 out['main_html'] = main_html
                 out['statics'] = statics
-                statics_obj.print()
+                Statics(statics).print()
             else:
                 raise ValueError(f'Invalid tool: {args.tool}')
 
