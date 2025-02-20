@@ -60,7 +60,7 @@ python run.py
     "output_path": "outputs/20250212_113509_5bbf75c0",  # 评测结果保存路径
     "create_time": "20250212_113509",  # 评测任务创建时间
     "finish_time": "20250212_113632",  # 评测任务完成时间
-    "detail": {
+    "result_detail": {
         "success_result": [
             {
                 "file_path": "html/ccmath/1.html",  # 评测文件路径
@@ -88,7 +88,6 @@ python run.py
         "error_result": [ # 抽取失败的网页
             {
                 "file_path": "html/ccmath/1.html", # 评测文件路径
-                "error_reason": "type_error", # 错误原因
                 "error_detail": "type_error" # 错误详情
             },
             ...
