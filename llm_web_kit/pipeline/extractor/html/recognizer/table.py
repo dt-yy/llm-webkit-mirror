@@ -132,7 +132,8 @@ class TableRecognizer(BaseHTMLElementRecognizer):
 
     def __get_table_type(self, child: HtmlElement) -> str:
         """获取table的类型."""
-        if self.__is_table_empty(child):
+        empty_flag = self.__is_table_empty(child)
+        if empty_flag:
             return 'empty'
         flag = self.__is_simple_table(child) and self.__is_table_nested(child)
         if flag:
@@ -159,8 +160,8 @@ class TableRecognizer(BaseHTMLElementRecognizer):
 
     def __get_table_body(self, table_type, table_root):
         """获取并处理table body，返回处理后的HTML字符串。"""
-        if self.__is_table_empty(table_root):
-            return
+        if table_type == 'empty':
+            return None
         allowed_attributes = ['colspan', 'rowspan']
         for child in list(table_root.iterchildren()):
             if child.tag is not None:
@@ -206,7 +207,7 @@ class TableRecognizer(BaseHTMLElementRecognizer):
     def __get_content_list_table_type(self, table_type):
         """complex|simple 转为True|False."""
         is_complex = False
-        if table_type == 'simple' or table_type == 'empty':
+        if table_type == 'simple':
             is_complex = False
         elif table_type == 'complex':
             is_complex = True

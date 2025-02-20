@@ -335,13 +335,14 @@ class StructureMapper(ABC):
         elif node_type == DocElementType.TABLE:
             # 对文本格式来说，普通表格直接转为md表格，复杂表格返还原始html
             html_table = content_lst_node['content']['html']
-            html_table = html_table.strip()
-            is_complex = content_lst_node['content']['is_complex']
-            if is_complex:
-                return html_table
-            else:
-                md_table = html_to_markdown_table(html_table)
-                return md_table
+            if html_table is not None:
+                html_table = html_table.strip()
+                is_complex = content_lst_node['content']['is_complex']
+                if is_complex:
+                    return html_table
+                else:
+                    md_table = html_to_markdown_table(html_table)
+                    return md_table
         else:
             raise ValueError(f'content_lst_node contains invalid element type: {node_type}')  # TODO: 自定义异常
 
