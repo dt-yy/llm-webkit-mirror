@@ -52,6 +52,14 @@ class TestContentListStaticsPostExtractor(unittest.TestCase):
                             'math_content': 'a^2 + b^2 = c^2',
                             'math_type': 'kelatex|mathml|asciimath'
                         }
+                    },
+                    {
+                        'type': 'table',
+                        'raw_content': '',
+                        'content': {
+                            'html': '<table><tr><td>1</td><td>2</td></tr></table>',
+                            'is_complex': True
+                        }
                     }
                 ]
             ]
@@ -67,3 +75,5 @@ class TestContentListStaticsPostExtractor(unittest.TestCase):
         self.assertEqual(data_json.get(DataJsonKey.METAINFO, {}).get(DataJsonKey.STATICS, {}).get('paragraph.text'), 2)
         self.assertEqual(data_json.get(DataJsonKey.METAINFO, {}).get(DataJsonKey.STATICS, {}).get('paragraph.equation-inline'), 1)
         self.assertEqual(data_json.get(DataJsonKey.METAINFO, {}).get(DataJsonKey.STATICS, {}).get('equation-interline'), 1)
+        self.assertEqual(data_json.get(DataJsonKey.METAINFO, {}).get(DataJsonKey.STATICS, {}).get('table'), 1)
+        self.assertEqual(data_json.get(DataJsonKey.METAINFO, {}).get(DataJsonKey.STATICS, {}).get('table.complex'), 1)
