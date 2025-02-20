@@ -161,4 +161,4 @@ class TestTableRecognizer(unittest.TestCase):
             base_url = 'https://en.m.wikipedia.org/wiki/Variance'
             raw_html = raw_html_path.read_text(encoding='utf-8')
             parts = self.rec.recognize(base_url, [(raw_html, raw_html)], raw_html)
-            assert len(parts) == 0
+            assert html_to_element(parts[0][0]).xpath(f'.//{CCTag.CC_TABLE}')[0].text is None
