@@ -1,3 +1,5 @@
+import json
+
 from llm_web_kit.input.datajson import ContentList
 from llm_web_kit.libs.doc_element_type import DocElementType
 
@@ -5,20 +7,18 @@ from llm_web_kit.libs.doc_element_type import DocElementType
 class Statics:
     """统计content_list中每个元素的type的数量."""
     def __init__(self, statics: dict = None):
-        self.statics = statics if statics else {'statics': {}}
+        self.statics = statics if statics else {}
         self._validate(self.statics)
 
     def _validate(self, statics: dict):
         """校验statics的格式.需要是字典且只有一个为"statics"的key.示例:
             {
-                "statics": {
-                    "list": 1,
-                    "list.text": 2,
-                    "list.equation-inline": 1,
-                    "paragraph": 2,
-                    "paragraph.text": 2,
-                    "equation-interline": 2
-                }
+                "list": 1,
+                "list.text": 2,
+                "list.equation-inline": 1,
+                "paragraph": 2,
+                "paragraph.text": 2,
+                "equation-interline": 2
             }
         """
         if not isinstance(statics, dict):
@@ -37,8 +37,7 @@ class Statics:
         self.statics = {}
 
     def print(self):
-        for key, value in self.statics.items():
-            print(f'{key}: {value}')
+        print(json.dumps(self.statics, indent=4))
 
     def merge_statics(self, statics: dict) -> dict:
         """合并多个contentlist的统计结果.

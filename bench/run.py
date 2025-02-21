@@ -4,6 +4,7 @@ import os
 import uuid
 from pathlib import Path
 
+from bench.common.metrics import Metrics
 from bench.common.result import Error_Item, Result_Detail, Result_Summary
 from bench.eval.ours import eval_ours_extract_html
 from llm_web_kit.dataio.filebase import (FileBasedDataReader,
@@ -48,8 +49,9 @@ def main():
     )
 
     # 创建统计对象
-    statics_total = Statics()
-
+    statics_gt = Statics()
+    statics_pre = Statics()
+    metrics = Metrics()
     # 读取html文件
     with open(sourcePath, 'r') as f:
         files = json.load(f)
@@ -57,8 +59,11 @@ def main():
         for fileName in files:
             summary.total += 1
             url = files[fileName]['url']
-            filepath = files[fileName]['origin_filepath']
-            html = reader.read(f'{root}/data/{filepath}').decode('utf-8')
+            origin_filepath = files[fileName]['origin_filepath']
+            groundtruth_filepath = files[fileName]['groundtruth_filepath']
+            html = reader.read(f'{root}/data/{origin_filepath}').decode('utf-8')
+            groundtruth = json.loads(reader.read(f'{root}/data/{groundtruth_filepath}').decode('utf-8'))
+            statics_gt.merge_statics(groundtruth.get('statics', {}))
 
             # 评估
             if args.tool == 'magic_html':
@@ -71,17 +76,17 @@ def main():
                 try:
                     print(pipelineConfigPath)
                     print(pipeline_data_path)
-                    print(f'{root}/data/{filepath}')
-                    output, content_list, main_html, statics = eval_ours_extract_html(pipelineConfigPath, pipeline_data_path, f'{root}/data/{filepath}')
+                    print(f'{root}/data/{origin_filepath}')
+                    output, content_list, main_html, statics = eval_ours_extract_html(pipelineConfigPath, pipeline_data_path, f'{root}/data/{origin_filepath}')
                     out['content_list'] = content_list
                     out['main_html'] = main_html
                     out['statics'] = statics
                     Statics(statics).print()
-                    statics_total.merge_statics(statics)
+                    statics_pre.merge_statics(statics)
                 except Exception as e:
                     summary.error_summary['count'] += 1
                     detail.result_detail['error_result'].append(Error_Item(
-                        file_path=filepath,
+                        file_path=origin_filepath,
                         error_detail=str(e)
                     ))
             else:
@@ -93,7 +98,9 @@ def main():
             writer.write(f'{outputPath}/{args.tool}/{fileName}.jsonl', json.dumps(out).encode('utf-8') + b'\n')
     summary.finish()
     detail.finish()
-    statics_total.print()
+    statics_gt.print()
+    statics_pre.print()
+    print(json.dumps(metrics.eval_type_acc(statics_gt, statics_pre), indent=4))
     return summary, detail
 
 
