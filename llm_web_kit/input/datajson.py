@@ -227,7 +227,7 @@ class StructureMapper(ABC):
                     md_table = html_to_markdown_table(html_table)
                     return md_table
             else:
-                return ""  
+                return ''
         else:
             raise ValueError(f'content_lst_node contains invalid element type: {node_type}')  # TODO: 自定义异常
 
@@ -347,7 +347,7 @@ class StructureMapper(ABC):
                     md_table = html_to_markdown_table(html_table)
                     return md_table
             else:
-                return ""
+                return ''
         else:
             raise ValueError(f'content_lst_node contains invalid element type: {node_type}')  # TODO: 自定义异常
 
