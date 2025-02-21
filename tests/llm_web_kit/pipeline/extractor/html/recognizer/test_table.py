@@ -154,7 +154,7 @@ class TestTableRecognizer(unittest.TestCase):
             parts = self.rec.recognize(base_url, [(raw_html, raw_html)], raw_html)
             assert parts is not None
 
-    def test_table_involve_code(self):
+    def test_table_involve_after_code(self):
         """test table involve code, code被提取出去了，过滤掉空的和坏的table."""
         for test_case in TEST_CASES:
             raw_html_path = base_dir.joinpath(test_case['input'][10])
