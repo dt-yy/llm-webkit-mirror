@@ -20,7 +20,7 @@ TEST_CASES = [
             'assets/recognizer/table_simple_cc.html',
             'assets/recognizer/table_include_rowspan_colspan.html',
             'assets/recognizer/table_involve_equation.html',
-            'assets/recognizer/table_include_code.html'
+            'assets/recognizer/table_include_after_code.html'
 
         ),
         'expected': [
