@@ -1,62 +1,51 @@
-import errno
 import os
-import time
+import shutil
+
+from llm_web_kit.config.cfg_reader import load_config
 
 
-def try_remove(path: str):
-    """Attempt to remove a file, but ignore any exceptions that occur."""
+def decide_cache_dir():
+    """Get the cache directory for the web kit. The.
+
+    Returns:
+        _type_: _description_
+    """
+    cache_dir = '~/.llm_web_kit_cache'
+
+    if 'WEB_KIT_CACHE_DIR' in os.environ:
+        cache_dir = os.environ['WEB_KIT_CACHE_DIR']
+
     try:
-        os.remove(path)
+        config = load_config()
+        cache_dir = config['resources']['common']['cache_path']
     except Exception:
         pass
 
+    if cache_dir.startswith('~/'):
+        cache_dir = os.path.expanduser(cache_dir)
 
-class FileLockContext:
-    """基于文件锁的上下文管理器（跨平台兼容版）"""
+    cache_tmp_dir = os.path.join(cache_dir, 'tmp')
 
-    def __init__(self, lock_path: str, check_callback=None, timeout: float = 300):
-        self.lock_path = lock_path
-        self.check_callback = check_callback
-        self.timeout = timeout
-        self._fd = None
+    return cache_dir, cache_tmp_dir
 
-    def __enter__(self):
-        start_time = time.time()
-        while True:
-            if self.check_callback:
-                if self.check_callback():
-                    return True
-            try:
-                # 原子性创建锁文件（O_EXCL标志是关键）
-                self._fd = os.open(
-                    self.lock_path, os.O_CREAT | os.O_EXCL | os.O_WRONLY, 0o644
-                )
-                # 写入进程信息和时间戳
-                with os.fdopen(self._fd, 'w') as f:
-                    f.write(f'{os.getpid()}\n{time.time()}')
-                return self
-            except OSError as e:
-                if e.errno != errno.EEXIST:
-                    raise
 
-                # 检查锁是否过期
-                try:
-                    with open(self.lock_path, 'r') as f:
-                        pid, timestamp = f.read().split('\n')[:2]
-                        if time.time() - float(timestamp) > self.timeout:
-                            os.remove(self.lock_path)
-                except (FileNotFoundError, ValueError):
-                    pass
+CACHE_DIR, CACHE_TMP_DIR = decide_cache_dir()
 
-                if time.time() - start_time > self.timeout:
-                    raise TimeoutError(f'Could not acquire lock after {self.timeout}s')
-                time.sleep(0.1)
 
-    def __exit__(self, exc_type, exc_val, exc_tb):
-        try:
-            if self._fd:
-                os.close(self._fd)
-        except OSError:
-            pass
-        finally:
-            try_remove(self.lock_path)
+if not os.path.exists(CACHE_DIR):
+    os.makedirs(CACHE_DIR, exist_ok=True)
+
+if not os.path.exists(CACHE_TMP_DIR):
+    os.makedirs(CACHE_TMP_DIR, exist_ok=True)
+
+
+def try_remove(path: str):
+    """Attempt to remove a file by os.remove or to remove a directory by
+    shutil.rmtree and ignore exceptions."""
+    try:
+        if os.path.isdir(path):
+            shutil.rmtree(path)
+        else:
+            os.remove(path)
+    except Exception:
+        pass
