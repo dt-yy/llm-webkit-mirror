@@ -5,7 +5,7 @@ import time
 def get_func_path(func) -> str:
     if not callable(func):
         return func
-    return f"{func.__module__}.{func.__name__}"
+    return f'{func.__module__}.{func.__name__}'
 
 
 def with_retry(func=None, max_retries=5, sleep_time=3):
@@ -16,9 +16,9 @@ def with_retry(func=None, max_retries=5, sleep_time=3):
             pass
 
     def get_msg(func, args, kwargs):
-        msg = f"Retry exhausted for [{get_func_path(func)}]"
-        msg += f", args={args}" if args else ''
-        msg += f", kwargs={kwargs}" if kwargs else ''
+        msg = f'Retry exhausted for [{get_func_path(func)}]'
+        msg += f', args={args}' if args else ''
+        msg += f', kwargs={kwargs}' if kwargs else ''
         return msg
 
     def handle(func):

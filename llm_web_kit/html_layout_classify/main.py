@@ -54,7 +54,7 @@ def __most_frequent_or_zero(int_elements):
         else:
             return 0
     else:
-        logger.error(f"most_frequent_or_zero error:{int_elements}")
+        logger.error(f'most_frequent_or_zero error:{int_elements}')
 
 
 def __process_one_layout_sample(layout_sample_file: str, layout_type_dir: str):

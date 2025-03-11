@@ -59,8 +59,8 @@ def _get_s3_config(
     if endpoint_key not in cluster:
         endpoint_key = 'outside'
 
-    if prefer_ip and f"{endpoint_key}_ips" in cluster:
-        endpoint_key = f"{endpoint_key}_ips"
+    if prefer_ip and f'{endpoint_key}_ips' in cluster:
+        endpoint_key = f'{endpoint_key}_ips'
 
     endpoints = cluster[endpoint_key]
 
@@ -69,7 +69,7 @@ def _get_s3_config(
     elif isinstance(endpoints, list):
         endpoint = random.choice(endpoints)
     else:
-        raise Exception(f"invalid endpoint for [{cluster}]")
+        raise Exception(f'invalid endpoint for [{cluster}]')
 
     return {
         'endpoint': endpoint,
@@ -86,7 +86,7 @@ def get_s3_config(path: Union[str, List[str]], outside=False):
         if bucket_config in [bc, None]:
             bucket_config = bc
             continue
-        raise Exception(f"{paths} have different s3 config, cannot read together.")
+        raise Exception(f'{paths} have different s3 config, cannot read together.')
     if not bucket_config:
         raise Exception('path is empty.')
     return _get_s3_config(bucket_config, outside, prefer_ip=True)

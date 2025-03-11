@@ -36,9 +36,9 @@ class ResumableS3Stream(io.IOBase):
                 self.size = self.size_limit
 
         if self.size_limit > 0:
-            kwargs = {'Range': f"bytes={self.pos}-{self.size_limit - 1}"}
+            kwargs = {'Range': f'bytes={self.pos}-{self.size_limit - 1}'}
         else:
-            kwargs = {'Range': f"bytes={self.pos}-"} if self.pos > 0 else {}
+            kwargs = {'Range': f'bytes={self.pos}-'} if self.pos > 0 else {}
 
         obj = get_s3_object_with_retry(self.path, client=self.client, **kwargs)
 
@@ -58,7 +58,7 @@ class ResumableS3Stream(io.IOBase):
         last_e = None
         while True:
             if retries > 5:
-                msg = f"Retry exhausted for reading [{self.path}]"
+                msg = f'Retry exhausted for reading [{self.path}]'
                 raise Exception(msg) from last_e
             try:
                 data = self.stream.read(n)

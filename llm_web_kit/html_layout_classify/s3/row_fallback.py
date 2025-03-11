@@ -29,7 +29,7 @@ class Row(tuple):
     Examples
     --------
     >>> from pyspark.sql import Row
-    >>> row = Row(name="Alice", age=11)
+    >>> row = Row(name='Alice', age=11)
     >>> row
     Row(name='Alice', age=11)
     >>> row['name'], row['age']
@@ -44,21 +44,21 @@ class Row(tuple):
     Row also can be used to create another Row like class, then it
     could be used to create Row objects, such as
 
-    >>> Person = Row("name", "age")
+    >>> Person = Row('name', 'age')
     >>> Person
     <Row('name', 'age')>
     >>> 'name' in Person
     True
     >>> 'wrong_key' in Person
     False
-    >>> Person("Alice", 11)
+    >>> Person('Alice', 11)
     Row(name='Alice', age=11)
 
     This form can also be used to create rows as tuple values, i.e. with unnamed
     fields.
 
-    >>> row1 = Row("Alice", 11)
-    >>> row2 = Row(name="Alice", age=11)
+    >>> row1 = Row('Alice', 11)
+    >>> row2 = Row(name='Alice', age=11)
     >>> row1 == row2
     True
     """
@@ -102,7 +102,7 @@ class Row(tuple):
         Examples
         --------
         >>> from pyspark.sql import Row
-        >>> Row(name="Alice", age=11).asDict() == {'name': 'Alice', 'age': 11}
+        >>> Row(name='Alice', age=11).asDict() == {'name': 'Alice', 'age': 11}
         True
         >>> row = Row(key=1, value=Row(name='a', age=2))
         >>> row.asDict() == {'key': 1, 'value': Row(name='a', age=2)}

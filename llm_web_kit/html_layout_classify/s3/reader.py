@@ -107,7 +107,7 @@ def get_conf_dir():
 def _read_default_config():
     conf_file = os.path.join(get_conf_dir(), 'config.yaml')
     if not os.path.isfile(conf_file):
-        raise Exception(f"config file [{conf_file}] not found.")
+        raise Exception(f'config file [{conf_file}] not found.')
     with open(conf_file, 'r') as f:
         config = yaml.safe_load(f)
     assert isinstance(config, dict)

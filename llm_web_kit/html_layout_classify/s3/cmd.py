@@ -51,14 +51,14 @@ def str_encode(s: str) -> bytes:
     except UnicodeEncodeError as e:
         debug_start = max(0, e.start - 1000)
         debug_end = min(len(s), e.end + 1000)
-        print(f"{debug_start=}, {debug_end=}, debug_s={s[debug_start:debug_end]}")
+        print(f'{debug_start=}, {debug_end=}, debug_s={s[debug_start:debug_end]}')
         raise
 
 # def json_print(obj):
 #     if isinstance(obj, list) and len(obj):
 #         return json_print(obj[0])
 #     if isinstance(obj, bytes):
-#         return json_print(obj.decode("utf-8"))
+#         return json_print(obj.decode('utf-8'))
 #     if isinstance(obj, str):
 #         return json_print(json_loads(obj))
 #     if isinstance(obj, dict):
@@ -66,21 +66,21 @@ def str_encode(s: str) -> bytes:
 #
 #     from .row_fallback import Row
 #
-#     if isinstance(obj, Row) and "value" in obj:
+#     if isinstance(obj, Row) and 'value' in obj:
 #         return json_print(obj.value)
 #
 #     print(obj)
 #
 # def _format_datetime(dt):
 #     if not dt:
-#         return ""
+#         return ''
 #     dt = dt.replace(tzinfo=timezone.utc).astimezone(tz=None)  # localtime
-#     return dt.strftime("%y-%m-%d %H:%M:%S %Z")
+#     return dt.strftime('%y-%m-%d %H:%M:%S %Z')
 #
 #
 # def _format_size(size):
 #     if size is None:
-#         return ""
+#         return ''
 #     size = str(size)
 #     parts = []
 #     while len(size):
@@ -89,17 +89,17 @@ def str_encode(s: str) -> bytes:
 #             part_size = len(size) % part_size
 #         parts.append(size[:part_size])
 #         size = size[part_size:]
-#     return ",".join(parts)
+#     return ','.join(parts)
 #
 #
 # def _format_detail(detail):
 #     path, obj = detail
-#     if path.endswith("/"):
+#     if path.endswith('/'):
 #         return f"{'DIR'.rjust(53)}  {path}"
-#     tm = _format_datetime(obj.get("LastModified"))
-#     sz = _format_size(obj.get("Size") or obj.get("ContentLength", 0))
-#     owner = obj.get("Owner", {}).get("ID", "")
-#     return f"{tm} {sz.rjust(15)} {owner.rjust(15)}  {path}"
+#     tm = _format_datetime(obj.get('LastModified'))
+#     sz = _format_size(obj.get('Size') or obj.get('ContentLength', 0))
+#     owner = obj.get('Owner', {}).get('ID', '')
+#     return f'{tm} {sz.rjust(15)} {owner.rjust(15)}  {path}'
 #
 #
 # def head(path):
@@ -109,7 +109,7 @@ def str_encode(s: str) -> bytes:
 #
 #
 # def cat(path, limit=1, show_loc=False):
-#     if "?bytes=" in path:
+#     if '?bytes=' in path:
 #         row = read_s3_row(path)
 #         if row is not None:
 #             if show_loc:

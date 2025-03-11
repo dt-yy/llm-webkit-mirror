@@ -22,7 +22,7 @@ def read_s3_object_detailed(
     """
     ### Usage
     ```
-    obj = read_object("s3://bkt/path/to/file.txt")
+    obj = read_object('s3://bkt/path/to/file.txt')
     for line in obj.iter_lines():
       handle(line)
     ```
@@ -37,9 +37,9 @@ def read_s3_object_detailed(
             if sep == ',':
                 to = frm + to - 1
             if to >= frm:
-                kwargs['Range'] = f"bytes={frm}-{to}"
+                kwargs['Range'] = f'bytes={frm}-{to}'
             elif frm > 0:
-                kwargs['Range'] = f"bytes={frm}-"
+                kwargs['Range'] = f'bytes={frm}-'
 
     obj = get_s3_object(path, client=client, **kwargs)
     return obj.pop('Body'), obj
@@ -53,7 +53,7 @@ def read_s3_object_bytes_detailed(path: str, size_limit=0, client=None):
     last_e = None
     while True:
         if retries > 5:
-            msg = f"Retry exhausted for reading [{path}]"
+            msg = f'Retry exhausted for reading [{path}]'
             raise Exception(msg) from last_e
         try:
             stream, obj = read_s3_object_detailed(path, client=client)
@@ -94,7 +94,7 @@ def read_records(path: str, stream: io.IOBase, buffer_size: int):
     """do not handle stream.close()"""
     offset = 0
 
-    # if path.endswith(".warc") or path.endswith(".warc.gz"):
+    # if path.endswith('.warc') or path.endswith('.warc.gz'):
     #     from .read_warc import read_warc_records
     #
     #     yield from read_warc_records(path, stream)
@@ -114,7 +114,7 @@ def read_records(path: str, stream: io.IOBase, buffer_size: int):
     elif path.endswith('.bz2'):
         raise Exception('bz2 is not supported yet.')
 
-    # elif path.endswith(".7z"):
+    # elif path.endswith('.7z'):
     #     from .read_7z import SevenZipReadStream
     #
     #     stream1 = SevenZipReadStream(stream)
@@ -124,7 +124,7 @@ def read_records(path: str, stream: io.IOBase, buffer_size: int):
     #         line = stream2.readline()
     #         if not line:
     #             break
-    #         yield (line.decode("utf-8"), int(-1), int(0))
+    #         yield (line.decode('utf-8'), int(-1), int(0))
 
     else:  # plaintext
         stream1 = stream
@@ -153,7 +153,7 @@ def read_s3_rows(path: str, use_stream=False, limit=0, size_limit=0, client=None
             value, offset, length = record
 
             if offset >= 0:
-                loc = f"{path}?bytes={offset},{length}"
+                loc = f'{path}?bytes={offset},{length}'
             else:
                 loc = path
 

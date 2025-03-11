@@ -47,11 +47,11 @@ class S3DocWriter:
         compression='',
     ) -> None:
         if not path.startswith('s3://'):
-            raise Exception(f"invalid s3 path [{path}].")
+            raise Exception(f'invalid s3 path [{path}].')
 
         compression = _compressions.get(compression)
-        if compression and not path.endswith(f".{compression}"):
-            raise Exception(f"path must endswith [.{compression}]")
+        if compression and not path.endswith(f'.{compression}'):
+            raise Exception(f'path must endswith [.{compression}]')
         if not compression and path.endswith('.gz'):
             compression = 'gz'
         if not compression and path.endswith('.bz2'):
@@ -67,7 +67,7 @@ class S3DocWriter:
         os.makedirs(tmp_dir, exist_ok=True)
 
         ext = self.__get_ext(path)
-        self.tmp_file = os.path.join(tmp_dir, f"{str(uuid.uuid4())}.{ext}")
+        self.tmp_file = os.path.join(tmp_dir, f'{str(uuid.uuid4())}.{ext}')
         self.tmp_fh = open(self.tmp_file, 'ab')
         self.offset = 0
 
@@ -95,7 +95,7 @@ class S3DocWriter:
 
         if self.compression == 'gz':
             if not self.skip_loc and FIELD_ID in d:
-                d['doc_loc'] = f"{self.path}?bytes={self.offset},0"
+                d['doc_loc'] = f'{self.path}?bytes={self.offset},0'
             buf = io.BytesIO()
             with gzip.GzipFile(fileobj=buf, mode='wb') as f:
                 f.write(json_encode(d))
@@ -103,7 +103,7 @@ class S3DocWriter:
 
         elif self.compression == 'bz2':
             if not self.skip_loc and FIELD_ID in d:
-                d['doc_loc'] = f"{self.path}?bytes={self.offset},0"
+                d['doc_loc'] = f'{self.path}?bytes={self.offset},0'
             buf = io.BytesIO()
             with bz2.BZ2File(buf, mode='wb') as f:
                 f.write(json_encode(d))
@@ -116,7 +116,7 @@ class S3DocWriter:
             if not self.skip_loc and FIELD_ID in d:
                 doc_len, last_len = len(doc_bytes), 0
                 while doc_len != last_len:
-                    d['doc_loc'] = f"{self.path}?bytes={self.offset},{doc_len}"
+                    d['doc_loc'] = f'{self.path}?bytes={self.offset},{doc_len}'
                     doc_bytes = json_encode(d)
                     doc_len, last_len = len(doc_bytes), doc_len
 

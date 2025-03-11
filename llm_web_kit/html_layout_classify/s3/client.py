@@ -65,11 +65,11 @@ def _restore_and_wait(client, bucket: str, key: str, path: str):
         if not restore:
             req = {'Days': 1, 'GlacierJobParameters': {'Tier': 'Standard'}}
             client.restore_object(Bucket=bucket, Key=key, RestoreRequest=req)
-            print(f"restoration-started: {path}")
+            print(f'restoration-started: {path}')
         elif 'ongoing-request="true"' in restore:
-            print(f"restoration-ongoing: {path}")
+            print(f'restoration-ongoing: {path}')
         elif 'ongoing-request="false"' in restore:
-            print(f"restoration-complete: {path}")
+            print(f'restoration-complete: {path}')
             break
         time.sleep(3)
 
