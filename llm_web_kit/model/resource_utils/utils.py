@@ -32,13 +32,6 @@ def decide_cache_dir():
 CACHE_DIR, CACHE_TMP_DIR = decide_cache_dir()
 
 
-if not os.path.exists(CACHE_DIR):
-    os.makedirs(CACHE_DIR, exist_ok=True)
-
-if not os.path.exists(CACHE_TMP_DIR):
-    os.makedirs(CACHE_TMP_DIR, exist_ok=True)
-
-
 def try_remove(path: str):
     """Attempt to remove a file by os.remove or to remove a directory by
     shutil.rmtree and ignore exceptions."""
@@ -53,6 +46,7 @@ def try_remove(path: str):
 
 def import_transformer():
     os.environ['HF_HOME'] = CACHE_DIR
+    os.makedirs(CACHE_DIR, exist_ok=True)
     import transformers
 
     return transformers
