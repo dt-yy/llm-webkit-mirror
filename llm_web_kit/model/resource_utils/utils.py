@@ -49,3 +49,10 @@ def try_remove(path: str):
             os.remove(path)
     except Exception:
         pass
+
+
+def import_transformer():
+    os.environ['HF_HOME'] = CACHE_DIR
+    import transformers
+
+    return transformers
