@@ -107,7 +107,7 @@ mkdir -p ${SLURM_LOG_DIR}/error
 export SLURM_SUBMIT_DIR=${SLURM_LOG_DIR}
 export LLM_WEB_KIT_CFG_PATH=/share/xuchao/.llm-web-kit-pageclassify.jsonc
 TASK_NUM="${TASK_NUM:-1}"  # Default to 1 if not provided
-
+DEBUG="${DEBUG:-0}"
 
 # Check required arguments
 if [ -z "$PARTATION" ] || [ -z "$TAG" ]; then
@@ -129,9 +129,9 @@ do
             # total_reserved_idle=$(calculate_total_reserved_idle)
             # echo -e "check  $partation spot \n tt:$tt \n total_spot_used: $total_spot_used\n total_reserved_idle: $total_reserved_idle \n PD_COUNT: $PD_COUNT"
             if [ $DEBUG -eq 1 ]; then
-                LOG_LEVEL=ERROR srun -p ${partation} --quotatype=spot --output=${SLURM_LOG_DIR}/logs/output_%j.out --export=ALL --cpus-per-task=${TASK_NUM} --error=${SLURM_LOG_DIR}/error/error_%j.err -N ${TASK_NUM} --gres=gpu:1   python main.py  ${SERVER_ADDR} --result-save-dir ${RESULT_SAVE_DIR}
+                LOG_LEVEL=ERROR srun -p ${partation} --quotatype=spot --output=${SLURM_LOG_DIR}/logs/output_%j.out --export=ALL  --error=${SLURM_LOG_DIR}/error/error_%j.err -N 1 -n${TASK_NUM} --gres=gpu:1   python main.py  ${SERVER_ADDR} --result-save-dir ${RESULT_SAVE_DIR}
             else
-                LOG_LEVEL=ERROR srun -p ${partation} --quotatype=spot --output=${SLURM_LOG_DIR}/logs/output_%j.out --export=ALL --cpus-per-task=${TASK_NUM} --error=${SLURM_LOG_DIR}/error/error_%j.err -N ${TASK_NUM} --gres=gpu:1 --async  python main.py  ${SERVER_ADDR} --result-save-dir ${RESULT_SAVE_DIR}
+                LOG_LEVEL=ERROR srun -p ${partation} --quotatype=spot --output=${SLURM_LOG_DIR}/logs/output_%j.out --export=ALL  --error=${SLURM_LOG_DIR}/error/error_%j.err -N 1 -n ${TASK_NUM} --gres=gpu:1 --async  python main.py  ${SERVER_ADDR} --result-save-dir ${RESULT_SAVE_DIR}
             fi
             echo "use ${partation} submit job succ, submit next job now..."
             rm batchscript* 2>/dev/null

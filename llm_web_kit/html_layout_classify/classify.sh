@@ -65,6 +65,7 @@ mkdir -p ${SLURM_LOG_DIR}/error
 export SLURM_SUBMIT_DIR=${SLURM_LOG_DIR}
 export LLM_WEB_KIT_CFG_PATH=/share/${MY_NAME}/.llm-web-kit-pageclassify.jsonc
 TASK_NUM="${TASK_NUM:-1}"  # Default to 1 if not provided
+DEBUG="${DEBUG:-0}"
 SERVER_ADDR="${SERVER_ADDR:-http://127.0.0.1:5000}"
 PYTHON=/share/${MY_NAME}/.conda/envs/webkitdev/bin/python
 
@@ -87,10 +88,10 @@ do
     if [ $avai_gpu -gt 0 ]; then
         # 提交一个任务，睡眠
         if [ $DEBUG -eq 1 ]; then
-            LOG_LEVEL=INFO  srun -p ${PARTATION} --output=${SLURM_LOG_DIR}/logs/output_%j.out --export=ALL --cpus-per-task=${TASK_NUM} --error=${SLURM_LOG_DIR}/error/error_%j.err  --gres=gpu:1 -N ${TASK_NUM}  ${PYTHON} main.py --server-addr ${SERVER_ADDR} --result-save-dir ${RESULT_SAVE_DIR}
+            LOG_LEVEL=INFO  srun -p ${PARTATION} --output=${SLURM_LOG_DIR}/logs/output_%j.out --export=ALL  --error=${SLURM_LOG_DIR}/error/error_%j.err  --gres=gpu:1 -N 1 -n ${TASK_NUM}  ${PYTHON} main.py --server-addr ${SERVER_ADDR} --result-save-dir ${RESULT_SAVE_DIR}
         else
 
-            LOG_LEVEL=ERROR  srun -p ${PARTATION} --output=${SLURM_LOG_DIR}/logs/output_%j.out --export=ALL --cpus-per-task=${TASK_NUM} --error=${SLURM_LOG_DIR}/error/error_%j.err  --gres=gpu:1 --async -N ${TASK_NUM}  ${PYTHON}  main.py --server-addr ${SERVER_ADDR} --result-save-dir ${RESULT_SAVE_DIR}
+            LOG_LEVEL=ERROR  srun -p ${PARTATION} --output=${SLURM_LOG_DIR}/logs/output_%j.out --export=ALL --error=${SLURM_LOG_DIR}/error/error_%j.err  --gres=gpu:1 --async -N 1 -n ${TASK_NUM}  ${PYTHON}  main.py --server-addr ${SERVER_ADDR} --result-save-dir ${RESULT_SAVE_DIR}
         fi
         # TODO 判断任务是否提交成功
         submited_job_num=$((submited_job_num+1))
