@@ -3,6 +3,7 @@ import os
 import commentjson as json
 
 from llm_web_kit.exception.exception import ModelResourceException
+from llm_web_kit.libs.path_lib import get_py_pkg_root_dir
 
 
 def load_config() -> dict:
@@ -41,3 +42,17 @@ def load_config() -> dict:
         config = json.load(f)
 
     return config
+
+
+def load_pipe_tpl(pipe_name: str) -> dict:
+    """Load the pipe template for the web kit.
+
+    Args:
+        pipe_name(str): The name of the pipe to load
+
+    Returns: pipe_tpl(dict): The pipe template dictionary
+    """
+    pipe_tpl_path = os.path.join(get_py_pkg_root_dir(), 'config', 'pipe_tpl', f'{pipe_name}.jsonc')
+    with open(pipe_tpl_path, 'r', encoding='utf-8') as f:
+        pipe_tpl = json.load(f)
+    return pipe_tpl
