@@ -142,6 +142,10 @@
     "CleanModelException": {
       "code": 46000000,
       "message": "Clean model exception"
+    },
+    "CleanModelUnsupportedLanguageException": {
+      "code": 46100000,
+      "message": "Clean model unsupported language exception"
     }
   }
 }
