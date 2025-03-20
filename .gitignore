@@ -4,6 +4,7 @@
 venv*/
 envs/
 slurm_logs/
+local_tests/
 
 __pycache__
 *.log
@@ -45,3 +46,5 @@ output/
 coverage.xml
 
 llm_web_kit.egg-info/*
+.llm-web-kit.jsonc
+.llm-web-kit-pageclassify.jsonc

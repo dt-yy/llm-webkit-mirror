@@ -24,11 +24,11 @@ jobs:
   pr_ut_test:
     runs-on: ubuntu-latest
     env:
-      LLM_WEB_KIT_CFG_PATH: ${{ github.workspace }}/llm_web_kit/pipeline/pipe_tpl/pipeline_html_tpl.jsonc
+      LLM_WEB_KIT_CFG_PATH: ${{ github.workspace }}/bench/config/ours_config.jsonc
       PYTHONPATH: $PYTHONPATH:${{ github.workspace }}
     strategy:
       matrix:
-        python-version: [3.10.15]
+        python-version: [3.10.16]
     steps:
       - name: Checkout code
         uses: actions/checkout@v4

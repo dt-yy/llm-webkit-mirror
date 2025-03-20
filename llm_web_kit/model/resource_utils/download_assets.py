@@ -1,74 +1,126 @@
+"""本模块提供从 S3 或 HTTP 下载文件的功能，支持校验和验证和并发下载锁机制。
+
+主要功能：
+1. 计算文件的 MD5 和 SHA256 校验和
+2. 通过 S3 或 HTTP 连接下载文件
+3. 使用文件锁防止并发下载冲突
+4. 自动校验文件完整性
+
+类说明：
+- Connection: 抽象基类，定义下载连接接口
+- S3Connection: 实现 S3 文件下载连接
+- HttpConnection: 实现 HTTP 文件下载连接
+
+函数说明：
+- calc_file_md5/sha256: 计算文件哈希值
+- verify_file_checksum: 校验文件哈希
+- download_auto_file_core: 核心下载逻辑
+- download_auto_file: 自动下载入口函数（含锁机制）
+"""
+
 import hashlib
 import os
-import shutil
 import tempfile
-from typing import Iterable
+from functools import partial
+from typing import Iterable, Optional
 
 import requests
 from tqdm import tqdm
 
-from llm_web_kit.config.cfg_reader import load_config
+from llm_web_kit.exception.exception import ModelResourceException
 from llm_web_kit.libs.logger import mylogger as logger
 from llm_web_kit.model.resource_utils.boto3_ext import (get_s3_client,
                                                         is_s3_path,
                                                         split_s3_path)
-
-
-def decide_cache_dir():
-    """Get the cache directory for the web kit. The.
-
-    Returns:
-        _type_: _description_
-    """
-    cache_dir = '~/.llm_web_kit_cache'
-
-    if 'WEB_KIT_CACHE_DIR' in os.environ:
-        cache_dir = os.environ['WEB_KIT_CACHE_DIR']
-
-    try:
-        config = load_config()
-        cache_dir = config['resources']['common']['cache_path']
-        print(config)
-    except Exception:
-        pass
-
-    if cache_dir.startswith('~/'):
-        cache_dir = os.path.expanduser(cache_dir)
-
-    return cache_dir
-
-
-CACHE_DIR = decide_cache_dir()
+from llm_web_kit.model.resource_utils.process_with_lock import \
+    process_and_verify_file_with_lock
+from llm_web_kit.model.resource_utils.utils import CACHE_TMP_DIR
 
 
 def calc_file_md5(file_path: str) -> str:
-    """Calculate the MD5 checksum of a file."""
+    """计算文件的 MD5 校验和.
+
+    Args:
+        file_path: 文件路径
+
+    Returns:
+        MD5 哈希字符串（32位十六进制）
+    """
     with open(file_path, 'rb') as f:
         return hashlib.md5(f.read()).hexdigest()
 
 
 def calc_file_sha256(file_path: str) -> str:
-    """Calculate the sha256 checksum of a file."""
+    """计算文件的 SHA256 校验和.
+
+    Args:
+        file_path: 文件路径
+
+    Returns:
+        SHA256 哈希字符串（64位十六进制）
+    """
     with open(file_path, 'rb') as f:
         return hashlib.sha256(f.read()).hexdigest()
 
 
-class Connection:
+def verify_file_checksum(
+    file_path: str, md5_sum: Optional[str] = None, sha256_sum: Optional[str] = None
+) -> bool:
+    """验证文件的 MD5 或 SHA256 校验和.
 
-    def __init__(self, *args, **kwargs):
-        pass
+    Args:
+        file_path: 待验证文件路径
+        md5_sum: 预期 MD5 值（与 sha256_sum 二选一）
+        sha256_sum: 预期 SHA256 值（与 md5_sum 二选一）
+
+    Returns:
+        bool: 校验是否通过
+
+    Raises:
+        ModelResourceException: 当未提供或同时提供两个校验和时
+    """
+    if not (bool(md5_sum) ^ bool(sha256_sum)):
+        raise ModelResourceException(
+            'Exactly one of md5_sum or sha256_sum must be provided'
+        )
+    if not os.path.exists(file_path):
+        return False
+    if md5_sum:
+        actual = calc_file_md5(file_path)
+        if actual != md5_sum:
+            logger.warning(
+                f'MD5 mismatch: expect {md5_sum[:8]}..., got {actual[:8]}...'
+            )
+            return False
+
+    if sha256_sum:
+        actual = calc_file_sha256(file_path)
+        if actual != sha256_sum:
+            logger.warning(
+                f'SHA256 mismatch: expect {sha256_sum[:8]}..., got {actual[:8]}...'
+            )
+            return False
+
+    return True
+
+
+class Connection:
+    """下载连接的抽象基类."""
 
     def get_size(self) -> int:
+        """获取文件大小（字节）"""
         raise NotImplementedError
 
     def read_stream(self) -> Iterable[bytes]:
+        """返回数据流的迭代器."""
         raise NotImplementedError
 
 
 class S3Connection(Connection):
+    """S3 文件下载连接."""
 
     def __init__(self, resource_path: str):
-        super().__init__(resource_path)
+        super().__init__()
         self.client = get_s3_client(resource_path)
         self.bucket, self.key = split_s3_path(resource_path)
         self.obj = self.client.get_object(Bucket=self.bucket, Key=self.key)
@@ -82,13 +134,15 @@ class S3Connection(Connection):
             yield chunk
 
     def __del__(self):
-        self.obj['Body'].close()
+        if hasattr(self, 'obj') and 'Body' in self.obj:
+            self.obj['Body'].close()
 
 
 class HttpConnection(Connection):
+    """HTTP 文件下载连接."""
 
     def __init__(self, resource_path: str):
-        super().__init__(resource_path)
+        super().__init__()
         self.response = requests.get(resource_path, stream=True)
         self.response.raise_for_status()
 
@@ -101,87 +155,99 @@ class HttpConnection(Connection):
             yield chunk
 
     def __del__(self):
-        self.response.close()
+        if hasattr(self, 'response'):
+            self.response.close()
 
 
-def download_auto_file(resource_path: str, target_path: str, md5_sum: str = '', sha256_sum: str = '',exist_ok=True) -> str:
-    """Download a file from a given resource path (either an S3 path or an HTTP
-    URL) to a target path on the local file system.
-
-    This function will first download the file to a temporary file, then move the temporary file to the target path after
-    the download is complete. A progress bar will be displayed during the download.
-
-    If the size of the downloaded file does not match the expected size, an exception will be raised.
+def download_to_temp(conn: Connection, progress_bar: tqdm, download_path: str):
+    """下载文件到临时目录.
 
     Args:
-        resource_path (str): The path of the resource to download. This can be either an S3 path (e.g., "s3://bucket/key")
-            or an HTTP URL (e.g., "http://example.com/file").
-        target_path (str): The path on the local file system where the downloaded file should be saved.\
-        exist_ok (bool, optional): If False, raise an exception if the target path already exists. Defaults to True.
+        conn: 下载连接
+        progress_bar: 进度条
+        download_path: 临时文件路径
+    """
+
+    with open(download_path, 'wb') as f:
+        for chunk in conn.read_stream():
+            if chunk:  # 防止空chunk导致进度条卡死
+                f.write(chunk)
+                progress_bar.update(len(chunk))
+
+
+def download_auto_file_core(
+    resource_path: str,
+    target_path: str,
+) -> str:
+    """下载文件的核心逻辑（无锁）
+
+    Args:
+        resource_path: 源文件路径（S3或HTTP URL）
+        target_path: 目标保存路径
 
     Returns:
-        str: The path where the downloaded file was saved.
+        下载后的文件路径
 
     Raises:
-        Exception: If an error occurs during the download, or if the size of the downloaded file does not match the
-            expected size, or if the temporary file cannot be moved to the target path.
+        ModelResourceException: 下载失败或文件大小不匹配时
     """
-    if os.path.exists(target_path):
-        # if the file already exists, check if it has the correct md5 sum
-        if md5_sum:
-            file_md5 = calc_file_md5(target_path)
-            if file_md5 == md5_sum:
-                logger.info(f'File {target_path} already exists and has the correct md5 sum')
-                return target_path
-            else:
-                logger.info(f'File {target_path} already exists but has incorrect md5 sum.')
-        # if the file already exists, and not passed md5_sum
-        if sha256_sum:
-            file_sha256 = calc_file_sha256(target_path)
-            if file_sha256 == sha256_sum:
-                logger.info(f'File {target_path} already exists and has the correct sha256 sum')
-                return target_path
-            else:
-                logger.info(f'File {target_path} already exists but has incorrect sha256 sum.')
-        if not exist_ok:
-            # if not exist_ok, raise exception
-            raise Exception(f'File {target_path} already exists and exist_ok is False')
-        else:
-            os.remove(target_path)
+    # 初始化连接
+    conn_cls = S3Connection if is_s3_path(resource_path) else HttpConnection
+    conn = conn_cls(resource_path)
+    total_size = conn.get_size()
 
-    if is_s3_path(resource_path):
-        conn = S3Connection(resource_path)
-    else:
-        conn = HttpConnection(resource_path)
+    # 配置进度条
+    logger.info(f'Downloading {resource_path} => {target_path}')
+    progress = tqdm(total=total_size, unit='iB', unit_scale=True)
 
-    total_size_in_bytes = conn.get_size()
-
-    logger.info(f'Downloading {resource_path} to {target_path}, but first to a temporary file')
-    progress_bar = tqdm(total=total_size_in_bytes, unit='iB', unit_scale=True)
-    with tempfile.NamedTemporaryFile() as tmp_file:
-        tmp_file_path = tmp_file.name
-        logger.info(f'Donwloading {resource_path} to {tmp_file_path}')
+    # 使用临时目录确保原子性
+    os.makedirs(CACHE_TMP_DIR, exist_ok=True)
+    with tempfile.TemporaryDirectory(dir=CACHE_TMP_DIR) as temp_dir:
+        download_path = os.path.join(temp_dir, 'download_file')
         try:
+            download_to_temp(conn, progress, download_path)
 
-            with open(tmp_file_path, 'wb') as f:
-                for chunk in conn.read_stream():
-                    progress_bar.update(len(chunk))
-                    f.write(chunk)
+            # 验证文件大小
+            actual_size = os.path.getsize(download_path)
+            if total_size != actual_size:
+                raise ModelResourceException(
+                    f'Size mismatch: expected {total_size}, got {actual_size}'
+                )
 
-            local_asset_size = os.path.getsize(tmp_file_path)
-            if local_asset_size != total_size_in_bytes:
-                raise Exception(f'Downloaded asset size {local_asset_size} does not match expected size {total_size_in_bytes}')
-
-            logger.info(f'Download complete. Copying {tmp_file_path} to {target_path}')
+            # 移动到目标路径
             os.makedirs(os.path.dirname(target_path), exist_ok=True)
-            shutil.copy(tmp_file_path, target_path)
-
-            if not os.path.exists(target_path):
-                raise Exception(f'Failed to move {tmp_file_path} to {target_path}')
-        except Exception as e:
-            logger.error(f'Error downloading {resource_path}: {e}')
-            raise e
+            os.rename(download_path, target_path)  # 替换 os.rename
+            return target_path
         finally:
-            progress_bar.close()
+            progress.close()
 
-    return target_path
+
+def download_auto_file(
+    resource_path: str,
+    target_path: str,
+    md5_sum: str = '',
+    sha256_sum: str = '',
+    lock_suffix: str = '.lock',
+    lock_timeout: float = 60,
+) -> str:
+    """自动下载文件（含锁机制和校验）
+
+    Args:
+        resource_path: 源文件路径
+        target_path: 目标保存路径
+        md5_sum: 预期 MD5 值（与 sha256_sum 二选一）
+        sha256_sum: 预期 SHA256 值（与 md5_sum 二选一）
+        lock_suffix: 锁文件后缀
+        lock_timeout: 锁超时时间（秒）
+
+    Returns:
+        下载后的文件路径
+
+    Raises:
+        ModelResourceException: 校验失败或下载错误时
+    """
+    process_func = partial(download_auto_file_core, resource_path, target_path)
+    verify_func = partial(verify_file_checksum, target_path, md5_sum, sha256_sum)
+    return process_and_verify_file_with_lock(
+        process_func, verify_func, target_path, lock_suffix, lock_timeout
+    )
