@@ -26,7 +26,7 @@ class MathRecognizer(BaseHTMLElementRecognizer):
         self.cm = CCMATH()
 
     @override
-    def recognize(self, base_url: str, main_html_lst: List[Tuple[str, str]], raw_html: str) -> List[Tuple[str, str]]:
+    def recognize(self, base_url: str, main_html_lst: List[Tuple[HtmlElement, HtmlElement]], raw_html: str) -> List[Tuple[HtmlElement, HtmlElement]]:
         """父类，解析数学公式元素.
 
         Args:
@@ -56,7 +56,7 @@ class MathRecognizer(BaseHTMLElementRecognizer):
         return result
 
     @override
-    def to_content_list_node(self, base_url: str, parsed_content: str, raw_html_segment: str) -> dict:
+    def to_content_list_node(self, base_url: str, parsed_content: HtmlElement, raw_html_segment: str) -> dict:
         """将content转换成content_list_node.
         每种类型的html元素都有自己的content-list格式：参考 docs/specification/output_format/content_list_spec.md
         例如代码的返回格式：
@@ -78,7 +78,7 @@ class MathRecognizer(BaseHTMLElementRecognizer):
         Returns:
             dict: content_list_node
         """
-        tree = self._build_html_tree(parsed_content)
+        tree = parsed_content
         if tree is None:
             raise HtmlMathRecognizerException(f'Failed to load html: {parsed_content}')
 
@@ -125,7 +125,7 @@ class MathRecognizer(BaseHTMLElementRecognizer):
         """
         # node是从cc_html中解析出来的lxml节点
         self.cm.url = base_url
-        tree = self._build_html_tree(cc_html)
+        tree = cc_html
         math_render_type = math_render.get_render_type()
         if tree is None:
             raise HtmlMathRecognizerException(f'Failed to load html: {cc_html}')
@@ -171,20 +171,20 @@ class MathRecognizer(BaseHTMLElementRecognizer):
         # 保存处理后的html
         # with open('math_physicsforums_1_processed.html', 'w') as f:
         #     f.write(self._element_to_html(tree))
-        return self.html_split_by_tags(self._element_to_html(tree), [CCTag.CC_MATH_INTERLINE])
+        return self.html_split_by_tags(tree, [CCTag.CC_MATH_INTERLINE])
 
-    def process_mathjax_html(self, cc_html: str, o_html: str, math_render: BaseMathRender, base_url: str) -> List[Tuple[str, str]]:
+    def process_mathjax_html(self, cc_html: HtmlElement, o_html: HtmlElement, math_render: BaseMathRender, base_url: str) -> List[Tuple[HtmlElement, HtmlElement]]:
         """处理mathjax有自定义标识符的数学公式."""
         self.cm.url = base_url
         try:
-            tree = self._build_html_tree(cc_html)
+            tree = cc_html
             math_render.find_math(tree)
 
             # with open('math_physicsforums_1_processed.html', 'w') as f:
             #     f.write(self._element_to_html(tree))
         except Exception as e:
             raise HtmlMathMathjaxRenderRecognizerException(f'处理mathjax有自定义标识符的数学公式失败: {e}')
-        return self.html_split_by_tags(self._element_to_html(tree), [CCTag.CC_MATH_INTERLINE])
+        return self.html_split_by_tags(tree, [CCTag.CC_MATH_INTERLINE])
 
 
 if __name__ == '__main__':
