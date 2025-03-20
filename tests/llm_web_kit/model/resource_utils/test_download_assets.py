@@ -1,195 +1,291 @@
-import hashlib
+import io
 import os
 import tempfile
-import time
 import unittest
-from unittest.mock import MagicMock, call, patch
+from typing import Tuple
+from unittest.mock import MagicMock, patch
 
-from llm_web_kit.exception.exception import ModelResourceException
 from llm_web_kit.model.resource_utils.download_assets import (
     HttpConnection, S3Connection, calc_file_md5, calc_file_sha256,
-    download_auto_file, download_auto_file_core, download_to_temp,
-    verify_file_checksum)
+    decide_cache_dir, download_auto_file)
 
 
-class TestChecksumCalculations:
+class Test_decide_cache_dir:
+
+    @patch('os.environ', {'WEB_KIT_CACHE_DIR': '/env/cache_dir'})
+    @patch('llm_web_kit.model.resource_utils.download_assets.load_config')
+    def test_only_env(self, get_configMock):
+        get_configMock.side_effect = Exception
+        assert decide_cache_dir() == '/env/cache_dir'
+
+    @patch('os.environ', {})
+    @patch('llm_web_kit.model.resource_utils.download_assets.load_config')
+    def test_only_config(self, get_configMock):
+        get_configMock.return_value = {'resources': {'common': {'cache_path': '/config/cache_dir'}}}
+        assert decide_cache_dir() == '/config/cache_dir'
+
+    @patch('os.environ', {})
+    @patch('llm_web_kit.model.resource_utils.download_assets.load_config')
+    def test_default(self, get_configMock):
+        get_configMock.side_effect = Exception
+        # if no env or config, use default
+        assert decide_cache_dir() == os.path.expanduser('~/.llm_web_kit_cache')
+
+    @patch('os.environ', {'WEB_KIT_CACHE_DIR': '/env/cache_dir'})
+    @patch('llm_web_kit.model.resource_utils.download_assets.load_config')
+    def test_both(self, get_configMock):
+        get_configMock.return_value = {'resources': {'common': {'cache_path': '/config/cache_dir'}}}
+        # config is preferred
+        assert decide_cache_dir() == '/config/cache_dir'
+
+
+class Test_calc_file_md5:
 
     def test_calc_file_md5(self):
+        import hashlib
+
         with tempfile.NamedTemporaryFile() as f:
-            test_data = b'hello world' * 100
-            f.write(test_data)
+            test_bytes = b'hello world' * 10000
+            f.write(test_bytes)
             f.flush()
-            expected = hashlib.md5(test_data).hexdigest()
-            assert calc_file_md5(f.name) == expected
+            assert calc_file_md5(f.name) == hashlib.md5(test_bytes).hexdigest()
+
+
+class Test_calc_file_sha256:
 
     def test_calc_file_sha256(self):
+        import hashlib
+
         with tempfile.NamedTemporaryFile() as f:
-            test_data = b'hello world' * 100
-            f.write(test_data)
+            test_bytes = b'hello world' * 10000
+            f.write(test_bytes)
             f.flush()
-            expected = hashlib.sha256(test_data).hexdigest()
-            assert calc_file_sha256(f.name) == expected
+            assert calc_file_sha256(f.name) == hashlib.sha256(test_bytes).hexdigest()
 
 
-class TestConnections:
-
-    @patch('requests.get')
-    def test_http_connection(self, mock_get):
-        test_data = b'test data'
-        mock_response = MagicMock()
-        mock_response.headers = {'content-length': str(len(test_data))}
-        mock_response.iter_content.return_value = [test_data]
-        mock_get.return_value = mock_response
-
-        conn = HttpConnection('http://example.com')
-        assert conn.get_size() == len(test_data)
-        assert next(conn.read_stream()) == test_data
-        del conn
-        mock_response.close.assert_called()
-
-    @patch('llm_web_kit.model.resource_utils.download_assets.get_s3_client')
-    def test_s3_connection(self, mock_client):
-        mock_body = MagicMock()
-        mock_body.read.side_effect = [b'chunk1', b'chunk2', b'']
-        mock_client.return_value.get_object.return_value = {
-            'ContentLength': 100,
-            'Body': mock_body,
-        }
-
-        conn = S3Connection('s3://bucket/key')
-        assert conn.get_size() == 100
-        assert list(conn.read_stream()) == [b'chunk1', b'chunk2']
-        del conn
-        mock_body.close.assert_called()
+def read_mockio_size(mock_io: io.BytesIO, size: int):
+    while True:
+        data = mock_io.read(size)
+        if not data:
+            break
+        yield data
 
 
-class TestDownloadCoreFunctionality(unittest.TestCase):
-
-    @patch('llm_web_kit.model.resource_utils.download_assets.CACHE_TMP_DIR', '/tmp')
-    @patch('llm_web_kit.model.resource_utils.download_assets.S3Connection')
-    def test_successful_download(self, mock_conn):
-        # Mock connection
-        download_data = b'data'
-        mock_instance = MagicMock()
-        mock_instance.read_stream.return_value = [download_data]
-        mock_instance.get_size.return_value = len(download_data)
-        mock_conn.return_value = mock_instance
-
-        with tempfile.TemporaryDirectory() as tmpdir:
-            target = os.path.join(tmpdir, 'target.file')
-            result = download_auto_file_core('s3://bucket/key', target)
-
-            assert result == target
-            assert os.path.exists(target)
-
-    @patch('llm_web_kit.model.resource_utils.download_assets.CACHE_TMP_DIR', '/tmp')
-    @patch('llm_web_kit.model.resource_utils.download_assets.HttpConnection')
-    def test_size_mismatch(self, mock_conn):
-        download_data = b'data'
-        mock_instance = MagicMock()
-        mock_instance.read_stream.return_value = [download_data]
-        mock_instance.get_size.return_value = len(download_data) + 1
-
-        mock_conn.return_value = mock_instance
-
-        with tempfile.TemporaryDirectory() as tmpdir:
-            target = os.path.join(tmpdir, 'target.file')
-            print(target)
-            with self.assertRaises(ModelResourceException):
-                download_auto_file_core('http://example.com', target)
+def get_mock_http_response(test_data: bytes) -> Tuple[MagicMock, int]:
+    mock_io = io.BytesIO(test_data)
+    content_length = len(test_data)
+    response_mock = MagicMock()
+    response_mock.headers = {'content-length': str(content_length)}
+    response_mock.iter_content.return_value = read_mockio_size(mock_io, 1024)
+    return response_mock, content_length
 
 
-class TestDownloadToTemp:
-
-    def test_normal_download(self):
-        mock_conn = MagicMock()
-        mock_conn.read_stream.return_value = [b'chunk1', b'chunk2']
-        mock_progress = MagicMock()
-
-        with tempfile.TemporaryDirectory() as tmpdir:
-            temp_path = os.path.join(tmpdir, 'temp.file')
-            download_to_temp(mock_conn, mock_progress, temp_path)
-
-            with open(temp_path, 'rb') as f:
-                assert f.read() == b'chunk1chunk2'
-            mock_progress.update.assert_has_calls([call(6), call(6)])
-
-    def test_empty_chunk_handling(self):
-        mock_conn = MagicMock()
-        mock_conn.read_stream.return_value = [b'', b'data', b'']
-        mock_progress = MagicMock()
-
-        with tempfile.TemporaryDirectory() as tmpdir:
-            temp_path = os.path.join(tmpdir, 'temp.file')
-            download_to_temp(mock_conn, mock_progress, temp_path)
-
-            with open(temp_path, 'rb') as f:
-                assert f.read() == b'data'
+def get_mock_s3_response(test_data: bytes) -> Tuple[MagicMock, int]:
+    mock_io = io.BytesIO(test_data)
+    content_length = len(test_data)
+    clientMock = MagicMock()
+    body = MagicMock()
+    body.read.side_effect = read_mockio_size(mock_io, 1024)
+    clientMock.get_object.return_value = {'ContentLength': content_length, 'Body': body}
+    return clientMock, content_length
 
 
-class TestVerifyChecksum(unittest.TestCase):
+@patch('llm_web_kit.model.resource_utils.download_assets.get_s3_client')
+@patch('llm_web_kit.model.resource_utils.download_assets.split_s3_path')
+def test_S3Connection(split_s3_pathMock, get_s3_clientMock):
+    test_data = b'hello world' * 100
 
-    def setUp(self):
-        self.temp_file = tempfile.NamedTemporaryFile()
-        self.temp_file.write(b'test data')
-        self.temp_file.flush()
+    # Mock the split_s3_path function
+    split_s3_pathMock.return_value = ('bucket', 'key')
 
-    def tearDown(self):
-        self.temp_file.close()
+    # Mock the S3 client
+    clientMock, content_length = get_mock_s3_response(test_data)
+    get_s3_clientMock.return_value = clientMock
 
-    @patch('llm_web_kit.model.resource_utils.download_assets.calc_file_md5')
-    def test_valid_md5(self, mock_md5):
-        mock_md5.return_value = 'correct_md5'
-        assert verify_file_checksum(self.temp_file.name, md5_sum='correct_md5') is True
+    # Test the S3Connection class
+    conn = S3Connection('s3://bucket/key')
+    assert conn.get_size() == content_length
+    assert b''.join(conn.read_stream()) == test_data
 
-    @patch('llm_web_kit.model.resource_utils.download_assets.calc_file_sha256')
-    def test_invalid_sha256(self, mock_sha):
-        mock_sha.return_value = 'wrong_sha'
-        assert verify_file_checksum(self.temp_file.name, sha256_sum='correct_sha') is False
 
-    def test_no_such_file(self):
-        assert verify_file_checksum('dummy', md5_sum='a') is False
+@patch('requests.get')
+def test_HttpConnection(requests_get_mock):
+    test_data = b'hello world' * 100
+    response_mock, content_length = get_mock_http_response(test_data)
+    requests_get_mock.return_value = response_mock
 
-    def test_invalid_arguments(self):
-        with self.assertRaises(ModelResourceException):
-            verify_file_checksum('dummy', md5_sum='a', sha256_sum='b')
+    # Test the HttpConnection class
+    conn = HttpConnection('http://example.com/file')
+    assert conn.get_size() == content_length
+    assert b''.join(conn.read_stream()) == test_data
 
 
 class TestDownloadAutoFile(unittest.TestCase):
-    @patch(
-        'llm_web_kit.model.resource_utils.download_assets.process_and_verify_file_with_lock'
-    )
-    @patch('llm_web_kit.model.resource_utils.download_assets.verify_file_checksum')
-    @patch('llm_web_kit.model.resource_utils.download_assets.download_auto_file_core')
-    def test_download(self, mock_download, mock_verify, mock_process):
-        def download_func(resource_path, target_path):
-            dir = os.path.dirname(target_path)
-            os.makedirs(dir, exist_ok=True)
-            with open(target_path, 'w') as f:
-                time.sleep(1)
-                f.write(resource_path)
 
-        mock_download.side_effect = download_func
+    @patch('llm_web_kit.model.resource_utils.download_assets.os.path.exists')
+    @patch('llm_web_kit.model.resource_utils.download_assets.calc_file_md5')
+    @patch('llm_web_kit.model.resource_utils.download_assets.os.remove')
+    @patch('llm_web_kit.model.resource_utils.download_assets.is_s3_path')
+    @patch('llm_web_kit.model.resource_utils.download_assets.S3Connection')
+    @patch('llm_web_kit.model.resource_utils.download_assets.HttpConnection')
+    def test_file_exists_correct_md5(
+        self,
+        mock_http_conn,
+        mock_s3_conn,
+        mock_is_s3_path,
+        mock_os_remove,
+        mock_calc_file_md5,
+        mock_os_path_exists,
+    ):
+        # Arrange
+        mock_os_path_exists.return_value = True
+        mock_calc_file_md5.return_value = 'correct_md5'
+        mock_is_s3_path.return_value = False
+        mock_http_conn.return_value = MagicMock(get_size=MagicMock(return_value=100))
 
-        def verify_func(target_path, md5 ,sha):
-            with open(target_path, 'r') as f:
-                return f.read() == md5
+        # Act
+        result = download_auto_file('http://example.com', 'target_path', md5_sum='correct_md5')
 
-        mock_verify.side_effect = verify_func
+        # Assert
+        assert result == 'target_path'
 
-        def process_and_verify(
-            process_func, verify_func, target_path, lock_suffix, timeout
-        ):
-            process_func()
-            if verify_func():
-                return target_path
+        mock_os_path_exists.assert_called_once_with('target_path')
+        mock_calc_file_md5.assert_called_once_with('target_path')
+        mock_os_remove.assert_not_called()
+        mock_http_conn.assert_not_called()
+        mock_s3_conn.assert_not_called()
 
-        mock_process.side_effect = process_and_verify
-        with tempfile.TemporaryDirectory() as tmpdir:
-            resource_url = 'http://example.com/resource'
-            target_dir = os.path.join(tmpdir, 'target')
-            result = download_auto_file(resource_url, target_dir, md5_sum=resource_url)
-            assert result == os.path.join(tmpdir, 'target')
+    @patch('llm_web_kit.model.resource_utils.download_assets.os.path.exists')
+    @patch('llm_web_kit.model.resource_utils.download_assets.calc_file_sha256')
+    @patch('llm_web_kit.model.resource_utils.download_assets.os.remove')
+    @patch('llm_web_kit.model.resource_utils.download_assets.is_s3_path')
+    @patch('llm_web_kit.model.resource_utils.download_assets.S3Connection')
+    @patch('llm_web_kit.model.resource_utils.download_assets.HttpConnection')
+    def test_file_exists_correct_sha256(
+        self,
+        mock_http_conn,
+        mock_s3_conn,
+        mock_is_s3_path,
+        mock_os_remove,
+        mock_calc_file_sha256,
+        mock_os_path_exists,
+    ):
+        # Arrange
+        mock_os_path_exists.return_value = True
+        mock_calc_file_sha256.return_value = 'correct_sha256'
+        mock_is_s3_path.return_value = False
+        mock_http_conn.return_value = MagicMock(get_size=MagicMock(return_value=100))
+
+        # Act
+        result = download_auto_file('http://example.com', 'target_path', sha256_sum='correct_sha256')
+
+        # Assert
+        assert result == 'target_path'
+
+        mock_os_path_exists.assert_called_once_with('target_path')
+        mock_calc_file_sha256.assert_called_once_with('target_path')
+        mock_os_remove.assert_not_called()
+        mock_http_conn.assert_not_called()
+        mock_s3_conn.assert_not_called()
+
+    @patch('llm_web_kit.model.resource_utils.download_assets.calc_file_md5')
+    @patch('llm_web_kit.model.resource_utils.download_assets.os.remove')
+    @patch('llm_web_kit.model.resource_utils.download_assets.is_s3_path')
+    @patch('llm_web_kit.model.resource_utils.download_assets.S3Connection')
+    @patch('llm_web_kit.model.resource_utils.download_assets.HttpConnection')
+    def test_file_exists_wrong_md5_download_http(
+        self,
+        mock_http_conn,
+        mock_s3_conn,
+        mock_is_s3_path,
+        mock_os_remove,
+        mock_calc_file_md5,
+    ):
+        # Arrange
+        mock_calc_file_md5.return_value = 'wrong_md5'
+        mock_is_s3_path.return_value = False
+
+        with tempfile.TemporaryDirectory() as tmp_dir:
+            with open(os.path.join(tmp_dir, 'target_path'), 'wb') as f:
+                f.write(b'hello world')
+            response_mock, content_length = get_mock_http_response(b'hello world')
+            mock_http_conn.return_value = MagicMock(
+                get_size=MagicMock(return_value=content_length),
+                read_stream=MagicMock(return_value=response_mock.iter_content()),
+            )
+
+            target_path = os.path.join(tmp_dir, 'target_path')
+            # Act
+            result = download_auto_file('http://example.com', target_path, md5_sum='correct_md5')
+
+            assert result == target_path
+            with open(target_path, 'rb') as f:
+                assert f.read() == b'hello world'
+
+    @patch('llm_web_kit.model.resource_utils.download_assets.calc_file_sha256')
+    @patch('llm_web_kit.model.resource_utils.download_assets.os.remove')
+    @patch('llm_web_kit.model.resource_utils.download_assets.is_s3_path')
+    @patch('llm_web_kit.model.resource_utils.download_assets.S3Connection')
+    @patch('llm_web_kit.model.resource_utils.download_assets.HttpConnection')
+    def test_file_exists_wrong_sha256_download_http(
+        self,
+        mock_http_conn,
+        mock_s3_conn,
+        mock_is_s3_path,
+        mock_os_remove,
+        mock_calc_file_sha256,
+    ):
+        # Arrange
+        mock_calc_file_sha256.return_value = 'wrong_sha256'
+        mock_is_s3_path.return_value = False
+
+        with tempfile.TemporaryDirectory() as tmp_dir:
+            with open(os.path.join(tmp_dir, 'target_path'), 'wb') as f:
+                f.write(b'hello world')
+            response_mock, content_length = get_mock_http_response(b'hello world')
+            mock_http_conn.return_value = MagicMock(
+                get_size=MagicMock(return_value=content_length),
+                read_stream=MagicMock(return_value=response_mock.iter_content()),
+            )
+
+            target_path = os.path.join(tmp_dir, 'target_path')
+            # Act
+            result = download_auto_file('http://example.com', target_path, sha256_sum='correct_sha256')
+
+            assert result == target_path
+            with open(target_path, 'rb') as f:
+                assert f.read() == b'hello world'
+
+    @patch('llm_web_kit.model.resource_utils.download_assets.calc_file_md5')
+    @patch('llm_web_kit.model.resource_utils.download_assets.os.remove')
+    @patch('llm_web_kit.model.resource_utils.download_assets.is_s3_path')
+    @patch('llm_web_kit.model.resource_utils.download_assets.S3Connection')
+    @patch('llm_web_kit.model.resource_utils.download_assets.HttpConnection')
+    def test_file_not_exists_download_http(
+        self,
+        mock_http_conn,
+        mock_s3_conn,
+        mock_is_s3_path,
+        mock_os_remove,
+        mock_calc_file_md5,
+    ):
+        # Arrange
+        mock_is_s3_path.return_value = False
+
+        with tempfile.TemporaryDirectory() as tmp_dir:
+            response_mock, content_length = get_mock_http_response(b'hello world')
+            mock_http_conn.return_value = MagicMock(
+                get_size=MagicMock(return_value=content_length),
+                read_stream=MagicMock(return_value=response_mock.iter_content()),
+            )
+
+            target_path = os.path.join(tmp_dir, 'target_path')
+            # Act
+            result = download_auto_file('http://example.com', target_path, md5_sum='correct_md5')
+
+            assert result == target_path
+            with open(target_path, 'rb') as f:
+                assert f.read() == b'hello world'
 
 
 if __name__ == '__main__':

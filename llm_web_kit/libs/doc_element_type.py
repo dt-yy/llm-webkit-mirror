@@ -8,8 +8,7 @@ class ParagraphTextType(object):
 class DocElementType(object):
     PARAGRAPH = 'paragraph'
     LIST = 'list'
-    SIMPLE_TABLE = 'simple_table'
-    COMPLEX_TABLE = 'complex_table'
+    TABLE = 'table'
     EQUATION_INTERLINE = 'equation-interline'
     CODE = 'code'
     TITLE = 'title'

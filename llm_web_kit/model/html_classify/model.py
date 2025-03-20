@@ -1,7 +1,5 @@
 import torch
 
-from llm_web_kit.model.resource_utils import import_transformer
-
 
 class Markuplm():
     def __init__(self, path, device):
@@ -18,13 +16,13 @@ class Markuplm():
         self.tokenizer = self.load_tokenizer()
 
     def load_tokenizer(self):
-        transformers = import_transformer()
+        from transformers import MarkupLMProcessor
 
-        return transformers.MarkupLMProcessor.from_pretrained(self.model_path)
+        return MarkupLMProcessor.from_pretrained(self.model_path)
 
     def load_model(self):
-        transformers = import_transformer()
-        model = transformers.MarkupLMForSequenceClassification.from_pretrained(self.model_path, num_labels=self.num_labels)
+        from transformers import MarkupLMForSequenceClassification
+        model = MarkupLMForSequenceClassification.from_pretrained(self.model_path, num_labels=self.num_labels)
         # load checkpoint
         model.load_state_dict(torch.load(self.checkpoint_path, map_location=self.device))
         model.to(self.device)

@@ -19,7 +19,7 @@ def build_tags_to_remove_map() -> dict[str, list[str]]:
             'portal',
             'source',
         ],
-        'script': ['canvas', 'script'],
+        'script': ['canvas', 'noscript', 'script'],
         'form': [
             'button',
             'datalist',

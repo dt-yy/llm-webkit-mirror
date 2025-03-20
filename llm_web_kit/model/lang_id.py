@@ -1,13 +1,15 @@
 import os
 import re
-from typing import Dict, Tuple
+from typing import Tuple
 
 import fasttext
 
 from llm_web_kit.config.cfg_reader import load_config
 from llm_web_kit.libs.logger import mylogger as logger
-from llm_web_kit.model.resource_utils import (CACHE_DIR, download_auto_file,
-                                              singleton_resource_manager)
+from llm_web_kit.model.resource_utils.download_assets import (
+    CACHE_DIR, download_auto_file)
+from llm_web_kit.model.resource_utils.singleton_resource_manager import \
+    singleton_resource_manager
 
 language_dict = {
     'srp': 'sr', 'swe': 'sv', 'dan': 'da', 'ita': 'it', 'spa': 'es', 'pes': 'fa', 'slk': 'sk', 'hun': 'hu', 'bul': 'bg', 'cat': 'ca',
@@ -194,7 +196,7 @@ def detect_latex_env(content_str: str) -> bool:
     return latex_env_pattern.search(content_str) is not None
 
 
-def decide_language_func(content_str: str, lang_detect: LanguageIdentification) -> Dict[str, str]:
+def decide_language_func(content_str: str, lang_detect: LanguageIdentification) -> str:
     """Decide language based on the content string. This function will truncate
     the content string if it is too long. This function will return "empty" if
     the content string is empty.
@@ -214,7 +216,7 @@ def decide_language_func(content_str: str, lang_detect: LanguageIdentification) 
         lang_detect (LanguageIdentification): The language identification model
 
     Returns:
-        dict: Dictionary containing 'language' and 'language_details' keys
+        str: The final language label
     """
 
     # truncate the content string if it is too long
@@ -234,33 +236,40 @@ def decide_language_func(content_str: str, lang_detect: LanguageIdentification) 
 
     # return "empty" if the content string is empty
     if len(content_str.strip()) == 0:
-        return {'language': 'empty', 'language_details': 'empty'}
+        return 'empty'
 
-    if lang_detect.version not in LANG_ID_SUPPORTED_VERSIONS:
-        raise ValueError(f'Unsupported version: {lang_detect.version}. Supported versions: {LANG_ID_SUPPORTED_VERSIONS}')
-
-    predictions, probabilities = lang_detect.predict(content_str)
-    language = decide_language_by_prob_v176(predictions, probabilities)
-
-    if lang_detect.version == '218.bin':
-        first_pred = predictions[0]
-        # Extract the full label (e.g., __label__eng_Latn -> eng_Latn)
-        if first_pred.startswith('__label__'):
-            language_details = first_pred.replace('__label__', '')
+    if lang_detect.version in ['176.bin', '218.bin']:
+        predictions, probabilities = lang_detect.predict(content_str)
+        result = decide_language_by_prob_v176(predictions, probabilities)
     else:
-        language_details = 'not_defined'
-
-    return {
-        'language': language,
-        'language_details': language_details
-    }
+        raise ValueError(f'Unsupported version: {lang_detect.version}. Supported versions: {LANG_ID_SUPPORTED_VERSIONS}')
+    return result
 
 
-def update_language_by_str(content_str: str, model_path: str = None) -> Dict[str, str]:
-    """Decide language based on the content string and return a dictionary with
-    language and details."""
+def decide_lang_by_str(content_str: str, model_path: str = None) -> str:
+    """Decide language based on the content string, based on
+    decide_language_func."""
     lang_detect = get_singleton_lang_detect(model_path)
+
     return decide_language_func(content_str, lang_detect)
+
+
+def decide_lang_by_str_v218(content_str: str, model_path: str = None) -> str:
+    """Decide language based on the content string, displayed in the format of
+    the fasttext218 model."""
+    lang_detect = get_singleton_lang_detect(model_path)
+    if lang_detect.version == '176.bin':
+        return None
+    else:
+        return lang_detect.predict(content_str)[0][0].replace('__label__', '')
+
+
+def update_language_by_str(content_str: str, model_path: str = None) -> str:
+    """Decide language based on the content string."""
+    return {
+        'language': decide_lang_by_str(content_str, model_path),
+        'language_details': decide_lang_by_str_v218(content_str, model_path)
+    }
 
 
 if __name__ == '__main__':

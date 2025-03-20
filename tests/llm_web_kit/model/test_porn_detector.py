@@ -1,28 +1,20 @@
-import logging
 import os
 import sys
 import unittest
 from unittest import TestCase
 from unittest.mock import MagicMock, mock_open, patch
 
-from transformers import logging as transformers_logging
-
-from llm_web_kit.model.porn_detector import BertModel  # noqa: E402
-
 current_file_path = os.path.abspath(__file__)
 parent_dir_path = os.path.join(current_file_path, *[os.pardir] * 4)
 normalized_path = os.path.normpath(parent_dir_path)
 sys.path.append(normalized_path)
 
-
-transformers_logging.set_verbosity_error()
-
-logging.disable(logging.CRITICAL)
+from llm_web_kit.model.porn_detector import BertModel  # noqa: E402
 
 
 class TestBertModel(TestCase):
-    @patch('transformers.AutoModelForSequenceClassification.from_pretrained')
-    @patch('transformers.AutoTokenizer.from_pretrained')
+    @patch('llm_web_kit.model.porn_detector.AutoModelForSequenceClassification.from_pretrained')
+    @patch('llm_web_kit.model.porn_detector.AutoTokenizer.from_pretrained')
     @patch('llm_web_kit.model.porn_detector.os.path.join')
     @patch('llm_web_kit.model.porn_detector.open', new_callable=mock_open, read_data='{"cls_index": 0, "use_sigmoid": true, "max_tokens": 512, "device": "cuda"}')
     @patch('llm_web_kit.model.porn_detector.BertModel.auto_download')
@@ -60,8 +52,8 @@ class TestBertModel(TestCase):
             }
         )
 
-    @patch('transformers.AutoModelForSequenceClassification.from_pretrained')
-    @patch('transformers.AutoTokenizer.from_pretrained')
+    @patch('llm_web_kit.model.porn_detector.AutoModelForSequenceClassification.from_pretrained')
+    @patch('llm_web_kit.model.porn_detector.AutoTokenizer.from_pretrained')
     @patch('llm_web_kit.model.porn_detector.os.path.join')
     @patch('llm_web_kit.model.porn_detector.open', new_callable=mock_open, read_data='{"cls_index": 0, "use_sigmoid": true, "max_tokens": 512, "device": "cuda"}')
     @patch('llm_web_kit.model.porn_detector.BertModel.auto_download')
@@ -115,8 +107,8 @@ class TestBertModel(TestCase):
         self.assertEqual(result['inputs']['input_ids'], expected_input_ids)
         self.assertEqual(result['inputs']['attention_mask'], expected_attn_mask)
 
-    @patch('transformers.AutoModelForSequenceClassification.from_pretrained')
-    @patch('transformers.AutoTokenizer.from_pretrained')
+    @patch('llm_web_kit.model.porn_detector.AutoModelForSequenceClassification.from_pretrained')
+    @patch('llm_web_kit.model.porn_detector.AutoTokenizer.from_pretrained')
     @patch('llm_web_kit.model.porn_detector.os.path.join')
     @patch('llm_web_kit.model.porn_detector.open', new_callable=mock_open, read_data='{"cls_index": 0, "use_sigmoid": true, "max_tokens": 512, "device": "cuda"}')
     @patch('llm_web_kit.model.porn_detector.BertModel.auto_download')
