@@ -60,7 +60,7 @@ class TestExtractorChain(unittest.TestCase):
             for line in f:
                 self.data_json.append(json.loads(line.strip()))
 
-        assert len(self.data_json) == 26
+        assert len(self.data_json) == 27
 
         # Config for HTML extraction
         self.config = load_pipe_tpl('html-test')
@@ -355,7 +355,7 @@ DEF
         assert """| عنوان فارسی | توسعه مالی و هزینه سرمایه حقوق سهامداران: شواهدی از چین |
 |---|---|
 | عنوان انگلیسی | Financial development and the cost of equity capital: Evidence from China |
-| کلمات کلیدی : | &nbsp         توسعه مالی؛ هزینه سرمایه حقوق سهامداران؛ قانون و امور مالی؛ چین |
+| کلمات کلیدی : | &nbsp  توسعه مالی؛ هزینه سرمایه حقوق سهامداران؛ قانون و امور مالی؛ چین |
 | درسهای مرتبط | حسابداری |""" in content_md
 
     def test_list_empty(self):
@@ -484,3 +484,15 @@ DEF
         result = chain.extract(input_data)
         result_md = result.get_content_list().to_nlp_md()
         self.assertIn(r'\`Queen Helena\`', result_md)
+
+    def test_more_nt(self):
+        """测试去除单元格的\n\t.\n保留下来."""
+        chain = ExtractSimpleFactory.create(self.config)
+        self.assertIsNotNone(chain)
+        test_data = self.data_json[26]
+        input_data = DataJson(test_data)
+        result = chain.extract(input_data)
+        result_content_list = result.get_content_list()._get_data()
+        result = result_content_list[0][2]['content']['html']
+        assert '\n\t' not in result
+        assert len(result) == 1878
