@@ -280,7 +280,7 @@ class TableRecognizer(BaseHTMLElementRecognizer):
             table_raw_html = self._element_to_html(root)
             table_type = self.__get_table_type(root)
             table_nest_level = self.__is_table_nested(root)
-            tail_text = root.tail
+            tail_text = None
             table_body = self.__get_table_body(table_type, table_nest_level, root)
             cc_element = self._build_cc_element(
                 CCTag.CC_TABLE, table_body, tail_text, table_type=table_type, table_nest_level=table_nest_level,
