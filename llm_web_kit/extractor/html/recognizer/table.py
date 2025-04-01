@@ -157,7 +157,7 @@ class TableRecognizer(BaseHTMLElementRecognizer):
             return 'empty'
         level = self.__is_table_nested(child)
         # 是否跨行跨列
-        flag = (self.__is_simple_table(child) and level < 2)
+        flag = (level < 2 and self.__is_simple_table(child))
         if flag:
             table_type = 'simple'
         else:
@@ -205,11 +205,11 @@ class TableRecognizer(BaseHTMLElementRecognizer):
                 else:
                     # 提取当前节点的文本
                     if node.text and node.text.strip():
-                        cleaned_text = node.text.strip().replace('\\n', '')
+                        cleaned_text = node.text.strip()
                         result.append(cleaned_text)
                     # 处理节点的tail（元素闭合后的文本）
                     if node.tail and node.tail.strip():
-                        cleaned_tail = node.tail.strip().replace('\\n', '')
+                        cleaned_tail = node.tail.strip()
                         result.append(cleaned_tail)
                     # 递归处理子节点
                     for child in node:
@@ -263,9 +263,9 @@ class TableRecognizer(BaseHTMLElementRecognizer):
         # text进行strip操作,tail保留（部分内容留在tail中）
         for elem in chain([table_root], table_root.iterchildren()):
             if elem.text is not None:
-                elem.text = elem.text.strip().replace('\\n', '')
+                elem.text = elem.text.strip()
             if elem.tail is not None:
-                elem.tail = elem.tail.strip().replace('\\n', '')
+                elem.tail = elem.tail.strip()
         # 单元格内的多标签内容进行简化，空格拼接，公式、代码识别
         self.__simplify_td_th_content(table_nest_level, table_root)
         # 迭代
