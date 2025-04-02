@@ -76,7 +76,7 @@
             }
         },
         {
-            "type": "simple_table",
+            "type": "simple_table", // 可以选填simple_table、complex_table
             "bbox": [0, 0, 50, 50],
             "raw_content": null,
             "content": {
@@ -280,7 +280,7 @@
 
 ```json
 {
-    "type": "simple_table",
+    "type": "simple_table",  // 可以选填simple_table、complex_table
     "bbox": [0, 0, 50, 50],
     "raw_content": null,
     "content": {
