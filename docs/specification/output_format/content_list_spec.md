@@ -76,7 +76,7 @@
             }
         },
         {
-            "type": "table",
+            "type": "simple_table", // 可以选填simple_table、complex_table
             "bbox": [0, 0, 50, 50],
             "raw_content": null,
             "content": {
@@ -280,7 +280,7 @@
 
 ```json
 {
-    "type": "table",
+    "type": "simple_table",  // 可以选填simple_table、complex_table
     "bbox": [0, 0, 50, 50],
     "raw_content": null,
     "content": {
@@ -295,7 +295,7 @@
 
 | 字段                     | 类型    | 描述                                              | 是否必须 |
 | ------------------------ | ------- | ------------------------------------------------- | -------- |
-| type                     | string  | 值固定为table                                     | 是       |
+| type                     | string  | 可选值为simple_table、complex_table               | 是       |
 | bbox                     | array   | \[x1, y1, x2, y2\]                                | 可选     |
 | raw_content              | string  | 原始文本内容                                      | 可选     |
 | content.html             | string  | 表格的html内容                                    | 是       |

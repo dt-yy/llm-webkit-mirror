@@ -144,6 +144,10 @@ class ListRecognizer(BaseHTMLElementRecognizer):
         tail_text = ele.tail
         content_list = []
         raw_html = self._element_to_html(ele)
+        # 添加处理ul标签直接文本的逻辑
+        if ele.text and ele.text.strip():
+            content_list.append([[{'c': ele.text.strip(), 't': ParagraphTextType.TEXT}]])
+
         for item in ele.iterchildren():
             # 这里 遍历列表的每个直接子元素，每个子元素作为一个段落。 TODO 列表里有列表、图片、表格的情况先不考虑。
             # 获取到每个子元素的全部文本，忽略其他标签
@@ -224,7 +228,6 @@ class ListRecognizer(BaseHTMLElementRecognizer):
         if paragraph := __extract_list_item_text_recusive(root):
             if len(paragraph) > 0:
                 text_paragraph.append(paragraph)
-
         return text_paragraph
 
     def __get_attribute(self, html:HtmlElement) -> Tuple[bool, dict, str]:
