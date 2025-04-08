@@ -629,6 +629,17 @@ A few explanations on why certain things in business are so.
         assert '猜你感兴趣' in result_md
         assert '友情链接' in result_md
 
+    def test_list_lack_content(self):
+        """list缺少a标签前内容.html格式不标准."""
+        chain = ExtractSimpleFactory.create(self.config)
+        self.assertIsNotNone(chain)
+        test_data = self.data_json[39]
+        input_data = DataJson(test_data)
+        result = chain.extract(input_data)
+        result_md = result.get_content_list().to_nlp_md()
+        assert '猜你感兴趣' in result_md
+        assert '友情链接' in result_md
+
     def test_table_lack_pre_content(self):
         """测试table缺少td标签前面的内容."""
         chain = ExtractSimpleFactory.create(self.config)
