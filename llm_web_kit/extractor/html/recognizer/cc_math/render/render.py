@@ -82,6 +82,7 @@ class BaseMathRender():
             KaTeXRender
         from llm_web_kit.extractor.html.recognizer.cc_math.render.mathjax import \
             MathJaxRender
+
         # 处理无效输入
         if html is None or not isinstance(html, str) or not html.strip():
             return None

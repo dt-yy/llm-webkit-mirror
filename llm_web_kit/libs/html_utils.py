@@ -248,6 +248,7 @@ def remove_element(element: HtmlElement):
             previous.tail = (previous.tail or '') + element.tail
     parent.remove(element)
 
+
 def extract_magic_html(html, base_url, page_layout_type):
     """提取magic html.
 
