@@ -14,6 +14,8 @@ jobs:
 
   update-version:
     runs-on: ubuntu-latest
+    permissions: # 添加权限配置
+      contents: write
     steps:
       - name: Checkout repository
         uses: actions/checkout@v4

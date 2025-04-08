@@ -60,7 +60,7 @@ class TestExtractorChain(unittest.TestCase):
             for line in f:
                 self.data_json.append(json.loads(line.strip()))
 
-        assert len(self.data_json) == 42
+        assert len(self.data_json) == 43
 
         # Config for HTML extraction
         self.config = load_pipe_tpl('html-test')
@@ -638,3 +638,17 @@ A few explanations on why certain things in business are so.
         result = chain.extract(input_data)
         result_content_list = result.get_content_list()._get_data()
         assert result_content_list[0][22]['content']['html'] == r"""<table><colgroup><col><col><col><col></colgroup><tr><th>お名前 【必須】</th><td></td><th>お名前（カナ）</th><td></td></tr><tr><th>ご連絡先 【いずれか必須】</th><td colspan="3">※メール受信制限をしている方は、@chintai.co.jpからのメールを受信できるよう設定の変更をお願い致します。<table><td>メールアドレス</td><td>電話番号</td></table></td></tr></table>"""
+
+    def test_td_include_specila_symbol(self):
+        """测试td包含特殊符号|，需要转义."""
+        chain = ExtractSimpleFactory.create(self.config)
+        self.assertIsNotNone(chain)
+        test_data = self.data_json[42]
+        input_data = DataJson(test_data)
+        result = chain.extract(input_data)
+        result_md = result.get_content_list().to_mm_md()
+        assert result_md == """| \| 你好 | 字 | 字 |
+|---|---|---|
+| \| 字 | 字 | 字 |
+| 字 | 字 | 字 |
+"""
