@@ -22,10 +22,9 @@ def parse_requirements(filename):
 
 
 if __name__ == '__main__':
-    print('000000000000', __version__)
     setup(
         name='llm_web_kit',
-        version=__version__,
+        version="3.2.0",
         description='LLM Web Kit for processing web content',
         packages=find_packages(exclude=['tests*']),
         install_requires=parse_requirements('requirements/runtime.txt'),
