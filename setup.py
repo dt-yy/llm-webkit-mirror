@@ -24,7 +24,7 @@ def parse_requirements(filename):
 if __name__ == '__main__':
     setup(
         name='llm_web_kit',
-        version="3.2.0",
+        version=__version__,
         description='LLM Web Kit for processing web content',
         packages=find_packages(exclude=['tests*']),
         install_requires=parse_requirements('requirements/runtime.txt'),
