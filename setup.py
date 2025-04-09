@@ -22,7 +22,7 @@ def parse_requirements(filename):
 
 
 if __name__ == '__main__':
-    print("000000000000", __version__)
+    print('000000000000', __version__)
     setup(
         name='llm_web_kit',
         version=__version__,
