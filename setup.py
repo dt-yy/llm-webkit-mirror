@@ -33,6 +33,11 @@ if __name__ == '__main__':
         },
         url='https://github.com/ccprocessor/llm_web_kit',
         python_requires='>=3.10, <3.14',
+        entry_points={
+            'console_scripts': [
+                'magic-html = llm_web_kit.tools.cli:cli'
+            ],
+        },
         include_package_data=True,
         package_data={
             'llm_web_kit': ['**/*.*'],
