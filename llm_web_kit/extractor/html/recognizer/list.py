@@ -9,6 +9,7 @@ from llm_web_kit.extractor.html.recognizer.recognizer import (
     BaseHTMLElementRecognizer, CCTag)
 from llm_web_kit.libs.doc_element_type import DocElementType, ParagraphTextType
 from llm_web_kit.libs.text_utils import normalize_text_segment
+from llm_web_kit.libs.html_utils import process_sub_sup_tags
 
 
 class ListAttribute():
@@ -120,6 +121,7 @@ class ListRecognizer(BaseHTMLElementRecognizer):
 
         def __extract_list_item_text_recusive(el: HtmlElement):
             list_container_tags = ('ul', 'ol', 'dl', 'menu', 'dir')
+            is_sub_sup = el.tag == 'sub' or el.tag == 'sup'
             paragraph = []
             result = {}
             if el.tag == CCTag.CC_MATH_INLINE and el.text and el.text.strip():
@@ -127,7 +129,16 @@ class ListRecognizer(BaseHTMLElementRecognizer):
             elif el.tag == CCTag.CC_CODE_INLINE and el.text and el.text.strip():
                 paragraph.append({'c': f'`{el.text}`', 't': ParagraphTextType.CODE_INLINE})
             elif el.tag == 'br':
-                paragraph.append({'c': '\n', 't': ParagraphTextType.TEXT})
+                paragraph.append({'c': '\n\n', 't': ParagraphTextType.TEXT})
+            elif el.tag == 'sub' or el.tag == 'sup':
+                # 处理sub和sup标签，转换为GitHub Flavored Markdown格式
+                current_text = ''
+                if len(paragraph) > 0 and paragraph[-1]['t'] == ParagraphTextType.TEXT:
+                    current_text = paragraph[-1]['c']
+                    paragraph.pop()
+                processed_text = process_sub_sup_tags(el, current_text, recursive=False)
+                if processed_text:
+                    paragraph.append({'c': processed_text, 't': ParagraphTextType.TEXT})
             elif el.tag in list_container_tags:
                 list_attribute = self.__get_list_attribute(el)
                 child_list = {
@@ -151,10 +162,17 @@ class ListRecognizer(BaseHTMLElementRecognizer):
                         if 'c' in p:
                             paragraph.append({'c': p['c'], 't': p.get('t', ParagraphTextType.TEXT)})
             if el.tag != 'li' and el.tail and el.tail.strip():
-                paragraph.append({'c': el.tail, 't': ParagraphTextType.TEXT})
+                if is_sub_sup:
+                    # 如果尾部文本跟在sub/sup后面，直接附加到最后一个文本段落中
+                    if len(paragraph) > 0 and paragraph[-1]['t'] == ParagraphTextType.TEXT:
+                        paragraph[-1]['c'] += el.tail
+                    else:
+                        paragraph.append({'c': el.tail, 't': ParagraphTextType.TEXT})
+                else:
+                    paragraph.append({'c': el.tail, 't': ParagraphTextType.TEXT})
+            print(json.dumps(paragraph, ensure_ascii=False, indent=4))
             if paragraph:
                 result['c'] = ' '.join(normalize_text_segment(item['c'].strip()) for item in paragraph)
-                result['t'] = ParagraphTextType.TEXT
             return result
         list_item_tags = ('li', 'dd', 'dt')
         if child.tag in list_item_tags:
