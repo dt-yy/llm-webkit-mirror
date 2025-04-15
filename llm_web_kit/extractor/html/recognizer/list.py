@@ -170,7 +170,6 @@ class ListRecognizer(BaseHTMLElementRecognizer):
                         paragraph.append({'c': el.tail, 't': ParagraphTextType.TEXT})
                 else:
                     paragraph.append({'c': el.tail, 't': ParagraphTextType.TEXT})
-            print(json.dumps(paragraph, ensure_ascii=False, indent=4))
             if paragraph:
                 result['c'] = ' '.join(normalize_text_segment(item['c'].strip()) for item in paragraph)
             return result

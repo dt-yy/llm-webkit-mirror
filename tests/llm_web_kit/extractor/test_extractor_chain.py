@@ -658,12 +658,9 @@ A few explanations on why certain things in business are so.
         input_data = DataJson(test_data)
         result = chain.extract(input_data)
         content_md = result.get_content_list().to_nlp_md()
-        fw = open('nest_list.md', 'w', encoding='utf-8')
-        fw.write(content_md)
-        fw.close()
         assert content_md.strip() == r"""# electricty
 
-1. L A circuit is set up consisting of a 120V cell , a 90 ohm resistor and 60 ohm resistor in parallel with a 200 ohm resistor and 300 Ohm resistor
+1. L A circuit is set up consisting of a 120V cell , a 90 ohm resistor and 60 ohm resistor in parallel with a 200 ohm resistor and 300 Ohm resistor 
 
 a motor of 50 ohm resistor is connected across the 300 ohm resistor and is used to pull a 2Kg mass up a slope of inclines 30 degrees to the horizontal...
   - Thread
@@ -687,7 +684,7 @@ What will be q3’s acceleration...
   - charged electricty graph homework help magnetism moving particle physics postion time
   - Replies: 1
   - Forum: Electricity & Magnetism
-4. G Coulombs are the usual unit of charge. Show that ampere-hours are an alternative unit.
+4. G Coulombs are the usual unit of charge. Show that ampere-hours are an alternative unit. 
 Joules are the normal units for energy. Show that kilowatthours are an alternative.
 
 Don't understand how o do this. Please answer and explain thanks.
