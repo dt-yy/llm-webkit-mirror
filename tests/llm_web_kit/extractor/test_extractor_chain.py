@@ -118,7 +118,7 @@ class TestExtractorChain(unittest.TestCase):
         html_content = html_content_list[6]
         self.assertEqual(html_content['type'], DocElementType.LIST)
         self.assertEqual(len(html_content['content']['items']), 2)
-        self.assertEqual(html_content['content']['list_attribute'], "unordered")
+        self.assertEqual(html_content['content']['list_attribute'], 'unordered')
         self.assertEqual(html_content['content']['items'][0]['c'], '1')
         self.assertEqual(html_content['content']['items'][1]['c'], '2')
 
@@ -127,8 +127,8 @@ class TestExtractorChain(unittest.TestCase):
         self.assertEqual(html_content['type'], DocElementType.LIST)
         self.assertEqual(len(html_content['content']['items']), 2)
         self.assertEqual(len(html_content['content']['items'][0]['child_list']), 2)
-        self.assertEqual(html_content['content']['items'][0]['child_list']["items"][0]['c'], '1.1')
-        self.assertEqual(html_content['content']['items'][1]['child_list']["items"][0]['c'], '2.1')
+        self.assertEqual(html_content['content']['items'][0]['child_list']['items'][0]['c'], '1.1')
+        self.assertEqual(html_content['content']['items'][1]['child_list']['items'][0]['c'], '2.1')
 
         # 行间公式
         html_content = html_content_list[8]
@@ -146,7 +146,7 @@ class TestExtractorChain(unittest.TestCase):
         # 有序列表
         html_content = html_content_list[10]
         self.assertEqual(html_content['type'], DocElementType.LIST)
-        self.assertEqual(html_content['content']['list_attribute'], "ordered")
+        self.assertEqual(html_content['content']['list_attribute'], 'ordered')
         self.assertEqual(len(html_content['content']['items']), 2)
         self.assertEqual(html_content['content']['items'][0]['c'], '100')
         self.assertEqual(html_content['content']['items'][1]['c'], '200')
@@ -359,8 +359,8 @@ DEF
         input_data = DataJson(test_data)
         result = chain.extract(input_data)
         list_type = result.get_content_list()._get_data()[0][0]['type']
-        print("=============", json.dumps(result.get_content_list()._get_data(), ensure_ascii=False))
-        print("=============", list_type)
+        print('=============', json.dumps(result.get_content_list()._get_data(), ensure_ascii=False))
+        print('=============', list_type)
         assert list_type != 'list'
 
     def test_table_include_math_p(self):
@@ -404,7 +404,7 @@ DEF
         input_data = DataJson(test_data)
         result = chain.extract(input_data)
         result_content_list = result.get_content_list()._get_data()
-        print("============= result_content_list", json.dumps(result_content_list, ensure_ascii=False))
+        print('============= result_content_list', json.dumps(result_content_list, ensure_ascii=False))
         assert int(result_content_list[0][0]['content']['list_nest_level']) == 3
 
     def test_table_include_entity(self):
@@ -658,10 +658,10 @@ A few explanations on why certain things in business are so.
         input_data = DataJson(test_data)
         result = chain.extract(input_data)
         content_md = result.get_content_list().to_nlp_md()
-        print("============= content_md", content_md)
+        print('============= content_md', content_md)
         assert content_md.strip() == r"""# electricty
 
-1. L A circuit is set up consisting of a 120V cell , a 90 ohm resistor and 60 ohm resistor in parallel with a 200 ohm resistor and 300 Ohm resistor 
+1. L A circuit is set up consisting of a 120V cell , a 90 ohm resistor and 60 ohm resistor in parallel with a 200 ohm resistor and 300 Ohm resistor
 
 a motor of 50 ohm resistor is connected across the 300 ohm resistor and is used to pull a 2Kg mass up a slope of inclines 30 degrees to the horizontal...
   - Thread
@@ -685,7 +685,7 @@ What will be q3’s acceleration...
   - charged electricty graph homework help magnetism moving particle physics postion time
   - Replies: 1
   - Forum: Electricity & Magnetism
-4. G Coulombs are the usual unit of charge. Show that ampere-hours are an alternative unit. 
+4. G Coulombs are the usual unit of charge. Show that ampere-hours are an alternative unit.
 Joules are the normal units for energy. Show that kilowatthours are an alternative.
 
 Don't understand how o do this. Please answer and explain thanks.
@@ -693,7 +693,7 @@ Don't understand how o do this. Please answer and explain thanks.
   - amperehours apere-hours convert coulombs coulumbs electricty joules kilowatthours
   - Replies: 4
   - Forum: Classical & Modern Physics"""
-       
+
     def test_definition_list(self):
         """测试定义列表."""
         chain = ExtractSimpleFactory.create(self.config)
@@ -702,4 +702,4 @@ Don't understand how o do this. Please answer and explain thanks.
         input_data = DataJson(test_data)
         result = chain.extract(input_data)
         content_md = result.get_content_list().to_nlp_md()
-        assert "2. 苍南县龙港林冉小吃店" not in content_md
+        assert '2. 苍南县龙港林冉小吃店' not in content_md

@@ -275,17 +275,17 @@ class HTMLFileFormatExtractor(BaseFileFormatExtractor):
                             has_content = True
                         elif isinstance(item['c'], list) and any(bool(c_item) for c_item in item['c']):
                             has_content = True
-                    
+
                     # 检查child_list是否有内容
                     has_child_list = False
                     child_list = item.get('child_list', {})
                     if isinstance(child_list, dict) and child_list.get('item') and len(child_list.get('item', [])) > 0:
                         has_child_list = True
-                    
+
                     # 如果c或child_list有内容，则认为是有效项
                     if has_content or has_child_list:
                         valid_items.append(item)
-                
+
                 # 如果没有有效项，则返回False
                 return len(valid_items) > 0
         # 检测code类型的节点

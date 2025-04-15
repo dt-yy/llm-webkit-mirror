@@ -6,13 +6,14 @@ from typing import Dict, List
 from overrides import override
 
 from llm_web_kit.exception.exception import ExtractorChainInputException
+from llm_web_kit.extractor.html.recognizer.list import ListAttribute
 from llm_web_kit.libs.doc_element_type import DocElementType, ParagraphTextType
 from llm_web_kit.libs.encode import sha256_hash
 from llm_web_kit.libs.html_utils import (get_element_text, html_to_element,
                                          html_to_markdown_table,
                                          table_cells_count)
 from llm_web_kit.libs.text_utils import normalize_math_delimiters
-from llm_web_kit.extractor.html.recognizer.list import ListAttribute
+
 
 class DataJsonKey(object):
     """DataJson的键值key常量定义."""
@@ -162,22 +163,22 @@ class StructureMapper(ABC):
         raise NotImplementedError('This method must be implemented by the subclass.')
 
     def __process_nested_list(self, items, list_attribute, indent_level=0, exclude_inline_types=[]):
-        """处理新格式的嵌套列表结构
-        
+        """处理新格式的嵌套列表结构.
+
         Args:
             items: 列表项数组
             list_attribute: 列表属性（有序/无序/定义）
             indent_level: 缩进级别
             exclude_inline_types: 排除的内联类型
-            
+
         Returns:
             list: 处理后的列表项段落
         """
         result = []
-        
+
         # 设置缩进
-        indent = "  " * indent_level
-        
+        indent = '  ' * indent_level
+
         for item_idx, item in enumerate(items):
             # 根据列表属性确定前缀格式
             if list_attribute == ListAttribute.ORDERED:
@@ -185,16 +186,16 @@ class StructureMapper(ABC):
                 list_prefix = f'{item_idx + 1}.'
             elif list_attribute == ListAttribute.DEFINITION:
                 # 定义列表
-                item_text = item.get("c", "")
-                term_line = f"{item_text}"
+                item_text = item.get('c', '')
+                term_line = f'{item_text}'
                 result.append(term_line)
-                
+
                 # 处理嵌套子列表，同样不添加特殊缩进
-                child_list = item.get("child_list", {})
-                if child_list and isinstance(child_list, dict) and "items" in child_list:
-                    child_items = child_list.get("items", [])
-                    child_attribute = child_list.get("list_attribute", ListAttribute.UNORDERED)
-                    
+                child_list = item.get('child_list', {})
+                if child_list and isinstance(child_list, dict) and 'items' in child_list:
+                    child_items = child_list.get('items', [])
+                    child_attribute = child_list.get('list_attribute', ListAttribute.UNORDERED)
+
                     if child_items:
                         # 传递原始缩进级别，不额外增加
                         child_result = self.__process_nested_list(
@@ -203,7 +204,7 @@ class StructureMapper(ABC):
                             indent_level,  # 使用相同的缩进级别
                             exclude_inline_types
                         )
-                        result.extend(child_result)               
+                        result.extend(child_result)
                 continue
             else:
                 # 无序列表 - 使用破折号
@@ -218,28 +219,28 @@ class StructureMapper(ABC):
                         continue  # 跳过无法处理的情况
                 else:
                     continue  # 如果不是dict也不是list，跳过该项
-                    
-            item_text = item.get("c", "")
-            
+
+            item_text = item.get('c', '')
+
             # 创建列表项行
-            item_line = f"{indent}{list_prefix} {item_text}"
+            item_line = f'{indent}{list_prefix} {item_text}'
             result.append(item_line)
-            
+
             # 处理嵌套子列表
-            child_list = item.get("child_list", {})
-            if child_list and isinstance(child_list, dict) and "items" in child_list:
-                child_items = child_list.get("items", [])
-                child_attribute = child_list.get("list_attribute", ListAttribute.UNORDERED)
-                
+            child_list = item.get('child_list', {})
+            if child_list and isinstance(child_list, dict) and 'items' in child_list:
+                child_items = child_list.get('items', [])
+                child_attribute = child_list.get('list_attribute', ListAttribute.UNORDERED)
+
                 if child_items:
                     child_result = self.__process_nested_list(
-                        child_items, 
+                        child_items,
                         child_attribute,
-                        indent_level + 1, 
+                        indent_level + 1,
                         exclude_inline_types
                     )
                     result.extend(child_result)
-        
+
         return result
 
     def __content_lst_node_2_md(self, content_lst_node: dict, exclude_inline_types: list = []) -> str:

@@ -1,5 +1,6 @@
-import unittest
 import json
+import unittest
+
 from llm_web_kit.extractor.html.post_extractor import \
     HTMLStripSpacePostExtractor
 from llm_web_kit.input.datajson import DataJson
@@ -30,7 +31,7 @@ class TestHTMLStripSpacePostExtractor(unittest.TestCase):
         # Test basic text normalization
         data_json = DataJson(self.data_json)
         processed = self.extractor.post_extract(data_json).get_content_list()._get_data()
-        print("============= processed", json.dumps(processed, ensure_ascii=False))
+        print('============= processed', json.dumps(processed, ensure_ascii=False))
         # 再看段落的情况
         text_4_processed = processed[0][0]['content'][0]['c']
         text_4_expected = '爱因斯坦的质量 方程公式是'

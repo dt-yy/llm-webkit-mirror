@@ -352,7 +352,7 @@ class TestDataJsonInit(unittest.TestCase):
                                         ]
                                     ]
                                 ],
-                                'list_attribute': "ordered",
+                                'list_attribute': 'ordered',
                                 'list_nest_level': 1,
                             }
                         }
@@ -377,7 +377,7 @@ class TestDataJsonInit(unittest.TestCase):
                                         ]
                                     ]
                                 ],
-                                'list_attribute': "ordered",
+                                'list_attribute': 'ordered',
                                 'list_nest_level': 1,
                             }
                         }
@@ -506,7 +506,7 @@ class TestDataJsonInit(unittest.TestCase):
                                         ]
                                     ]
                                 ],
-                                'list_attribute': "ordered",
+                                'list_attribute': 'ordered',
                                 'list_nest_level': 1,
                             }
                         }
