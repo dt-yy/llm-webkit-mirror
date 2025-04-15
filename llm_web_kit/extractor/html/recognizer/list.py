@@ -8,8 +8,8 @@ from llm_web_kit.exception.exception import HtmlListRecognizerException
 from llm_web_kit.extractor.html.recognizer.recognizer import (
     BaseHTMLElementRecognizer, CCTag)
 from llm_web_kit.libs.doc_element_type import DocElementType, ParagraphTextType
-from llm_web_kit.libs.text_utils import normalize_text_segment
 from llm_web_kit.libs.html_utils import process_sub_sup_tags
+from llm_web_kit.libs.text_utils import normalize_text_segment
 
 
 class ListAttribute():

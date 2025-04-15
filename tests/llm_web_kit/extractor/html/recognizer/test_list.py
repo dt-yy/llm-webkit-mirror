@@ -4,7 +4,7 @@ import unittest
 from llm_web_kit.exception.exception import HtmlListRecognizerException
 from llm_web_kit.extractor.html.recognizer.list import ListRecognizer
 from llm_web_kit.extractor.html.recognizer.recognizer import CCTag
-from llm_web_kit.libs.html_utils import build_cc_element, html_to_element, element_to_html
+from llm_web_kit.libs.html_utils import build_cc_element, html_to_element
 
 
 class TestSimpleListRecognize(unittest.TestCase):
@@ -248,7 +248,7 @@ class TestSimpleListRecognize(unittest.TestCase):
         marker_found = False
         for element, _ in html_part:
             element_text = element.text_content() if hasattr(element, 'text_content') else (element.text or '')
-            print("============= element_text", element_text)
+            print('============= element_text', element_text)
             if ('~下标~' in element_text) or ('^上标^' in element_text):
                 marker_found = True
                 break
