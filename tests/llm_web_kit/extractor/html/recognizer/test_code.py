@@ -11,6 +11,25 @@ from llm_web_kit.libs.html_utils import get_element_text, html_to_element
 TEST_CASES = [
     {
         'input': (
+            'assets/cccode/mathorg.html',
+            'https://www.mathorg.cn/forum.php?mod=viewthread&tid=36798&extra=page%3D1',
+        ),
+        'expected': [
+            'assets/cccode/mathorg-0.py',
+        ],
+    },
+    {
+        'input': (
+            'assets/cccode/cprograming.html',
+            'https://cboard.cprogramming.com/c-programming/96288-one-question-about-array-function-prototype-declaration-printable-thread.html',
+        ),
+        'expected': [
+            'assets/cccode/cprograming.c',
+            'int a[]',
+        ],
+    },
+    {
+        'input': (
             'assets/cccode/geeksforgeeks.html',
             'https://www.geeksforgeeks.org/output-java-program-set-7/?ref=rp',
         ),
@@ -206,6 +225,8 @@ class TestCodeRecognizer(unittest.TestCase):
         self.chain_config = load_pipe_tpl('html')
 
     def compare_code(self, expect: str, answer: str) -> None:
+        if expect != answer:
+            print(expect, answer)
         self.assertEqual(expect, answer)
         # expect_lines = [line for line in expect.split('\n') if line]
         # answer_lines = [line for line in answer.split('\n') if line]
@@ -533,3 +554,45 @@ import com.dao.UsersDao;
 """
         # 无须检查内容，只要不爆错就可以了
         _ = self.rec.recognize('', [(html_to_element(html), html_to_element(html))], html)
+
+    def test_url_rules(self):
+        chain = ExtractSimpleFactory.create(self.chain_config)
+        self.assertIsNotNone(chain)
+
+        raw_html = base_dir.joinpath('assets/cccode/android-googlesource.html').read_text()
+        answer = base_dir.joinpath('assets/cccode/android-googlesource-0.kt').read_text()
+
+        dj = DataJson({
+            'track_id': 'f7b3b1b4-0b1b',
+            'dataset_name': 'news',
+            'url': 'https://android.googlesource.com/platform/frameworks/support/+/4431302d43ed58e0ac918aa141a3a88768684272/camera/integration-tests/timingtestapp/src/main/java/androidx/camera/integration/antelope/cameracontrollers/CameraXDeviceStateCallback.kt',
+            'data_source_category': 'HTML',
+            'html': raw_html,
+            'file_bytes': 1000,
+            'meta_info': {'input_datetime': '2020-01-01 00:00:00'},
+        })
+
+        resp = chain.extract(dj)
+        self.assertEqual(resp.get_content_list().length(), 1)
+        self.assertEqual(len(resp.get_content_list()[0]), 1)
+        self.assertEqual(resp.get_content_list()[0][0]['content']['code_content'], answer)
+
+        html = '''<html>
+    <body>
+        <div><span>and you're interested only in <p class="code-style">foo.bar.x</p> and <p class="code-style">foo.bar.z</p> (non-existent):</span></div>
+    </body>
+</html>
+'''
+        eles = self.rec.recognize(
+            'http://www.test-inline-code-rules.com',
+            [
+                (html_to_element(html), html_to_element(html))
+            ],
+            html,
+        )
+
+        self.assertEqual(len(eles), 1)
+        inline_codes = eles[0][0].xpath(f'.//{CCTag.CC_CODE_INLINE}')
+        self.assertEqual(len(inline_codes), 2)
+        self.assertEqual(inline_codes[0].text, 'foo.bar.x')
+        self.assertEqual(inline_codes[1].text, 'foo.bar.z')

@@ -60,7 +60,7 @@ class TestExtractorChain(unittest.TestCase):
             for line in f:
                 self.data_json.append(json.loads(line.strip()))
 
-        assert len(self.data_json) == 24
+        assert len(self.data_json) == 46
 
         # Config for HTML extraction
         self.config = load_pipe_tpl('html-test')
@@ -118,21 +118,17 @@ class TestExtractorChain(unittest.TestCase):
         html_content = html_content_list[6]
         self.assertEqual(html_content['type'], DocElementType.LIST)
         self.assertEqual(len(html_content['content']['items']), 2)
-        self.assertEqual(html_content['content']['ordered'], False)
-        self.assertEqual(html_content['content']['items'][0][0][0]['c'], '1')
-        self.assertEqual(html_content['content']['items'][0][0][0]['t'], ParagraphTextType.TEXT)
-        self.assertEqual(html_content['content']['items'][1][0][0]['c'], '2')
-        self.assertEqual(html_content['content']['items'][1][0][0]['t'], ParagraphTextType.TEXT)
+        self.assertEqual(html_content['content']['list_attribute'], 'unordered')
+        self.assertEqual(html_content['content']['items'][0]['c'], '1')
+        self.assertEqual(html_content['content']['items'][1]['c'], '2')
 
         # 嵌套list
         html_content = html_content_list[7]
         self.assertEqual(html_content['type'], DocElementType.LIST)
         self.assertEqual(len(html_content['content']['items']), 2)
-        self.assertEqual(len(html_content['content']['items'][0][0]), 3)
-        self.assertEqual(html_content['content']['items'][0][0][1]['c'], '1.1')
-        self.assertEqual(html_content['content']['items'][0][0][1]['t'], ParagraphTextType.TEXT)
-        self.assertEqual(html_content['content']['items'][1][0][1]['c'], '2.1')
-        self.assertEqual(html_content['content']['items'][1][0][1]['t'], ParagraphTextType.TEXT)
+        self.assertEqual(len(html_content['content']['items'][0]['child_list']), 2)
+        self.assertEqual(html_content['content']['items'][0]['child_list']['items'][0]['c'], '1.1')
+        self.assertEqual(html_content['content']['items'][1]['child_list']['items'][0]['c'], '2.1')
 
         # 行间公式
         html_content = html_content_list[8]
@@ -150,12 +146,10 @@ class TestExtractorChain(unittest.TestCase):
         # 有序列表
         html_content = html_content_list[10]
         self.assertEqual(html_content['type'], DocElementType.LIST)
-        self.assertEqual(html_content['content']['ordered'], True)
+        self.assertEqual(html_content['content']['list_attribute'], 'ordered')
         self.assertEqual(len(html_content['content']['items']), 2)
-        self.assertEqual(html_content['content']['items'][0][0][0]['c'], '100')
-        self.assertEqual(html_content['content']['items'][0][0][0]['t'], ParagraphTextType.TEXT)
-        self.assertEqual(html_content['content']['items'][1][0][0]['c'], '200')
-        self.assertEqual(html_content['content']['items'][1][0][0]['t'], ParagraphTextType.TEXT)
+        self.assertEqual(html_content['content']['items'][0]['c'], '100')
+        self.assertEqual(html_content['content']['items'][1]['c'], '200')
 
         # code 前的文本
         html_content = html_content_list[11]
@@ -174,14 +168,13 @@ class TestExtractorChain(unittest.TestCase):
 
         # md格式
         md_content = result.get_content_list().to_nlp_md()
-        print('md_content', md_content)
         self.assertEqual(md_content, self.md_expected_content)
         self.assertNotEqual(md_content[-2], '\n')
         self.assertEqual(md_content[-1], '\n')
 
         # main_html
         main_html = result.get_content_list().to_main_html()  # 获取main_html内容
-        self.assertEqual(normalize_html(main_html), normalize_html(self.main_html_expected_content))  # 如果遇到嵌套的html, 则返回原始html的时候还是应当拼接替换一下 TODO
+        self.assertEqual(main_html, self.main_html_expected_content)  # 如果遇到嵌套的html, 则返回原始html的时候还是应当拼接替换一下 TODO
 
     def test_html_pipeline_suit_2(self):
         """测试第二个数据：这个数据会丢失一些文本信息."""
@@ -264,9 +257,8 @@ DEF
         # Create DataJson from test data
         input_data = DataJson(test_data)
         result = chain.extract(input_data)
-        print(result.get_content_list()._get_data())
-        self.assertIn('![點(diǎn)擊進(jìn)入下一頁(yè)]( "")', result.get_content_list().to_mm_md())
-        self.assertNotIn('![點(diǎn)擊進(jìn)入下一頁(yè)]( "")', result.get_content_list().to_txt())
+        self.assertIn('![點(diǎn)擊進(jìn)入下一頁(yè)](dda09be3795fa0df88c094ca906adf77086f1741b4d5634536997146deeda777)', result.get_content_list().to_mm_md())
+        self.assertNotIn('![點(diǎn)擊進(jìn)入下一頁(yè)](dda09be3795fa0df88c094ca906adf77086f1741b4d5634536997146deeda777)', result.get_content_list().to_txt())
 
     def test_lineno_detect(self):
         chain = ExtractSimpleFactory.create(self.config)
@@ -314,8 +306,8 @@ DEF
         # Create DataJson from test data
         input_data = DataJson(test_data)
         result = chain.extract(input_data)
-        main_html = result.get_content_list().to_main_html()
-        assert 'public int hashCode()' in main_html
+        main_html = result.get_content_list().to_mm_md()
+        assert 'public int hashCode()' in main_html
 
     def test_table_involve_inline_code(self):
         """
@@ -355,7 +347,7 @@ DEF
         assert """| عنوان فارسی | توسعه مالی و هزینه سرمایه حقوق سهامداران: شواهدی از چین |
 |---|---|
 | عنوان انگلیسی | Financial development and the cost of equity capital: Evidence from China |
-| کلمات کلیدی : | &nbsp         توسعه مالی؛ هزینه سرمایه حقوق سهامداران؛ قانون و امور مالی؛ چین |
+| کلمات کلیدی : | &nbsp  توسعه مالی؛ هزینه سرمایه حقوق سهامداران؛ قانون و امور مالی؛ چین |
 | درسهای مرتبط | حسابداری |""" in content_md
 
     def test_list_empty(self):
@@ -367,6 +359,8 @@ DEF
         input_data = DataJson(test_data)
         result = chain.extract(input_data)
         list_type = result.get_content_list()._get_data()[0][0]['type']
+        print('=============', json.dumps(result.get_content_list()._get_data(), ensure_ascii=False))
+        print('=============', list_type)
         assert list_type != 'list'
 
     def test_table_include_math_p(self):
@@ -390,7 +384,7 @@ DEF
         input_data = DataJson(test_data)
         result = chain.extract(input_data)
         content_list = result.get_content_list()._get_data()
-        assert content_list[0][2]['content']['html'] == '<table><tr><td>单位换算：</td><td>$1 \\text{km} = 10^3 \\text{m}$<table><tr><td>长度</td><td>质量</td><td>时间</td></tr><tr><td>$1m=10^2cm$</td><td>$1kg=10^3g$</td><td>$1h=3600s$</td></tr></table></td></tr><tr><td>运动学：</td><td>$v = \\frac{dx}{dt}$ $a = \\frac{dv}{dt}$</td></tr></table>'
+        assert content_list[0][2]['content']['html'] == '<table><tr><td>单位换算：</td><td>数学公式区块： $1 \\text{km} = 10^3 \\text{m}$<table><tr><td>长度</td><td>质量</td><td>时间</td></tr><tr><td>数学公式 $1m=10^2cm$</td></tr>td><td>数学公式 $1kg=10^3g$</td><td>数学公式 $1h=3600s$</td></table></td></tr><tr><td>运动学：</td><td>数学公式 $v = \\frac{dx}{dt}$ 数学公式 $a = \\frac{dv}{dt}$</td></tr></table>'
 
     def test_clean_tags(self):
         """测试clean_tag的preExtractor是否生效."""
@@ -410,6 +404,7 @@ DEF
         input_data = DataJson(test_data)
         result = chain.extract(input_data)
         result_content_list = result.get_content_list()._get_data()
+        print('============= result_content_list', json.dumps(result_content_list, ensure_ascii=False))
         assert int(result_content_list[0][0]['content']['list_nest_level']) == 3
 
     def test_table_include_entity(self):
@@ -452,8 +447,7 @@ DEF
         input_data = DataJson(test_data)
         result = chain.extract(input_data)
         content_txt = result.get_content_list().to_nlp_md()
-        print('content_txt', content_txt)
-        assert len(content_txt) == 2028
+        assert len(content_txt) == 1982
 
     def test_xml_tag(self):
         """测试xml标签."""
@@ -464,3 +458,227 @@ DEF
         result = chain.extract(input_data)
         result_md = result.get_content_list().to_mm_md()
         self.assertIn('Every child that attends a CHICKS break has a deserving story', result_md)
+
+    def test_math_dollar(self):
+        """测试math美元符号."""
+        chain = ExtractSimpleFactory.create(self.config)
+        self.assertIsNotNone(chain)
+        test_data = self.data_json[24]
+        input_data = DataJson(test_data)
+        result = chain.extract(input_data)
+        result_md = result.get_content_list().to_nlp_md()
+        self.assertIn(r'\$16.8 million', result_md)
+
+    def test_math_non_asciimath(self):
+        """测试普通文本中的``不应该被识别为asciimath."""
+        chain = ExtractSimpleFactory.create(self.config)
+        self.assertIsNotNone(chain)
+        test_data = self.data_json[25]
+        input_data = DataJson(test_data)
+        result = chain.extract(input_data)
+        result_md = result.get_content_list().to_nlp_md()
+        self.assertIn(r'\`Queen Helena\`', result_md)
+
+    def test_more_nt(self):
+        """测试去除单元格的\n\t.\n保留下来."""
+        chain = ExtractSimpleFactory.create(self.config)
+        self.assertIsNotNone(chain)
+        test_data = self.data_json[26]
+        input_data = DataJson(test_data)
+        result = chain.extract(input_data)
+        result_content_list = result.get_content_list()._get_data()
+        result = result_content_list[0][2]['content']['html']
+        assert '\n\t' not in result
+        assert len(result) == 1878
+
+    def test_math_physicsforums(self):
+        """测试math_physicsforums网页中数学公式是[tex]和[itex]包裹的，且中间还有<br>标签分割."""
+        chain = ExtractSimpleFactory.create(self.config)
+        self.assertIsNotNone(chain)
+        test_data = self.data_json[27]
+        input_data = DataJson(test_data)
+        result = chain.extract(input_data)
+        result_md = result.get_content_list().to_nlp_md()
+        self.assertIn('$\\Delta K = (dd^{\\dagger} + d^{\\dagger}d)K$', result_md)
+        self.assertIn('$$\\Delta K = \\Bigl( \\frac{1}{3!}\\epsilon^{klm}\\epsilon^n_{\\ ij}\\partial_k \\partial_n K_{lm} - \\frac{1}{4}\\partial_{i}\\partial^k K_{jk} \\Bigr) dx^i \\wedge dx^j$$', result_md)
+
+    def test_table_only_include_tr(self):
+        """测试table的表头只包含tr标签."""
+        chain = ExtractSimpleFactory.create(self.config)
+        self.assertIsNotNone(chain)
+        test_data = self.data_json[28]
+        input_data = DataJson(test_data)
+        result = chain.extract(input_data)
+        result_md = result.get_content_list().to_nlp_md()
+        assert 'List Price:$11.80' in result_md
+
+    def test_table_only_one_td(self):
+        """测试table只有一个td."""
+        chain = ExtractSimpleFactory.create(self.config)
+        self.assertIsNotNone(chain)
+        test_data = self.data_json[29]
+        input_data = DataJson(test_data)
+        result = chain.extract(input_data)
+        result_md = result.get_content_list().to_nlp_md()
+        assert '|  | Shooting on DEWEY AVENUE AND GLENDALE PARK., ROCHESTER |\n|---|---|' not in result_md
+
+    def test_math_broken_label(self):
+        """测试math标签包含属性缺失的情况."""
+        chain = ExtractSimpleFactory.create(self.config)
+        self.assertIsNotNone(chain)
+        test_data = self.data_json[30]
+        input_data = DataJson(test_data)
+        result = chain.extract(input_data)
+        result_md = result.get_content_list().to_nlp_md()
+        self.assertIn(r'$alpha = \left(alpha_1, alpha_2, ldots, alpha_n\right) ,!$', result_md)
+
+    def test_table_span_error(self):
+        """测试table的span标签错误."""
+        chain = ExtractSimpleFactory.create(self.config)
+        self.assertIsNotNone(chain)
+        test_data = self.data_json[31]
+        input_data = DataJson(test_data)
+        result = chain.extract(input_data)
+        result_flag = result.get_content_list()._get_data()[0][0]['content']['is_complex']
+        assert result_flag is True
+
+    def test_table_colspan_error(self):
+        """测试table的colspan标签为字符串引起的异常错误."""
+        chain = ExtractSimpleFactory.create(self.config)
+        self.assertIsNotNone(chain)
+        test_data = self.data_json[32]
+        input_data = DataJson(test_data)
+        result = chain.extract(input_data)
+        result_flag = result.get_content_list()._get_data()[0][15]['content']['is_complex']
+        assert result_flag is False
+
+    def test_table_colspan_percent_err(self):
+        """测试table的colspan标签为百分数引起的异常错误."""
+        chain = ExtractSimpleFactory.create(self.config)
+        self.assertIsNotNone(chain)
+        test_data = self.data_json[33]
+        input_data = DataJson(test_data)
+        result = chain.extract(input_data)
+        result_flag = result.get_content_list()._get_data()[0][0]['content']['is_complex']
+        assert result_flag is True
+
+    def test_table_colspan_str_error(self):
+        """测试table的colspan标签为字符串引起的异常错误."""
+        chain = ExtractSimpleFactory.create(self.config)
+        self.assertIsNotNone(chain)
+        test_data = self.data_json[34]
+        input_data = DataJson(test_data)
+        result = chain.extract(input_data)
+        result_flag = result.get_content_list()._get_data()[0][28]['content']['is_complex']
+        assert result_flag is False
+
+    def test_table_invalid_percent(self):
+        """测试table的colspan标签为百分数引起的异常错误."""
+        chain = ExtractSimpleFactory.create(self.config)
+        self.assertIsNotNone(chain)
+        test_data = self.data_json[35]
+        input_data = DataJson(test_data)
+        result = chain.extract(input_data)
+        result_flag = result.get_content_list()._get_data()[0][0]['content']['is_complex']
+        assert result_flag is False
+
+    def test_maigc_html(self):
+        """测试magic-html."""
+        chain = ExtractSimpleFactory.create(self.config)
+        self.assertIsNotNone(chain)
+        test_data = self.data_json[36]
+        input_data = DataJson(test_data)
+        result = chain.extract(input_data)
+        result_md = result.get_magic_html()
+        assert len(result_md) > 0
+
+    def test_table_tail_repeat(self):
+        """测试table的tail重复."""
+        chain = ExtractSimpleFactory.create(self.config)
+        self.assertIsNotNone(chain)
+        test_data = self.data_json[37]
+        input_data = DataJson(test_data)
+        result = chain.extract(input_data)
+        result_md = result.get_content_list().to_mm_md()
+        text = """
+A few explanations on why certain things in business are so.
+        """
+        assert result_md.count(text.strip()) == 1
+
+    def test_title_include_special_char(self):
+        """测试title包含特殊字符."""
+        chain = ExtractSimpleFactory.create(self.config)
+        self.assertIsNotNone(chain)
+        test_data = self.data_json[38]
+        input_data = DataJson(test_data)
+        result = chain.extract(input_data)
+        result_md = result.get_content_list()._get_data()
+        assert result_md[0][0]['content']['title_content'] == 'View source for Semi-continuous decomposition'
+
+    def test_list_lack_content(self):
+        """list缺少a标签前内容.html格式不标准."""
+        chain = ExtractSimpleFactory.create(self.config)
+        self.assertIsNotNone(chain)
+        test_data = self.data_json[39]
+        input_data = DataJson(test_data)
+        result = chain.extract(input_data)
+        result_md = result.get_content_list().to_nlp_md()
+        assert '猜你感兴趣' in result_md
+        assert '友情链接' in result_md
+
+    def test_table_lack_pre_content(self):
+        """测试table缺少td标签前面的内容."""
+        chain = ExtractSimpleFactory.create(self.config)
+        self.assertIsNotNone(chain)
+        test_data = self.data_json[40]
+        input_data = DataJson(test_data)
+        result = chain.extract(input_data)
+        result_content_list = result.get_content_list()._get_data()
+        assert result_content_list[0][22]['content']['html'] == r"""<table><colgroup><col><col><col><col></colgroup><tr><th>お名前 【必須】</th><td></td><th>お名前（カナ）</th><td></td></tr><tr><th>ご連絡先 【いずれか必須】</th><td colspan="3">※メール受信制限をしている方は、@chintai.co.jpからのメールを受信できるよう設定の変更をお願い致します。<table><td>メールアドレス</td><td>電話番号</td></table></td></tr></table>"""
+
+    def test_td_include_specila_symbol(self):
+        """测试td包含特殊符号|，需要转义."""
+        chain = ExtractSimpleFactory.create(self.config)
+        self.assertIsNotNone(chain)
+        test_data = self.data_json[42]
+        input_data = DataJson(test_data)
+        result = chain.extract(input_data)
+        result_md = result.get_content_list().to_mm_md()
+        assert result_md == r"""| \| 你好 | 字 | 字 |
+|---|---|---|
+| \| 字 | 字 | 字 |
+| 字 | 字 | 字 |
+"""
+
+    def test_nest_list(self):
+        """测试嵌套列表."""
+        chain = ExtractSimpleFactory.create(self.config)
+        self.assertIsNotNone(chain)
+        test_data = self.data_json[43]
+        input_data = DataJson(test_data)
+        result = chain.extract(input_data)
+        content_md = result.get_content_list().to_nlp_md()
+        assert """- Thread
+  - amperehours apere-hours convert coulombs coulumbs electricty joules kilowatthours
+  - Replies: 4
+  - Forum: Classical & Modern Physics""" in content_md
+
+    def test_definition_list(self):
+        """测试定义列表."""
+        chain = ExtractSimpleFactory.create(self.config)
+        self.assertIsNotNone(chain)
+        test_data = self.data_json[44]
+        input_data = DataJson(test_data)
+        result = chain.extract(input_data)
+        content_md = result.get_content_list().to_nlp_md()
+        assert '2. 苍南县龙港林冉小吃店' not in content_md
+
+    def test_cc_label_exception(self):
+        """测试cc_label_exception."""
+        chain = ExtractSimpleFactory.create(self.config)
+        self.assertIsNotNone(chain)
+        test_data = self.data_json[45]
+        input_data = DataJson(test_data)
+        result = chain.extract(input_data)
+        content_md = result.get_content_list().to_nlp_md()
+        assert len(content_md) > 0

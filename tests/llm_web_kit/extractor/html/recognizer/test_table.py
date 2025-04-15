@@ -89,7 +89,8 @@ class TestTableRecognizer(unittest.TestCase):
             parts = self.rec.recognize(base_url, [(html_to_element(raw_html), html_to_element(raw_html))], raw_html)
             assert len(parts) == 3
             content = parts[1][0].text_content()
-            assert content == r'<table><tbody><tr><td>Рейтинг:</td><td>Рейтинг 5.00 из 5 на основе опроса 3 пользователей</td></tr><tr><td>Тип товара:</td><td>Препараты для омоложения</td></tr><tr><td>Форма:</td><td>Крем</td></tr><tr><td>Объем:</td><td>50 мл</td></tr><tr><td>Рецепт:</td><td>Отпускается без рецепта</td></tr><tr><td>Способ хранения:</td><td>Хранить при температуре 4-20°</td></tr><tr><td>Примечание:</td><td>Беречь от детей</td></tr><tr><td>Оплата:</td><td>Наличными/банковской картой</td></tr><tr><td>Доступность в Северске:</td><td>В наличии</td></tr><tr><td>Доставка:</td><td>2-7 Дней</td></tr><tr><td>Цена:</td><td>84 ₽</td></tr></tbody></table>'
+            assert content == r"""<table><tbody><tr><td>Рейтинг:</td><td>Рейтинг 5.00 из 5 на основе опроса 3 пользователей</td></tr><tr><td>Тип товара:</td><td>Препараты для
+ омоложения</td></tr><tr><td>Форма:</td><td>Крем</td></tr><tr><td>Объем:</td><td>50 мл</td></tr><tr><td>Рецепт:</td><td>Отпускается без рецепта</td></tr><tr><td>Способ хранения:</td><td>Хранить при температуре 4-20°</td></tr><tr><td>Примечание:</td><td>Беречь от детей</td></tr><tr><td>Оплата:</td><td>Наличными/банковской картой</td></tr><tr><td>Доступность в Северске:</td><td>В наличии</td></tr><tr><td>Доставка:</td><td>2-7 Дней</td></tr><tr><td>Цена:</td><td>84 ₽</td></tr></tbody></table>"""
 
     def test_cc_complex_table(self):
         """cc跨行跨列的表格."""

@@ -10,6 +10,7 @@ from llm_web_kit.extractor.html.recognizer.recognizer import (
     BaseHTMLElementRecognizer, CCTag)
 from llm_web_kit.libs.doc_element_type import DocElementType
 from llm_web_kit.libs.html_utils import remove_element
+from llm_web_kit.libs.text_utils import normalize_text_segment
 
 
 class TableRecognizer(BaseHTMLElementRecognizer):
@@ -45,9 +46,6 @@ class TableRecognizer(BaseHTMLElementRecognizer):
 
     @override
     def to_content_list_node(self, base_url: str, parsed_content: HtmlElement, raw_html_segment: str) -> dict:
-        if not isinstance(parsed_content, HtmlElement):
-            raise HtmlTableRecognizerException(f'parsed_content 必须是 HtmlElement 类型，而不是 {type(parsed_content)}')
-
         table_type, table_nest_level, table_body = self.__get_attribute(parsed_content)
 
         # 确保 table_body 不为 None 且是字符串类型
@@ -90,19 +88,32 @@ class TableRecognizer(BaseHTMLElementRecognizer):
                 stack.extend(reversed(elem.getchildren()))
         return True
 
+    def __is_percentage(self, value: str) -> bool:
+        """百分数判断."""
+        if not value.endswith('%'):
+            return False
+        num_part = value.rstrip('%').strip()
+        try:
+            float(num_part)  # 检查%前面是否为有效数字
+            return True
+        except ValueError:
+            return False
+
     def __is_simple_table(self, tree: HtmlElement) -> bool:
         """处理table元素，判断是是否复杂：是否包含合并单元格."""
-        print('tree', self._element_to_html(tree))
         cells = tree.xpath('.//td | .//th')
         for cell in cells:
-            colspan_str = cell.get('colspan', '1').strip('"\'\\')
-            rowspan_str = cell.get('rowspan', '1').strip('"\'\\')
+            colspan_str = cell.get('colspan', '1').strip('"\'\\,.:')
+            rowspan_str = cell.get('rowspan', '1').strip('"\'\\,.:')
+            # colspan和rowspan的值为百分数时设置为100，否则尝试转为整数，默认为1
             try:
-                colspan = int(colspan_str)
-                rowspan = int(rowspan_str)
-            except ValueError as e:
-                raise HtmlTableRecognizerException(
-                    f'table的合并单元格属性值colspan:{colspan_str}或rowspan:{rowspan_str}不是有效的整数') from e
+                colspan = 100 if self.__is_percentage(colspan_str) else int(colspan_str or 1)
+            except ValueError:
+                colspan = 1
+            try:
+                rowspan = 100 if self.__is_percentage(rowspan_str) else int(rowspan_str or 1)
+            except ValueError:
+                rowspan = 1
             if (colspan > 1) or (rowspan > 1):
                 return False
         return True
@@ -146,7 +157,7 @@ class TableRecognizer(BaseHTMLElementRecognizer):
             return 'empty'
         level = self.__is_table_nested(child)
         # 是否跨行跨列
-        flag = (self.__is_simple_table(child) and level < 2)
+        flag = (level < 2 and self.__is_simple_table(child))
         if flag:
             table_type = 'simple'
         else:
@@ -194,11 +205,11 @@ class TableRecognizer(BaseHTMLElementRecognizer):
                 else:
                     # 提取当前节点的文本
                     if node.text and node.text.strip():
-                        cleaned_text = node.text.strip().replace('\\n', '')
+                        cleaned_text = node.text.strip()
                         result.append(cleaned_text)
                     # 处理节点的tail（元素闭合后的文本）
                     if node.tail and node.tail.strip():
-                        cleaned_tail = node.tail.strip().replace('\\n', '')
+                        cleaned_tail = node.tail.strip()
                         result.append(cleaned_tail)
                     # 递归处理子节点
                     for child in node:
@@ -213,6 +224,9 @@ class TableRecognizer(BaseHTMLElementRecognizer):
             parse_res = []
             # 检查是否存在嵌套的表格
             if table_nest_level > 1:
+                if elem.text and elem.text.strip():
+                    parse_res.append(elem.text.strip())
+                    elem.text = None  # 防止后续重复处理
                 # 存在嵌套表格，递归处理子节点
                 for child in elem.iterchildren():
                     if child.tag == 'table':
@@ -225,7 +239,7 @@ class TableRecognizer(BaseHTMLElementRecognizer):
                         remove_element(child)
                 # 将非表格内容拼接后放在表格前面
                 if parse_res:
-                    elem.text = ' '.join(parse_res)
+                    elem.text = ' '.join(normalize_text_segment(item) for item in parse_res)
             else:
                 # 没有嵌套表格，直接简化
                 math_res = self.__check_table_include_math_code(elem)
@@ -233,7 +247,7 @@ class TableRecognizer(BaseHTMLElementRecognizer):
                 for item in list(elem.iterchildren()):
                     remove_element(item)
                 if parse_res:
-                    elem.text = ' '.join(parse_res)
+                    elem.text = ' '.join(normalize_text_segment(item) for item in parse_res)
             return
         # 非 td/th 元素继续递归处理
         for child in elem.iterchildren():
@@ -252,9 +266,9 @@ class TableRecognizer(BaseHTMLElementRecognizer):
         # text进行strip操作,tail保留（部分内容留在tail中）
         for elem in chain([table_root], table_root.iterchildren()):
             if elem.text is not None:
-                elem.text = elem.text.strip().replace('\\n', '')
+                elem.text = elem.text.strip()
             if elem.tail is not None:
-                elem.tail = elem.tail.strip().replace('\\n', '')
+                elem.tail = elem.tail.strip()
         # 单元格内的多标签内容进行简化，空格拼接，公式、代码识别
         self.__simplify_td_th_content(table_nest_level, table_root)
         # 迭代
@@ -269,7 +283,7 @@ class TableRecognizer(BaseHTMLElementRecognizer):
             table_raw_html = self._element_to_html(root)
             table_type = self.__get_table_type(root)
             table_nest_level = self.__is_table_nested(root)
-            tail_text = root.tail
+            tail_text = None
             table_body = self.__get_table_body(table_type, table_nest_level, root)
             cc_element = self._build_cc_element(
                 CCTag.CC_TABLE, table_body, tail_text, table_type=table_type, table_nest_level=table_nest_level,
