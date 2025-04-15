@@ -60,7 +60,7 @@ class TestExtractorChain(unittest.TestCase):
             for line in f:
                 self.data_json.append(json.loads(line.strip()))
 
-        assert len(self.data_json) == 45
+        assert len(self.data_json) == 46
 
         # Config for HTML extraction
         self.config = load_pipe_tpl('html-test')
@@ -672,3 +672,13 @@ A few explanations on why certain things in business are so.
         result = chain.extract(input_data)
         content_md = result.get_content_list().to_nlp_md()
         assert '2. 苍南县龙港林冉小吃店' not in content_md
+
+    def test_cc_label_exception(self):
+        """测试cc_label_exception."""
+        chain = ExtractSimpleFactory.create(self.config)
+        self.assertIsNotNone(chain)
+        test_data = self.data_json[45]
+        input_data = DataJson(test_data)
+        result = chain.extract(input_data)
+        content_md = result.get_content_list().to_nlp_md()
+        assert len(content_md) > 0

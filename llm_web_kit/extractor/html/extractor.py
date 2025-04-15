@@ -369,8 +369,8 @@ class HTMLFileFormatExtractor(BaseFileFormatExtractor):
             nodes = el.xpath(xpath_expr)
             if len(nodes) == 0:
                 raise HtmlFileExtractorException(f'html文本中没有cc标签: {html}')
-            if len(nodes) > 3:
-                raise HtmlFileExtractorException(f'html文本中包含多个cc标签: {html}')
+            # if len(nodes) > 5:
+            #     raise HtmlFileExtractorException(f'html文本中包含多个cc标签: {html}')
             # return element_to_html(nodes[0]), nodes[0].tag
             return nodes[0], nodes[0].tag
 
