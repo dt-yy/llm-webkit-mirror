@@ -2,6 +2,7 @@ import ast
 import re
 from hashlib import sha256
 
+import nltk
 from lxml import html
 from lxml.html import etree
 from nltk.tokenize import word_tokenize
@@ -9,6 +10,8 @@ from nltk.tokenize import word_tokenize
 from llm_web_kit.input.pre_data_json import PreDataJson, PreDataJsonKey
 from llm_web_kit.libs.html_utils import element_to_html, html_to_element
 from llm_web_kit.main_html_parser.parser.parser import BaseMainHtmlParser
+
+nltk.download('punkt', quiet=True)  # 静默模式避免日志干扰
 
 MAX_LENGTH = 10
 
