@@ -48,4 +48,3 @@ class TestLayoutParser(unittest.TestCase):
             parser = LayoutBatchParser(element_json)
             parts = parser.parse(pre_data)
             assert parts.get(PreDataJsonKey.MAIN_HTML_BODY) == expected_html
-
