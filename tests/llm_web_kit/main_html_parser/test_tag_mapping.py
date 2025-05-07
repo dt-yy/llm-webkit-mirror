@@ -1,38 +1,69 @@
-import json
 import unittest
 from pathlib import Path
 
 from llm_web_kit.input.pre_data_json import PreDataJson, PreDataJsonKey
-from llm_web_kit.main_html_parser.parser.tag_mapping import \
-    MapItemToHtmlTagsParser
+from llm_web_kit.main_html_parser.parser.tag_simplifier import \
+    HtmlTagSimplifierParser
 
-base_dir = Path(__file__).parent.parent
-
-
-def parse_tuple_key(key_str):
-    if key_str.startswith('(') and key_str.endswith(')'):
-        try:
-            # Convert "(1, 2)" → (1, 2) using ast.literal_eval (safer than eval)
-            return eval(key_str)
-        except Exception:
-            return key_str
-    return key_str
+base_dir = Path(__file__).resolve().parent
 
 
-class TestTagMapping(unittest.TestCase):
-    def test_construct_main_tree(self):
-        data = []
-        raw_html_path = base_dir.joinpath('assets/test_tag_mapping_web.jsonl')
-        with open(raw_html_path, 'r', encoding='utf-8') as f:
-            for line in f:
-                data.append(json.loads(line.strip()))  # 解析每行 JSON
-        mock_dict = data[0]
-        pre_data = PreDataJson(mock_dict['pre_data'])
-        parser = MapItemToHtmlTagsParser({})
-        pre_data = parser.parse(pre_data)
-        content_list = pre_data.get(PreDataJsonKey.HTML_TARGET_LIST, [])
-        element_dict = pre_data.get(PreDataJsonKey.HTML_ELEMENT_LIST, [])
-        self.assertEqual(content_list, mock_dict['expected_content_list'])
-        verify_key = mock_dict['verify_key']
-        new_res = element_dict[8][tuple(verify_key)][0]
-        self.assertEqual('red', new_res)
+class MyTestCase(unittest.TestCase):
+    def test_tag_simplifier(self):
+        file_path = base_dir / 'parser/assets/test_html_data/test_tah_simplifier.html'
+        with open(file_path, 'r', encoding='utf-8') as file:
+            raw_html = file.read()
+        data_dict = {PreDataJsonKey.TYPICAL_RAW_HTML: raw_html}
+        pre_data = PreDataJson(data_dict)
+        pre_data_result = HtmlTagSimplifierParser({}).parse(pre_data)
+        simplifier_raw_html = pre_data_result.get(PreDataJsonKey.TYPICAL_SIMPLIFIED_HTML, '')
+        _item_id_count = simplifier_raw_html.count('_item_id')
+        self.assertEqual(_item_id_count, 32)
+
+    def test_tag_simplifier1(self):
+        file_path = base_dir / 'parser/assets/test_html_data/normal_dl.html'
+        with open(file_path, 'r', encoding='utf-8') as file:
+            raw_html = file.read()
+        data_dict = {PreDataJsonKey.TYPICAL_RAW_HTML: raw_html}
+        pre_data = PreDataJson(data_dict)
+        pre_data_result = HtmlTagSimplifierParser({}).parse(pre_data)
+        simplifier_raw_html = pre_data_result.get(PreDataJsonKey.TYPICAL_SIMPLIFIED_HTML, '')
+        _item_id_count = simplifier_raw_html.count('_item_id')
+        self.assertEqual(_item_id_count, 18)
+
+    def test_tag_simplifier2(self):
+        file_path = base_dir / 'parser/assets/test_html_data/normal_table.html'
+        with open(file_path, 'r', encoding='utf-8') as file:
+            raw_html = file.read()
+        data_dict = {PreDataJsonKey.TYPICAL_RAW_HTML: raw_html}
+        pre_data = PreDataJson(data_dict)
+        pre_data_result = HtmlTagSimplifierParser({}).parse(pre_data)
+        simplifier_raw_html = pre_data_result.get(PreDataJsonKey.TYPICAL_SIMPLIFIED_HTML, '')
+        _item_id_count = simplifier_raw_html.count('_item_id')
+        self.assertEqual(_item_id_count, 30)
+
+    def test_tag_simplifier3(self):
+        file_path = base_dir / 'parser/assets/test_html_data/special_table_1.html'
+        with open(file_path, 'r', encoding='utf-8') as file:
+            raw_html = file.read()
+        data_dict = {PreDataJsonKey.TYPICAL_RAW_HTML: raw_html}
+        pre_data = PreDataJson(data_dict)
+        pre_data_result = HtmlTagSimplifierParser({}).parse(pre_data)
+        simplifier_raw_html = pre_data_result.get(PreDataJsonKey.TYPICAL_SIMPLIFIED_HTML, '')
+        _item_id_count = simplifier_raw_html.count('_item_id')
+        self.assertEqual(_item_id_count, 5)
+
+    def test_tag_simplifier4(self):
+        file_path = base_dir / 'parser/assets/test_html_data/1.html'
+        with open(file_path, 'r', encoding='utf-8') as file:
+            raw_html = file.read()
+        data_dict = {PreDataJsonKey.TYPICAL_RAW_HTML: raw_html}
+        pre_data = PreDataJson(data_dict)
+        pre_data_result = HtmlTagSimplifierParser({}).parse(pre_data)
+        simplifier_raw_html = pre_data_result.get(PreDataJsonKey.TYPICAL_SIMPLIFIED_HTML, '')
+        _item_id_count = simplifier_raw_html.count('_item_id')
+        self.assertEqual(_item_id_count, 37)
+
+
+if __name__ == '__main__':
+    unittest.main()
