@@ -91,11 +91,7 @@ class TestLayoutParser(unittest.TestCase):
         element_path = base_dir.joinpath('assets/input_layout_batch_parser/template_sv.m.wiktionary.org_0.json')
         expected_html = base_dir.joinpath('assets/output_layout_batch_parser/parser_sv_m_wiktionary_org.html').read_text()
         raw_html = raw_html_path.read_text()
-        element_dict_str = json.loads(element_path.read_text())
-        element_dict = {}
-        for layer, layer_dict in element_dict_str.items():
-            layer_dict_json = {parse_tuple_key(k): v for k, v in layer_dict.items()}
-            element_dict[int(layer)] = layer_dict_json
+        element_dict = element_path.read_text()
         data_dict = {'HTML': raw_html, 'TEMPLATE_DATA': element_dict, 'ORI_HTML': raw_html}
         pre_data = PreDataJson(data_dict)
         parser = LayoutBatchParser(element_dict)

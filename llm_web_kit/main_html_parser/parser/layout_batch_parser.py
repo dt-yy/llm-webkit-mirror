@@ -5,7 +5,7 @@ import nltk
 from lxml import html
 from lxml.html import etree
 from nltk.tokenize import word_tokenize
-
+import json
 from llm_web_kit.input.pre_data_json import PreDataJson, PreDataJsonKey
 from llm_web_kit.libs.html_utils import element_to_html, html_to_element
 from llm_web_kit.main_html_parser.parser.parser import BaseMainHtmlParser
@@ -17,13 +17,32 @@ MAX_LENGTH = 10
 
 class LayoutBatchParser(BaseMainHtmlParser):
     """完整处理流程."""
-    def __init__(self, template_data: dict):
+    def __init__(self, template_data: str | dict):
         # 确保模板数据的键是整数类型
         self.template_data = template_data
 
+    def parse_tuple_key(self, key_str):
+        if key_str.startswith('(') and key_str.endswith(')'):
+            try:
+                return eval(key_str)  # WARNING: eval is unsafe for untrusted data!
+            except (SyntaxError, ValueError):
+                return key_str  # Fallback if parsing fails
+        return key_str
+
     def parse(self, pre_data: PreDataJson) -> PreDataJson:
+        # 支持输入字符串和tag mapping后的dict对象
         html_source = pre_data['HTML']
-        template_data = pre_data['TEMPLATE_DATA']
+        template_data_str = pre_data['TEMPLATE_DATA']
+        template_data = dict()
+        if isinstance(template_data_str, str):
+            template_data_str = json.loads(template_data_str)
+            for layer, layer_dict in template_data_str.items():
+                layer_dict_json = {self.parse_tuple_key(k): v for k, v in layer_dict.items()}
+                template_data[int(layer)] = layer_dict_json
+        elif isinstance(template_data_str, dict):
+            template_data = template_data_str
+        else:
+            raise ValueError(f'template_data 类型错误: {type(template_data_str)}')
         pipeline = LayoutBatchParser(template_data)
         content, body = pipeline.process(html_source)
         pre_data[PreDataJsonKey.MAIN_HTML] = content
