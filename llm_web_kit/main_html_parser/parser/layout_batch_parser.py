@@ -1,3 +1,4 @@
+import json
 import re
 from hashlib import sha256
 
@@ -5,7 +6,7 @@ import nltk
 from lxml import html
 from lxml.html import etree
 from nltk.tokenize import word_tokenize
-import json
+
 from llm_web_kit.input.pre_data_json import PreDataJson, PreDataJsonKey
 from llm_web_kit.libs.html_utils import element_to_html, html_to_element
 from llm_web_kit.main_html_parser.parser.parser import BaseMainHtmlParser
