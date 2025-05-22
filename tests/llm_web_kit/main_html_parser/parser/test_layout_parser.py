@@ -102,7 +102,7 @@ class TestLayoutParser(unittest.TestCase):
         data_dict = {'html_source': raw_html, 'html_element_dict': element_dict, 'ori_html': raw_html,
                      'typical_main_html': raw_html, 'similarity_layer': 5}
         pre_data = PreDataJson(data_dict)
-        parser = LayoutBatchParser(element_dict)
+        parser = LayoutBatchParser(data_dict)
         parts = parser.parse(pre_data)
         assert parts.get(PreDataJsonKey.MAIN_HTML_BODY) == expected_html
 
@@ -120,7 +120,7 @@ class TestLayoutParser(unittest.TestCase):
         data_dict = {'html_source': success_html, 'html_element_dict': element_dict,
                      'typical_main_html': template_html}
         pre_data = PreDataJson(data_dict)
-        parser = LayoutBatchParser(element_dict)
+        parser = LayoutBatchParser(data_dict)
         parts = parser.parse(pre_data)
         assert parts.get(PreDataJsonKey.MAIN_HTML_SUCCESS) is True
 
@@ -129,3 +129,18 @@ class TestLayoutParser(unittest.TestCase):
         pre_data = PreDataJson(data_dict)
         parts = parser.parse(pre_data)
         assert parts.get(PreDataJsonKey.MAIN_HTML_SUCCESS) is False
+
+    def test_layout_batch_parser_6abc(self):
+        raw_html_path = base_dir.joinpath('assets/input_layout_batch_parser/6abc.com_0.html')
+        element_path = base_dir.joinpath('assets/input_layout_batch_parser/template_6abc.com_0.json')
+
+        raw_html = raw_html_path.read_text(encoding='utf-8')
+        element_dict = element_path.read_text(encoding='utf-8')
+        data_dict = {'html_source': raw_html, 'html_element_dict': element_dict, 'ori_html': raw_html,
+                     'typical_main_html': raw_html, 'similarity_layer': 5}
+        pre_data = PreDataJson(data_dict)
+        parser = LayoutBatchParser(pre_data)
+        parts = parser.parse(pre_data)
+        fw = open('test.html', 'w+', encoding='utf-8')
+        fw.write(parts.get(PreDataJsonKey.MAIN_HTML_BODY))
+        fw.close()

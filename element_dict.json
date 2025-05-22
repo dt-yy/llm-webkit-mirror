@@ -1,0 +1,2611 @@
+{
+    "0": {
+        "('html', None, None, 0, 0)": [
+            "green",
+            null,
+            "/html"
+        ]
+    },
+    "1": {
+        "('head', None, None, 1, 0)": [
+            "green",
+            [
+                "html",
+                null,
+                null
+            ],
+            "/html/head"
+        ],
+        "('body', '', None, 1, 1)": [
+            "green",
+            [
+                "html",
+                null,
+                null
+            ],
+            "/html/body"
+        ]
+    },
+    "2": {
+        "('meta', None, None, 2, 0)": [
+            "green",
+            [
+                "head",
+                null,
+                null
+            ],
+            "/html/head/meta[1]"
+        ],
+        "('link', None, None, 2, 4)": [
+            "green",
+            [
+                "head",
+                null,
+                null
+            ],
+            "/html/head/link[1]"
+        ],
+        "('script', None, None, 2, 18)": [
+            "green",
+            [
+                "head",
+                null,
+                null
+            ],
+            "/html/head/script[1]"
+        ],
+        "('title', None, None, 2, 35)": [
+            "green",
+            [
+                "head",
+                null,
+                null
+            ],
+            "/html/head/title"
+        ],
+        "('div', None, 'abcotv', 2, 70)": [
+            "green",
+            [
+                "body",
+                "",
+                null
+            ],
+            "/html/body/div"
+        ],
+        "('script', None, None, 2, 71)": [
+            "green",
+            [
+                "body",
+                "",
+                null
+            ],
+            "/html/body/script[1]"
+        ]
+    },
+    "3": {
+        "('div', None, 'fitt-analytics', 3, 0)": [
+            "green",
+            [
+                "div",
+                null,
+                "abcotv"
+            ],
+            "/html/body/div/div"
+        ]
+    },
+    "4": {
+        "('div', 'bp-mobileMDPlus bp-mobileLGPlus bp-tabletPlus bp-desktopPlus bp-desktopLGPlus', None, 4, 0)": [
+            "green",
+            [
+                "div",
+                null,
+                "fitt-analytics"
+            ],
+            "/html/body/div/div/div"
+        ]
+    },
+    "5": {
+        "('div', 'wrapper prism-story', None, 5, 0)": [
+            "green",
+            [
+                "div",
+                "bp-mobileMDPlus bp-mobileLGPlus bp-tabletPlus bp-desktopPlus bp-desktopLGPlus",
+                null
+            ],
+            "/html/body/div/div/div/div"
+        ]
+    },
+    "6": {
+        "('section', 'breaking-news', None, 6, 0)": [
+            "green",
+            [
+                "div",
+                "wrapper prism-story",
+                null
+            ],
+            "/html/body/div/div/div/div/section[1]"
+        ],
+        "('section', 'nav', None, 6, 1)": [
+            "green",
+            [
+                "div",
+                "wrapper prism-story",
+                null
+            ],
+            "/html/body/div/div/div/div/section[2]"
+        ],
+        "('div', 'theme-otv ', 'themeProvider', 6, 2)": [
+            "green",
+            [
+                "div",
+                "wrapper prism-story",
+                null
+            ],
+            "/html/body/div/div/div/div/div[1]"
+        ],
+        "('div', None, 'path', 6, 3)": [
+            "green",
+            [
+                "div",
+                "wrapper prism-story",
+                null
+            ],
+            "/html/body/div/div/div/div/div[2]"
+        ],
+        "('div', None, 'tashl', 6, 4)": [
+            "green",
+            [
+                "div",
+                "wrapper prism-story",
+                null
+            ],
+            "/html/body/div/div/div/div/div[3]"
+        ],
+        "('footer', 'footer', None, 6, 5)": [
+            "green",
+            [
+                "div",
+                "wrapper prism-story",
+                null
+            ],
+            "/html/body/div/div/div/div/footer"
+        ],
+        "('div', None, None, 6, 6)": [
+            "green",
+            [
+                "div",
+                "wrapper prism-story",
+                null
+            ],
+            "/html/body/div/div/div/div/div[4]"
+        ]
+    },
+    "7": {
+        "('div', None, 'breaking-news-handler', 7, 0)": [
+            "green",
+            [
+                "section",
+                "breaking-news",
+                null
+            ],
+            "/html/body/div/div/div/div/section[1]/div[1]"
+        ],
+        "('div', 'breaking-news-pager ', None, 7, 1)": [
+            "green",
+            [
+                "section",
+                "breaking-news",
+                null
+            ],
+            "/html/body/div/div/div/div/section[1]/div[2]"
+        ],
+        "('header', 'feature-container wpvi', None, 7, 2)": [
+            "green",
+            [
+                "section",
+                "nav",
+                null
+            ],
+            "/html/body/div/div/div/div/section[2]/header"
+        ],
+        "('nav', 'main-nav', None, 7, 3)": [
+            "green",
+            [
+                "section",
+                "nav",
+                null
+            ],
+            "/html/body/div/div/div/div/section[2]/nav"
+        ],
+        "('div', 'profile-drop-down has-breaking', None, 7, 4)": [
+            "green",
+            [
+                "section",
+                "nav",
+                null
+            ],
+            "/html/body/div/div/div/div/section[2]/div"
+        ],
+        "('div', 'FITT_Article_outer-container iJVrZ lqtkC glxIO HfYhe vUYNV  dHdHP jLREf zXXje aGO ', 'FITTArticle', 7, 5)": [
+            "green",
+            [
+                "div",
+                "theme-otv ",
+                "themeProvider"
+            ],
+            "/html/body/div/div/div/div/div[1]/div"
+        ],
+        "('div', 'footer-searchsocial', None, 7, 6)": [
+            "green",
+            [
+                "footer",
+                "footer",
+                null
+            ],
+            "/html/body/div/div/div/div/footer/div[1]"
+        ],
+        "('div', 'footer-sections', None, 7, 7)": [
+            "green",
+            [
+                "footer",
+                "footer",
+                null
+            ],
+            "/html/body/div/div/div/div/footer/div[2]"
+        ],
+        "('div', 'footer-legal', None, 7, 8)": [
+            "green",
+            [
+                "footer",
+                "footer",
+                null
+            ],
+            "/html/body/div/div/div/div/footer/div[3]"
+        ],
+        "('div', 'clear', None, 7, 9)": [
+            "green",
+            [
+                "footer",
+                "footer",
+                null
+            ],
+            "/html/body/div/div/div/div/footer/div[4]"
+        ],
+        "('script', None, None, 7, 10)": [
+            "green",
+            [
+                "div",
+                null,
+                null
+            ],
+            "/html/body/div/div/div/div/div[4]/script"
+        ],
+        "('div', None, 'ZN_5hSLIyrLhlJ7ndr', 7, 11)": [
+            "green",
+            [
+                "div",
+                null,
+                null
+            ],
+            "/html/body/div/div/div/div/div[4]/div"
+        ],
+        "('div', 'Ad ad-slot', None, 7, 13)": [
+            "green",
+            [
+                "div",
+                null,
+                null
+            ],
+            "/html/body/div/div/div/div/div[6]/div"
+        ]
+    },
+    "8": {
+        "('ul', 'breaking-news-stories collapse', 'breaking-news-stories', 8, 0)": [
+            "green",
+            [
+                "div",
+                null,
+                "breaking-news-handler"
+            ],
+            "/html/body/div/div/div/div/section[1]/div[1]/ul"
+        ],
+        "('div', 'hr', None, 8, 1)": [
+            "green",
+            [
+                "div",
+                "breaking-news-pager ",
+                null
+            ],
+            "/html/body/div/div/div/div/section[1]/div[2]/div"
+        ],
+        "('ul', None, None, 8, 2)": [
+            "green",
+            [
+                "div",
+                "breaking-news-pager ",
+                null
+            ],
+            "/html/body/div/div/div/div/section[1]/div[2]/ul"
+        ],
+        "('a', 'feature-action', None, 8, 3)": [
+            "green",
+            [
+                "header",
+                "feature-container wpvi",
+                null
+            ],
+            "/html/body/div/div/div/div/section[2]/header/a"
+        ],
+        "('div', 'feature-header-container wpvi', None, 8, 4)": [
+            "green",
+            [
+                "header",
+                "feature-container wpvi",
+                null
+            ],
+            "/html/body/div/div/div/div/section[2]/header/div"
+        ],
+        "('div', 'nav-wrapper vis-hidden', None, 8, 5)": [
+            "green",
+            [
+                "nav",
+                "main-nav",
+                null
+            ],
+            "/html/body/div/div/div/div/section[2]/nav/div"
+        ],
+        "('div', 'profile-name', None, 8, 6)": [
+            "green",
+            [
+                "div",
+                "profile-drop-down has-breaking",
+                null
+            ],
+            "/html/body/div/div/div/div/section[2]/div/div[1]"
+        ],
+        "('div', 'profile-edit', None, 8, 7)": [
+            "green",
+            [
+                "div",
+                "profile-drop-down has-breaking",
+                null
+            ],
+            "/html/body/div/div/div/div/section[2]/div/div[2]"
+        ],
+        "('div', 'profile-logout', None, 8, 8)": [
+            "green",
+            [
+                "div",
+                "profile-drop-down has-breaking",
+                null
+            ],
+            "/html/body/div/div/div/div/section[2]/div/div[3]"
+        ],
+        "('div', 'pNwJE xZCNW WDwAI rbeIr tPakT HymbH JHrzh YppdR ', None, 8, 9)": [
+            "green",
+            [
+                "div",
+                "FITT_Article_outer-container iJVrZ lqtkC glxIO HfYhe vUYNV  dHdHP jLREf zXXje aGO ",
+                "FITTArticle"
+            ],
+            "/html/body/div/div/div/div/div[1]/div/div[1]"
+        ],
+        "('div', 'FITT_Article_main VZTD UeCOM jIRH oimqG DjbQm UwdmX Xmrlz ReShI KaJdY lqtkC ssImf HfYhe RTHNs iJVrZ ', None, 8, 10)": [
+            "green",
+            [
+                "div",
+                "FITT_Article_outer-container iJVrZ lqtkC glxIO HfYhe vUYNV  dHdHP jLREf zXXje aGO ",
+                "FITTArticle"
+            ],
+            "/html/body/div/div/div/div/div[1]/div/div[2]"
+        ],
+        "('div', 'footer-brand desktop', None, 8, 11)": [
+            "green",
+            [
+                "div",
+                "footer-searchsocial",
+                null
+            ],
+            "/html/body/div/div/div/div/footer/div[1]/div[1]"
+        ],
+        "('section', 'footer-smallnav', None, 8, 12)": [
+            "green",
+            [
+                "div",
+                "footer-searchsocial",
+                null
+            ],
+            "/html/body/div/div/div/div/footer/div[1]/section"
+        ],
+        "('div', 'footer-brand mobile', None, 8, 13)": [
+            "green",
+            [
+                "div",
+                "footer-searchsocial",
+                null
+            ],
+            "/html/body/div/div/div/div/footer/div[1]/div[2]"
+        ],
+        "('div', 'clear', None, 8, 14)": [
+            "green",
+            [
+                "div",
+                "footer-searchsocial",
+                null
+            ],
+            "/html/body/div/div/div/div/footer/div[1]/div[3]"
+        ],
+        "('div', 'frame-social', None, 8, 15)": [
+            "green",
+            [
+                "div",
+                "footer-searchsocial",
+                null
+            ],
+            "/html/body/div/div/div/div/footer/div[1]/div[4]"
+        ],
+        "('div', 'footer-sections-col1', None, 8, 16)": [
+            "green",
+            [
+                "div",
+                "footer-sections",
+                null
+            ],
+            "/html/body/div/div/div/div/footer/div[2]/div[1]"
+        ],
+        "('div', 'footer-sections-col2', None, 8, 17)": [
+            "green",
+            [
+                "div",
+                "footer-sections",
+                null
+            ],
+            "/html/body/div/div/div/div/footer/div[2]/div[2]"
+        ],
+        "('div', 'footer-legal-links', None, 8, 18)": [
+            "green",
+            [
+                "div",
+                "footer-legal",
+                null
+            ],
+            "/html/body/div/div/div/div/footer/div[3]/div[1]"
+        ],
+        "('div', 'footer-legal-copyright', None, 8, 19)": [
+            "green",
+            [
+                "div",
+                "footer-legal",
+                null
+            ],
+            "/html/body/div/div/div/div/footer/div[3]/div[2]"
+        ]
+    },
+    "9": {
+        "('li', 'breaking-news-story 0 on ', None, 9, 0)": [
+            "green",
+            [
+                "ul",
+                "breaking-news-stories collapse",
+                "breaking-news-stories"
+            ],
+            "/html/body/div/div/div/div/section[1]/div[1]/ul/li"
+        ],
+        "('hr', None, None, 9, 1)": [
+            "green",
+            [
+                "div",
+                "hr",
+                null
+            ],
+            "/html/body/div/div/div/div/section[1]/div[2]/div/hr"
+        ],
+        "('li', 'on', None, 9, 2)": [
+            "green",
+            [
+                "ul",
+                null,
+                null
+            ],
+            "/html/body/div/div/div/div/section[1]/div[2]/ul/li"
+        ],
+        "('p', None, None, 9, 3)": [
+            "green",
+            [
+                "a",
+                "feature-action",
+                null
+            ],
+            "/html/body/div/div/div/div/section[2]/header/a/p"
+        ],
+        "('div', 'feature-search-overlay', None, 9, 4)": [
+            "green",
+            [
+                "div",
+                "feature-header-container wpvi",
+                null
+            ],
+            "/html/body/div/div/div/div/section[2]/header/div/div[1]"
+        ],
+        "('div', 'feature-search-bar', None, 9, 5)": [
+            "green",
+            [
+                "div",
+                "feature-header-container wpvi",
+                null
+            ],
+            "/html/body/div/div/div/div/section[2]/header/div/div[2]"
+        ],
+        "('div', 'feature-search-close', None, 9, 6)": [
+            "green",
+            [
+                "div",
+                "feature-header-container wpvi",
+                null
+            ],
+            "/html/body/div/div/div/div/section[2]/header/div/div[3]"
+        ],
+        "('div', 'feature-header-left', None, 9, 7)": [
+            "green",
+            [
+                "div",
+                "feature-header-container wpvi",
+                null
+            ],
+            "/html/body/div/div/div/div/section[2]/header/div/div[4]"
+        ],
+        "('div', 'feature-header-right', None, 9, 8)": [
+            "green",
+            [
+                "div",
+                "feature-header-container wpvi",
+                null
+            ],
+            "/html/body/div/div/div/div/section[2]/header/div/div[5]"
+        ],
+        "('div', 'nav-sections-main-local', None, 9, 9)": [
+            "green",
+            [
+                "div",
+                "nav-wrapper vis-hidden",
+                null
+            ],
+            "/html/body/div/div/div/div/section[2]/nav/div/div[1]"
+        ],
+        "('div', 'nav-sections-links nav-sections-categories subnav-categories', None, 9, 10)": [
+            "green",
+            [
+                "div",
+                "nav-wrapper vis-hidden",
+                null
+            ],
+            "/html/body/div/div/div/div/section[2]/nav/div/div[2]"
+        ],
+        "('div', 'nav-sections-community-shows nav-sections-station-info', None, 9, 11)": [
+            "green",
+            [
+                "div",
+                "nav-wrapper vis-hidden",
+                null
+            ],
+            "/html/body/div/div/div/div/section[2]/nav/div/div[3]"
+        ],
+        "('div', 'nav-sections-community-shows', None, 9, 12)": [
+            "green",
+            [
+                "div",
+                "nav-wrapper vis-hidden",
+                null
+            ],
+            "/html/body/div/div/div/div/section[2]/nav/div/div[4]"
+        ],
+        "('div', 'nav-promos-follow', None, 9, 13)": [
+            "green",
+            [
+                "div",
+                "nav-wrapper vis-hidden",
+                null
+            ],
+            "/html/body/div/div/div/div/section[2]/nav/div/div[5]"
+        ],
+        "('div', None, None, 9, 14)": [
+            "green",
+            [
+                "div",
+                "pNwJE xZCNW WDwAI rbeIr tPakT HymbH JHrzh YppdR ",
+                null
+            ],
+            "/html/body/div/div/div/div/div[1]/div/div[1]/div"
+        ],
+        "('div', 'Kiog kNVGM nvpSA qwdi bmjsw ', None, 9, 15)": [
+            "green",
+            [
+                "div",
+                "FITT_Article_main VZTD UeCOM jIRH oimqG DjbQm UwdmX Xmrlz ReShI KaJdY lqtkC ssImf HfYhe RTHNs iJVrZ ",
+                null
+            ],
+            "/html/body/div/div/div/div/div[1]/div/div[2]/div"
+        ],
+        "('div', None, None, 9, 16)": [
+            "green",
+            [
+                "div",
+                "footer-brand desktop",
+                null
+            ],
+            "/html/body/div/div/div/div/footer/div[1]/div[1]/div"
+        ],
+        "('ul', None, None, 9, 17)": [
+            "green",
+            [
+                "section",
+                "footer-smallnav",
+                null
+            ],
+            "/html/body/div/div/div/div/footer/div[1]/section/ul"
+        ],
+        "('div', None, None, 9, 18)": [
+            "green",
+            [
+                "div",
+                "footer-brand mobile",
+                null
+            ],
+            "/html/body/div/div/div/div/footer/div[1]/div[2]/div"
+        ],
+        "('div', 'frame-social-action', None, 9, 19)": [
+            "green",
+            [
+                "div",
+                "frame-social",
+                null
+            ],
+            "/html/body/div/div/div/div/footer/div[1]/div[4]/div[1]"
+        ],
+        "('div', 'frame-social-icons', None, 9, 20)": [
+            "green",
+            [
+                "div",
+                "frame-social",
+                null
+            ],
+            "/html/body/div/div/div/div/footer/div[1]/div[4]/div[2]"
+        ],
+        "('div', 'footer-sections-group', None, 9, 21)": [
+            "green",
+            [
+                "div",
+                "footer-sections-col1",
+                null
+            ],
+            "/html/body/div/div/div/div/footer/div[2]/div[1]/div[1]"
+        ],
+        "('div', 'footer-sections-group', None, 9, 23)": [
+            "green",
+            [
+                "div",
+                "footer-sections-col2",
+                null
+            ],
+            "/html/body/div/div/div/div/footer/div[2]/div[2]/div[1]"
+        ],
+        "('ul', 'footer-legal-links-mobile', None, 9, 25)": [
+            "green",
+            [
+                "div",
+                "footer-legal-links",
+                null
+            ],
+            "/html/body/div/div/div/div/footer/div[3]/div[1]/ul"
+        ],
+        "('div', 'footer-legal-links-col1', None, 9, 26)": [
+            "green",
+            [
+                "div",
+                "footer-legal-links",
+                null
+            ],
+            "/html/body/div/div/div/div/footer/div[3]/div[1]/div[1]"
+        ],
+        "('div', 'footer-legal-links-col2', None, 9, 27)": [
+            "green",
+            [
+                "div",
+                "footer-legal-links",
+                null
+            ],
+            "/html/body/div/div/div/div/footer/div[3]/div[1]/div[2]"
+        ],
+        "('div', 'clear', None, 9, 28)": [
+            "green",
+            [
+                "div",
+                "footer-legal-links",
+                null
+            ],
+            "/html/body/div/div/div/div/footer/div[3]/div[1]/div[3]"
+        ]
+    },
+    "10": {
+        "('div', 'breaking-news-content', None, 10, 0)": [
+            "green",
+            [
+                "li",
+                "breaking-news-story 0 on ",
+                null
+            ],
+            "/html/body/div/div/div/div/section[1]/div[1]/ul/li/div[1]"
+        ],
+        "('div', 'breaking-news-button', None, 10, 1)": [
+            "green",
+            [
+                "li",
+                "breaking-news-story 0 on ",
+                null
+            ],
+            "/html/body/div/div/div/div/section[1]/div[1]/ul/li/div[2]"
+        ],
+        "('span', 'feature-watch-live', None, 10, 2)": [
+            "green",
+            [
+                "p",
+                null,
+                null
+            ],
+            "/html/body/div/div/div/div/section[2]/header/a/p/span"
+        ],
+        "('form', 'form-search frame-search', None, 10, 3)": [
+            "green",
+            [
+                "div",
+                "feature-search-bar",
+                null
+            ],
+            "/html/body/div/div/div/div/section[2]/header/div/div[2]/form"
+        ],
+        "('span', 'feature-menu closed', None, 10, 4)": [
+            "green",
+            [
+                "div",
+                "feature-header-left",
+                null
+            ],
+            "/html/body/div/div/div/div/section[2]/header/div/div[4]/span"
+        ],
+        "('a', 'feature-logo', None, 10, 5)": [
+            "green",
+            [
+                "div",
+                "feature-header-left",
+                null
+            ],
+            "/html/body/div/div/div/div/section[2]/header/div/div[4]/a"
+        ],
+        "('div', 'feature-nav-local', None, 10, 6)": [
+            "green",
+            [
+                "div",
+                "feature-header-right",
+                null
+            ],
+            "/html/body/div/div/div/div/section[2]/header/div/div[5]/div[1]"
+        ],
+        "('a', 'feature-local-expand', None, 10, 7)": [
+            "green",
+            [
+                "div",
+                "feature-header-right",
+                null
+            ],
+            "/html/body/div/div/div/div/section[2]/header/div/div[5]/a"
+        ],
+        "('div', 'feature-border feature-border-one', None, 10, 8)": [
+            "green",
+            [
+                "div",
+                "feature-header-right",
+                null
+            ],
+            "/html/body/div/div/div/div/section[2]/header/div/div[5]/div[2]"
+        ],
+        "('div', 'feature-weather-container weather-desktop', None, 10, 9)": [
+            "green",
+            [
+                "div",
+                "feature-header-right",
+                null
+            ],
+            "/html/body/div/div/div/div/section[2]/header/div/div[5]/div[3]"
+        ],
+        "('div', 'feature-border feature-border-two', None, 10, 10)": [
+            "green",
+            [
+                "div",
+                "feature-header-right",
+                null
+            ],
+            "/html/body/div/div/div/div/section[2]/header/div/div[5]/div[4]"
+        ],
+        "('div', 'feature-ux-container', None, 10, 11)": [
+            "green",
+            [
+                "div",
+                "feature-header-right",
+                null
+            ],
+            "/html/body/div/div/div/div/section[2]/header/div/div[5]/div[5]"
+        ],
+        "('div', 'feature-border feature-border-three', None, 10, 12)": [
+            "green",
+            [
+                "div",
+                "feature-header-right",
+                null
+            ],
+            "/html/body/div/div/div/div/section[2]/header/div/div[5]/div[6]"
+        ],
+        "('div', 'nav-sections-links nav-sections-main', None, 10, 13)": [
+            "green",
+            [
+                "div",
+                "nav-sections-main-local",
+                null
+            ],
+            "/html/body/div/div/div/div/section[2]/nav/div/div[1]/div[1]"
+        ],
+        "('div', 'nav-sections-links nav-sections-local subnav-local', None, 10, 14)": [
+            "green",
+            [
+                "div",
+                "nav-sections-main-local",
+                null
+            ],
+            "/html/body/div/div/div/div/section[2]/nav/div/div[1]/div[2]"
+        ],
+        "('div', 'nav-sections-header', None, 10, 15)": [
+            "green",
+            [
+                "div",
+                "nav-sections-links nav-sections-categories subnav-categories",
+                null
+            ],
+            "/html/body/div/div/div/div/section[2]/nav/div/div[2]/div"
+        ],
+        "('div', 'nav-sections-links nav-sections-community subnav-community', None, 10, 16)": [
+            "green",
+            [
+                "div",
+                "nav-sections-community-shows nav-sections-station-info",
+                null
+            ],
+            "/html/body/div/div/div/div/section[2]/nav/div/div[3]/div"
+        ],
+        "('div', 'nav-sections-links nav-sections-shows subnav-shows', None, 10, 17)": [
+            "green",
+            [
+                "div",
+                "nav-sections-community-shows",
+                null
+            ],
+            "/html/body/div/div/div/div/section[2]/nav/div/div[4]/div"
+        ],
+        "('div', 'frame-social nav-social', None, 10, 18)": [
+            "green",
+            [
+                "div",
+                "nav-promos-follow",
+                null
+            ],
+            "/html/body/div/div/div/div/section[2]/nav/div/div[5]/div"
+        ],
+        "('div', None, None, 10, 19)": [
+            "green",
+            [
+                "div",
+                null,
+                null
+            ],
+            "/html/body/div/div/div/div/div[1]/div/div[1]/div/div"
+        ],
+        "('div', 'theme-e FITT_Article_main__body oBTii mrzah ', None, 10, 20)": [
+            "green",
+            [
+                "div",
+                "Kiog kNVGM nvpSA qwdi bmjsw ",
+                null
+            ],
+            "/html/body/div/div/div/div/div[1]/div/div[2]/div/div[1]"
+        ],
+        "('div', 'theme-e FITT_Article_main__sidebar oBTii mrzah mZWbG RCVjw fjcc BFuEm ', None, 10, 21)": [
+            "green",
+            [
+                "div",
+                "Kiog kNVGM nvpSA qwdi bmjsw ",
+                null
+            ],
+            "/html/body/div/div/div/div/div[1]/div/div[2]/div/div[2]"
+        ],
+        "('a', None, None, 10, 22)": [
+            "green",
+            [
+                "div",
+                null,
+                null
+            ],
+            "/html/body/div/div/div/div/footer/div[1]/div[1]/div/a"
+        ],
+        "('li', None, None, 10, 23)": [
+            "green",
+            [
+                "ul",
+                null,
+                null
+            ],
+            "/html/body/div/div/div/div/footer/div[1]/section/ul/li[1]"
+        ],
+        "('li', '', None, 10, 26)": [
+            "green",
+            [
+                "ul",
+                null,
+                null
+            ],
+            "/html/body/div/div/div/div/footer/div[1]/section/ul/li[4]"
+        ],
+        "('a', 'follow-btn follow-btn--facebook', None, 10, 32)": [
+            "green",
+            [
+                "div",
+                "frame-social-icons",
+                null
+            ],
+            "/html/body/div/div/div/div/footer/div[1]/div[4]/div[2]/a[1]"
+        ],
+        "('a', 'follow-btn follow-btn--twitter', None, 10, 33)": [
+            "green",
+            [
+                "div",
+                "frame-social-icons",
+                null
+            ],
+            "/html/body/div/div/div/div/footer/div[1]/div[4]/div[2]/a[2]"
+        ],
+        "('a', 'follow-btn follow-btn--instagram', None, 10, 34)": [
+            "green",
+            [
+                "div",
+                "frame-social-icons",
+                null
+            ],
+            "/html/body/div/div/div/div/footer/div[1]/div[4]/div[2]/a[3]"
+        ],
+        "('a', 'follow-btn follow-btn--email', None, 10, 35)": [
+            "green",
+            [
+                "div",
+                "frame-social-icons",
+                null
+            ],
+            "/html/body/div/div/div/div/footer/div[1]/div[4]/div[2]/a[4]"
+        ],
+        "('a', None, None, 10, 36)": [
+            "green",
+            [
+                "div",
+                "footer-sections-group",
+                null
+            ],
+            "/html/body/div/div/div/div/footer/div[2]/div[1]/div[1]/a[1]"
+        ],
+        "('li', None, None, 10, 59)": [
+            "green",
+            [
+                "ul",
+                "footer-legal-links-mobile",
+                null
+            ],
+            "/html/body/div/div/div/div/footer/div[3]/div[1]/ul/li[1]"
+        ],
+        "('a', None, None, 10, 67)": [
+            "green",
+            [
+                "div",
+                "footer-legal-links-col1",
+                null
+            ],
+            "/html/body/div/div/div/div/footer/div[3]/div[1]/div[1]/a[1]"
+        ],
+        "('a', 'ot-sdk-show-settings', None, 10, 68)": [
+            "green",
+            [
+                "div",
+                "footer-legal-links-col1",
+                null
+            ],
+            "/html/body/div/div/div/div/footer/div[3]/div[1]/div[1]/a[2]"
+        ],
+        "('a', None, None, 10, 71)": [
+            "green",
+            [
+                "div",
+                "footer-legal-links-col2",
+                null
+            ],
+            "/html/body/div/div/div/div/footer/div[3]/div[1]/div[2]/a[1]"
+        ]
+    },
+    "11": {
+        "('div', 'arrow', None, 11, 0)": [
+            "green",
+            [
+                "div",
+                "breaking-news-content",
+                null
+            ],
+            "/html/body/div/div/div/div/section[1]/div[1]/ul/li/div[1]/div[1]"
+        ],
+        "('div', 'breaking-news-callout', None, 11, 1)": [
+            "green",
+            [
+                "div",
+                "breaking-news-content",
+                null
+            ],
+            "/html/body/div/div/div/div/section[1]/div[1]/ul/li/div[1]/div[2]"
+        ],
+        "('a', 'AnchorLink button', None, 11, 2)": [
+            "green",
+            [
+                "div",
+                "breaking-news-button",
+                null
+            ],
+            "/html/body/div/div/div/div/section[1]/div[1]/ul/li/div[2]/a"
+        ],
+        "('input', 'search-bar-input', None, 11, 3)": [
+            "green",
+            [
+                "form",
+                "form-search frame-search",
+                null
+            ],
+            "/html/body/div/div/div/div/section[2]/header/div/div[2]/form/input[1]"
+        ],
+        "('input', 'search-btn', None, 11, 4)": [
+            "green",
+            [
+                "form",
+                "form-search frame-search",
+                null
+            ],
+            "/html/body/div/div/div/div/section[2]/header/div/div[2]/form/input[2]"
+        ],
+        "('div', 'menu-icon menu-closed', None, 11, 5)": [
+            "green",
+            [
+                "span",
+                "feature-menu closed",
+                null
+            ],
+            "/html/body/div/div/div/div/section[2]/header/div/div[4]/span/div"
+        ],
+        "('div', 'sml-logo', None, 11, 6)": [
+            "green",
+            [
+                "a",
+                "feature-logo",
+                null
+            ],
+            "/html/body/div/div/div/div/section[2]/header/div/div[4]/a/div[1]"
+        ],
+        "('div', 'lrg-logo', None, 11, 7)": [
+            "green",
+            [
+                "a",
+                "feature-logo",
+                null
+            ],
+            "/html/body/div/div/div/div/section[2]/header/div/div[4]/a/div[2]"
+        ],
+        "('div', 'local-links', None, 11, 8)": [
+            "green",
+            [
+                "div",
+                "feature-nav-local",
+                null
+            ],
+            "/html/body/div/div/div/div/section[2]/header/div/div[5]/div[1]/div"
+        ],
+        "('a', None, None, 11, 9)": [
+            "green",
+            [
+                "div",
+                "feature-weather-container weather-desktop",
+                null
+            ],
+            "/html/body/div/div/div/div/section[2]/header/div/div[5]/div[3]/a"
+        ],
+        "('div', 'weather-text-container', None, 11, 10)": [
+            "green",
+            [
+                "div",
+                "feature-weather-container weather-desktop",
+                null
+            ],
+            "/html/body/div/div/div/div/section[2]/header/div/div[5]/div[3]/div"
+        ],
+        "('a', 'feature-logged-out login register', None, 11, 11)": [
+            "green",
+            [
+                "div",
+                "feature-ux-container",
+                null
+            ],
+            "/html/body/div/div/div/div/section[2]/header/div/div[5]/div[5]/a"
+        ],
+        "('div', 'feature-search-container', None, 11, 12)": [
+            "green",
+            [
+                "div",
+                "feature-ux-container",
+                null
+            ],
+            "/html/body/div/div/div/div/section[2]/header/div/div[5]/div[5]/div"
+        ],
+        "('div', 'subnav-search-bar', None, 11, 13)": [
+            "green",
+            [
+                "div",
+                "nav-sections-links nav-sections-main",
+                null
+            ],
+            "/html/body/div/div/div/div/section[2]/nav/div/div[1]/div[1]/div"
+        ],
+        "('a', 'subnav-main-btn', None, 11, 14)": [
+            "green",
+            [
+                "div",
+                "nav-sections-links nav-sections-main",
+                null
+            ],
+            "/html/body/div/div/div/div/section[2]/nav/div/div[1]/div[1]/a[1]"
+        ],
+        "('div', 'nav-sections-header', None, 11, 16)": [
+            "green",
+            [
+                "div",
+                "nav-sections-links nav-sections-local subnav-local",
+                null
+            ],
+            "/html/body/div/div/div/div/section[2]/nav/div/div[1]/div[2]/div"
+        ],
+        "('a', 'nav-section-name', None, 11, 17)": [
+            "green",
+            [
+                "div",
+                "nav-sections-header",
+                null
+            ],
+            "/html/body/div/div/div/div/section[2]/nav/div/div[2]/div/a"
+        ],
+        "('div', 'nav-sections-categories-1', None, 11, 18)": [
+            "green",
+            [
+                "div",
+                "nav-sections-header",
+                null
+            ],
+            "/html/body/div/div/div/div/section[2]/nav/div/div[2]/div/div[1]"
+        ],
+        "('div', 'nav-sections-categories-2', None, 11, 19)": [
+            "green",
+            [
+                "div",
+                "nav-sections-header",
+                null
+            ],
+            "/html/body/div/div/div/div/section[2]/nav/div/div[2]/div/div[2]"
+        ],
+        "('div', 'nav-sections-header', None, 11, 20)": [
+            "green",
+            [
+                "div",
+                "nav-sections-links nav-sections-community subnav-community",
+                null
+            ],
+            "/html/body/div/div/div/div/section[2]/nav/div/div[3]/div/div"
+        ],
+        "('div', 'nav-sections-header', None, 11, 21)": [
+            "green",
+            [
+                "div",
+                "nav-sections-links nav-sections-shows subnav-shows",
+                null
+            ],
+            "/html/body/div/div/div/div/section[2]/nav/div/div[4]/div/div"
+        ],
+        "('div', 'frame-social-action', None, 11, 22)": [
+            "green",
+            [
+                "div",
+                "frame-social nav-social",
+                null
+            ],
+            "/html/body/div/div/div/div/section[2]/nav/div/div[5]/div/div[1]"
+        ],
+        "('div', 'frame-social-icons', None, 11, 23)": [
+            "green",
+            [
+                "div",
+                "frame-social nav-social",
+                null
+            ],
+            "/html/body/div/div/div/div/section[2]/nav/div/div[5]/div/div[2]"
+        ],
+        "('div', 'Ad fitt-article-top-banner  ad-slot  ', None, 11, 24)": [
+            "green",
+            [
+                "div",
+                null,
+                null
+            ],
+            "/html/body/div/div/div/div/div[1]/div/div[1]/div/div/div"
+        ],
+        "('div', 'dHdHP jLREf zXXje aGO eCClZ nTLv jLsYA gmuro TOSFd VmeZt sCkVm hkQai wGrlE MUuGM fciaN qQjt DhNVo Tgcqk IGLAf tWjkv ', None, 11, 25)": [
+            "green",
+            [
+                "div",
+                "theme-e FITT_Article_main__body oBTii mrzah ",
+                null
+            ],
+            "/html/body/div/div/div/div/div[1]/div/div[2]/div/div[1]/div"
+        ],
+        "('div', 'dHdHP jLREf zXXje aGO eCClZ nTLv jLsYA gmuro TOSFd VmeZt sCkVm hkQai wGrlE MUuGM fciaN qQjt DhNVo Tgcqk IGLAf tWjkv ', None, 11, 26)": [
+            "green",
+            [
+                "div",
+                "theme-e FITT_Article_main__sidebar oBTii mrzah mZWbG RCVjw fjcc BFuEm ",
+                null
+            ],
+            "/html/body/div/div/div/div/div[1]/div/div[2]/div/div[2]/div"
+        ],
+        "('img', None, None, 11, 27)": [
+            "green",
+            [
+                "a",
+                null,
+                null
+            ],
+            "/html/body/div/div/div/div/footer/div[1]/div[1]/div/a/img"
+        ],
+        "('a', None, None, 11, 28)": [
+            "green",
+            [
+                "li",
+                null,
+                null
+            ],
+            "/html/body/div/div/div/div/footer/div[1]/section/ul/li[1]/a"
+        ],
+        "('a', 'footer-smallnav-header', None, 11, 31)": [
+            "green",
+            [
+                "li",
+                "",
+                null
+            ],
+            "/html/body/div/div/div/div/footer/div[1]/section/ul/li[4]/a"
+        ],
+        "('ul', None, None, 11, 32)": [
+            "green",
+            [
+                "li",
+                "",
+                null
+            ],
+            "/html/body/div/div/div/div/footer/div[1]/section/ul/li[4]/ul"
+        ],
+        "('a', 'ot-sdk-show-settings', None, 11, 42)": [
+            "green",
+            [
+                "li",
+                null,
+                null
+            ],
+            "/html/body/div/div/div/div/footer/div[3]/div[1]/ul/li[2]/a"
+        ]
+    },
+    "12": {
+        "('span', 'breaking-news-label', None, 12, 0)": [
+            "green",
+            [
+                "div",
+                "breaking-news-callout",
+                null
+            ],
+            "/html/body/div/div/div/div/section[1]/div[1]/ul/li/div[1]/div[2]/span[1]"
+        ],
+        "('span', None, None, 12, 1)": [
+            "green",
+            [
+                "div",
+                "breaking-news-callout",
+                null
+            ],
+            "/html/body/div/div/div/div/section[1]/div[1]/ul/li/div[1]/div[2]/span[2]"
+        ],
+        "('span', None, None, 12, 2)": [
+            "green",
+            [
+                "div",
+                "local-links",
+                null
+            ],
+            "/html/body/div/div/div/div/section[2]/header/div/div[5]/div[1]/div/span[1]"
+        ],
+        "('div', 'feature-weather icon-weather_', None, 12, 6)": [
+            "green",
+            [
+                "a",
+                null,
+                null
+            ],
+            "/html/body/div/div/div/div/section[2]/header/div/div[5]/div[3]/a/div"
+        ],
+        "('span', 'feature-degrees', None, 12, 7)": [
+            "green",
+            [
+                "a",
+                null,
+                null
+            ],
+            "/html/body/div/div/div/div/section[2]/header/div/div[5]/div[3]/a/span"
+        ],
+        "('a', 'feature-weather-location', None, 12, 8)": [
+            "green",
+            [
+                "div",
+                "weather-text-container",
+                null
+            ],
+            "/html/body/div/div/div/div/section[2]/header/div/div[5]/div[3]/div/a[1]"
+        ],
+        "('a', 'feature-weather-edit', None, 12, 9)": [
+            "green",
+            [
+                "div",
+                "weather-text-container",
+                null
+            ],
+            "/html/body/div/div/div/div/section[2]/header/div/div[5]/div[3]/div/a[2]"
+        ],
+        "('form', 'form-search frame-search', None, 12, 10)": [
+            "green",
+            [
+                "div",
+                "subnav-search-bar",
+                null
+            ],
+            "/html/body/div/div/div/div/section[2]/nav/div/div[1]/div[1]/div/form"
+        ],
+        "('span', 'subnav-watch', None, 12, 11)": [
+            "green",
+            [
+                "a",
+                "subnav-main-btn",
+                null
+            ],
+            "/html/body/div/div/div/div/section[2]/nav/div/div[1]/div[1]/a[1]/span"
+        ],
+        "('span', 'subnav-apps', None, 12, 12)": [
+            "green",
+            [
+                "a",
+                "subnav-main-btn",
+                null
+            ],
+            "/html/body/div/div/div/div/section[2]/nav/div/div[1]/div[1]/a[2]/span"
+        ],
+        "('a', 'nav-section-name', None, 12, 13)": [
+            "green",
+            [
+                "div",
+                "nav-sections-header",
+                null
+            ],
+            "/html/body/div/div/div/div/section[2]/nav/div/div[1]/div[2]/div/a"
+        ],
+        "('div', None, None, 12, 14)": [
+            "green",
+            [
+                "div",
+                "nav-sections-header",
+                null
+            ],
+            "/html/body/div/div/div/div/section[2]/nav/div/div[1]/div[2]/div/div"
+        ],
+        "('div', 'expand-arrow-light', None, 12, 15)": [
+            "green",
+            [
+                "a",
+                "nav-section-name",
+                null
+            ],
+            "/html/body/div/div/div/div/section[2]/nav/div/div[2]/div/a/div"
+        ],
+        "('span', None, None, 12, 16)": [
+            "green",
+            [
+                "div",
+                "nav-sections-categories-1",
+                null
+            ],
+            "/html/body/div/div/div/div/section[2]/nav/div/div[2]/div/div[1]/span[1]"
+        ],
+        "('span', None, None, 12, 23)": [
+            "green",
+            [
+                "div",
+                "nav-sections-categories-2",
+                null
+            ],
+            "/html/body/div/div/div/div/section[2]/nav/div/div[2]/div/div[2]/span[1]"
+        ],
+        "('a', 'follow-btn follow-btn--facebook', None, 12, 35)": [
+            "green",
+            [
+                "div",
+                "frame-social-icons",
+                null
+            ],
+            "/html/body/div/div/div/div/section[2]/nav/div/div[5]/div/div[2]/a[1]"
+        ],
+        "('a', 'follow-btn follow-btn--twitter', None, 12, 36)": [
+            "green",
+            [
+                "div",
+                "frame-social-icons",
+                null
+            ],
+            "/html/body/div/div/div/div/section[2]/nav/div/div[5]/div/div[2]/a[2]"
+        ],
+        "('a', 'follow-btn follow-btn--instagram', None, 12, 37)": [
+            "green",
+            [
+                "div",
+                "frame-social-icons",
+                null
+            ],
+            "/html/body/div/div/div/div/section[2]/nav/div/div[5]/div/div[2]/a[3]"
+        ],
+        "('a', 'follow-btn follow-btn--email', None, 12, 38)": [
+            "green",
+            [
+                "div",
+                "frame-social-icons",
+                null
+            ],
+            "/html/body/div/div/div/div/section[2]/nav/div/div[5]/div/div[2]/a[4]"
+        ],
+        "('div', ' ', None, 12, 39)": [
+            "green",
+            [
+                "div",
+                "dHdHP jLREf zXXje aGO eCClZ nTLv jLsYA gmuro TOSFd VmeZt sCkVm hkQai wGrlE MUuGM fciaN qQjt DhNVo Tgcqk IGLAf tWjkv ",
+                null
+            ],
+            "/html/body/div/div/div/div/div[1]/div/div[2]/div/div[1]/div/div[1]"
+        ],
+        "('div', 'kCTVx qtHut lqtkC HkWF HfYhe kGyAC ', None, 12, 40)": [
+            "green",
+            [
+                "div",
+                "dHdHP jLREf zXXje aGO eCClZ nTLv jLsYA gmuro TOSFd VmeZt sCkVm hkQai wGrlE MUuGM fciaN qQjt DhNVo Tgcqk IGLAf tWjkv ",
+                null
+            ],
+            "/html/body/div/div/div/div/div[1]/div/div[2]/div/div[1]/div/div[2]"
+        ],
+        "('div', 'QHblV nkdHX kvZxL hTosT whbOj ', None, 12, 41)": [
+            "green",
+            [
+                "div",
+                "dHdHP jLREf zXXje aGO eCClZ nTLv jLsYA gmuro TOSFd VmeZt sCkVm hkQai wGrlE MUuGM fciaN qQjt DhNVo Tgcqk IGLAf tWjkv ",
+                null
+            ],
+            "/html/body/div/div/div/div/div[1]/div/div[2]/div/div[1]/div/div[3]"
+        ],
+        "('div', 'featuredMediaImage--left InlineImage GpQCA lZur asrEW ', None, 12, 42)": [
+            "green",
+            [
+                "div",
+                "dHdHP jLREf zXXje aGO eCClZ nTLv jLsYA gmuro TOSFd VmeZt sCkVm hkQai wGrlE MUuGM fciaN qQjt DhNVo Tgcqk IGLAf tWjkv ",
+                null
+            ],
+            "/html/body/div/div/div/div/div[1]/div/div[2]/div/div[1]/div/div[4]"
+        ],
+        "('div', 'XQpSH ', None, 12, 43)": [
+            "green",
+            [
+                "div",
+                "dHdHP jLREf zXXje aGO eCClZ nTLv jLsYA gmuro TOSFd VmeZt sCkVm hkQai wGrlE MUuGM fciaN qQjt DhNVo Tgcqk IGLAf tWjkv ",
+                null
+            ],
+            "/html/body/div/div/div/div/div[1]/div/div[2]/div/div[1]/div/div[5]"
+        ],
+        "('div', 'xvlfx ZRifP TKoO eaKKC bOdfO ', None, 12, 44)": [
+            "green",
+            [
+                "div",
+                "dHdHP jLREf zXXje aGO eCClZ nTLv jLsYA gmuro TOSFd VmeZt sCkVm hkQai wGrlE MUuGM fciaN qQjt DhNVo Tgcqk IGLAf tWjkv ",
+                null
+            ],
+            "/html/body/div/div/div/div/div[1]/div/div[2]/div/div[1]/div/div[6]"
+        ],
+        "('div', 'copyright', None, 12, 45)": [
+            "green",
+            [
+                "div",
+                "dHdHP jLREf zXXje aGO eCClZ nTLv jLsYA gmuro TOSFd VmeZt sCkVm hkQai wGrlE MUuGM fciaN qQjt DhNVo Tgcqk IGLAf tWjkv ",
+                null
+            ],
+            "/html/body/div/div/div/div/div[1]/div/div[2]/div/div[1]/div/div[7]"
+        ],
+        "('div', None, None, 12, 46)": [
+            "green",
+            [
+                "div",
+                "dHdHP jLREf zXXje aGO eCClZ nTLv jLsYA gmuro TOSFd VmeZt sCkVm hkQai wGrlE MUuGM fciaN qQjt DhNVo Tgcqk IGLAf tWjkv ",
+                null
+            ],
+            "/html/body/div/div/div/div/div[1]/div/div[2]/div/div[1]/div/div[8]"
+        ],
+        "('div', 'taboola bmjsw lZur ', None, 12, 47)": [
+            "green",
+            [
+                "div",
+                "dHdHP jLREf zXXje aGO eCClZ nTLv jLsYA gmuro TOSFd VmeZt sCkVm hkQai wGrlE MUuGM fciaN qQjt DhNVo Tgcqk IGLAf tWjkv ",
+                null
+            ],
+            "/html/body/div/div/div/div/div[1]/div/div[2]/div/div[1]/div/div[9]"
+        ],
+        "('section', 'watch inner watch__article-sidebar watch__article-sidebar--onlyfirstLive', None, 12, 48)": [
+            "green",
+            [
+                "div",
+                "dHdHP jLREf zXXje aGO eCClZ nTLv jLsYA gmuro TOSFd VmeZt sCkVm hkQai wGrlE MUuGM fciaN qQjt DhNVo Tgcqk IGLAf tWjkv ",
+                null
+            ],
+            "/html/body/div/div/div/div/div[1]/div/div[2]/div/div[2]/div/section"
+        ],
+        "('div', 'expand-arrow-light', None, 12, 53)": [
+            "green",
+            [
+                "a",
+                "footer-smallnav-header",
+                null
+            ],
+            "/html/body/div/div/div/div/footer/div[1]/section/ul/li[4]/a/div"
+        ],
+        "('a', None, None, 12, 54)": [
+            "green",
+            [
+                "ul",
+                null,
+                null
+            ],
+            "/html/body/div/div/div/div/footer/div[1]/section/ul/li[4]/ul/a[1]"
+        ]
+    },
+    "13": {
+        "('a', 'AnchorLink', None, 13, 0)": [
+            "green",
+            [
+                "span",
+                null,
+                null
+            ],
+            "/html/body/div/div/div/div/section[2]/header/div/div[5]/div[1]/div/span[1]/a"
+        ],
+        "('input', 'search-bar-input', None, 13, 4)": [
+            "green",
+            [
+                "form",
+                "form-search frame-search",
+                null
+            ],
+            "/html/body/div/div/div/div/section[2]/nav/div/div[1]/div[1]/div/form/input[1]"
+        ],
+        "('input', 'search-btn', None, 13, 5)": [
+            "green",
+            [
+                "form",
+                "form-search frame-search",
+                null
+            ],
+            "/html/body/div/div/div/div/section[2]/nav/div/div[1]/div[1]/div/form/input[2]"
+        ],
+        "('div', 'expand-arrow-light', None, 13, 6)": [
+            "green",
+            [
+                "a",
+                "nav-section-name",
+                null
+            ],
+            "/html/body/div/div/div/div/section[2]/nav/div/div[1]/div[2]/div/a/div"
+        ],
+        "('span', None, None, 13, 7)": [
+            "green",
+            [
+                "div",
+                null,
+                null
+            ],
+            "/html/body/div/div/div/div/section[2]/nav/div/div[1]/div[2]/div/div/span[1]"
+        ],
+        "('div', 'IKUxI xFOBK YsVzB NuCDJ fMJDZ ZCNuU tZcZX JuzoE ', None, 13, 41)": [
+            "green",
+            [
+                "div",
+                " ",
+                null
+            ],
+            "/html/body/div/div/div/div/div[1]/div/div[2]/div/div[1]/div/div[1]/div"
+        ],
+        "('h1', 'vMjAx eeTZd WaKtx xZEw ', None, 13, 42)": [
+            "green",
+            [
+                "div",
+                "kCTVx qtHut lqtkC HkWF HfYhe kGyAC ",
+                null
+            ],
+            "/html/body/div/div/div/div/div[1]/div/div[2]/div/div[1]/div/div[2]/h1"
+        ],
+        "('div', 'VZTD mLASH OcxMG oJce ', None, 13, 43)": [
+            "green",
+            [
+                "div",
+                "QHblV nkdHX kvZxL hTosT whbOj ",
+                null
+            ],
+            "/html/body/div/div/div/div/div[1]/div/div[2]/div/div[1]/div/div[3]/div[1]"
+        ],
+        "('div', 'RwkLV Wowzl FokqZ LhXlJ FjRYD toBqx ', None, 13, 44)": [
+            "green",
+            [
+                "div",
+                "QHblV nkdHX kvZxL hTosT whbOj ",
+                null
+            ],
+            "/html/body/div/div/div/div/div[1]/div/div[2]/div/div[1]/div/div[3]/div[2]"
+        ],
+        "('figure', 'kzIjN GNmeK pYrtp dSqFO ', None, 13, 45)": [
+            "green",
+            [
+                "div",
+                "featuredMediaImage--left InlineImage GpQCA lZur asrEW ",
+                null
+            ],
+            "/html/body/div/div/div/div/div[1]/div/div[2]/div/div[1]/div/div[4]/figure"
+        ],
+        "('p', 'EkqkG nlgHS yuUao MvWXB TjIXL aGjvy ebVHC', None, 13, 46)": [
+            "green",
+            [
+                "div",
+                "xvlfx ZRifP TKoO eaKKC bOdfO ",
+                null
+            ],
+            "/html/body/div/div/div/div/div[1]/div/div[2]/div/div[1]/div/div[6]/p[1]"
+        ],
+        "('p', 'EkqkG nlgHS yuUao lqtkC TjIXL aGjvy', None, 13, 47)": [
+            "green",
+            [
+                "div",
+                "xvlfx ZRifP TKoO eaKKC bOdfO ",
+                null
+            ],
+            "/html/body/div/div/div/div/div[1]/div/div[2]/div/div[1]/div/div[6]/p[2]"
+        ],
+        "('ul', 'wtgAa XoCUF  sfxjZ dAmzA UoVV WtEci dSKvB seFhp ', None, 13, 52)": [
+            "green",
+            [
+                "div",
+                "xvlfx ZRifP TKoO eaKKC bOdfO ",
+                null
+            ],
+            "/html/body/div/div/div/div/div[1]/div/div[2]/div/div[1]/div/div[6]/ul"
+        ],
+        "('div', None, None, 13, 53)": [
+            "green",
+            [
+                "div",
+                null,
+                null
+            ],
+            "/html/body/div/div/div/div/div[1]/div/div[2]/div/div[1]/div/div[8]/div"
+        ],
+        "('div', None, 'taboola-below-article-thumbnails', 13, 54)": [
+            "green",
+            [
+                "div",
+                "taboola bmjsw lZur ",
+                null
+            ],
+            "/html/body/div/div/div/div/div[1]/div/div[2]/div/div[1]/div/div[9]/div"
+        ],
+        "('div', 'watch-side1', None, 13, 55)": [
+            "green",
+            [
+                "section",
+                "watch inner watch__article-sidebar watch__article-sidebar--onlyfirstLive",
+                null
+            ],
+            "/html/body/div/div/div/div/div[1]/div/div[2]/div/div[2]/div/section/div"
+        ],
+        "('section', 'CHWlW ZgZTu FlDNH hQfuy feniZ wBpop uAyYK yJYJo OGgqj tQHio PCVZs  Kiog iKqXF eeiyR ', None, 13, 56)": [
+            "green",
+            [
+                "div",
+                null,
+                null
+            ],
+            "/html/body/div/div/div/div/div[1]/div/div[2]/div/div[2]/div/div[1]/section"
+        ]
+    },
+    "14": {
+        "('a', 'AnchorLink', None, 14, 0)": [
+            "green",
+            [
+                "span",
+                null,
+                null
+            ],
+            "/html/body/div/div/div/div/section[2]/nav/div/div[1]/div[2]/div/div/span[1]/a"
+        ],
+        "('span', 'gtOSm FbbUW tUtYa vOCwz EQwFq yCufu eEak Qmvg nyTIa SRXVc vzLa jgBfc WXDas CiUCW kqbG zrdEG txGfn ygKVe BbezD UOtxr CVfpq xijV soGRS XgdC sEIlf daWqJ ', None, 14, 17)": [
+            "green",
+            [
+                "h1",
+                "vMjAx eeTZd WaKtx xZEw ",
+                null
+            ],
+            "/html/body/div/div/div/div/div[1]/div/div[2]/div/div[1]/div/div[2]/h1/span"
+        ],
+        "('div', 'kKfXc VZTD rEPuv ', None, 14, 18)": [
+            "green",
+            [
+                "div",
+                "VZTD mLASH OcxMG oJce ",
+                null
+            ],
+            "/html/body/div/div/div/div/div[1]/div/div[2]/div/div[1]/div/div[3]/div[1]/div"
+        ],
+        "('div', 'JpUfa aYoBt ', None, 14, 19)": [
+            "green",
+            [
+                "div",
+                "RwkLV Wowzl FokqZ LhXlJ FjRYD toBqx ",
+                null
+            ],
+            "/html/body/div/div/div/div/div[1]/div/div[2]/div/div[1]/div/div[3]/div[2]/div"
+        ],
+        "('img', 'hsDdd vBqtr KrDt zFTjo hakZw HlUVI ', None, 14, 20)": [
+            "green",
+            [
+                "figure",
+                "kzIjN GNmeK pYrtp dSqFO ",
+                null
+            ],
+            "/html/body/div/div/div/div/div[1]/div/div[2]/div/div[1]/div/div[4]/figure/img"
+        ],
+        "('figcaption', None, None, 14, 21)": [
+            "green",
+            [
+                "figure",
+                "kzIjN GNmeK pYrtp dSqFO ",
+                null
+            ],
+            "/html/body/div/div/div/div/div[1]/div/div[2]/div/div[1]/div/div[4]/figure/figcaption"
+        ],
+        "('span', 'oyrPY qlwaB AGxeB', None, 14, 22)": [
+            "green",
+            [
+                "p",
+                "EkqkG nlgHS yuUao MvWXB TjIXL aGjvy ebVHC",
+                null
+            ],
+            "/html/body/div/div/div/div/div[1]/div/div[2]/div/div[1]/div/div[6]/p[1]/span"
+        ],
+        "('b', 'cXscX', None, 14, 23)": [
+            "green",
+            [
+                "ul",
+                "wtgAa XoCUF  sfxjZ dAmzA UoVV WtEci dSKvB seFhp ",
+                null
+            ],
+            "/html/body/div/div/div/div/div[1]/div/div[2]/div/div[1]/div/div[6]/ul/b"
+        ],
+        "('h2', 'QOIir pZjYK JKlkC RZhHM ', None, 14, 24)": [
+            "green",
+            [
+                "div",
+                null,
+                null
+            ],
+            "/html/body/div/div/div/div/div[1]/div/div[2]/div/div[1]/div/div[8]/div/h2"
+        ],
+        "('ul', 'VZTD UeCOM dAmzA ltDkr qBPOY uoPjL ', None, 14, 25)": [
+            "green",
+            [
+                "div",
+                null,
+                null
+            ],
+            "/html/body/div/div/div/div/div[1]/div/div[2]/div/div[1]/div/div[8]/div/ul"
+        ],
+        "('div', 'section-header', None, 14, 26)": [
+            "green",
+            [
+                "div",
+                "watch-side1",
+                null
+            ],
+            "/html/body/div/div/div/div/div[1]/div/div[2]/div/div[2]/div/section/div/div[1]"
+        ],
+        "('div', 'watch-live-1', None, 14, 27)": [
+            "green",
+            [
+                "div",
+                "watch-side1",
+                null
+            ],
+            "/html/body/div/div/div/div/div[1]/div/div[2]/div/div[2]/div/section/div/div[2]"
+        ],
+        "('header', 'mLASH VZTD bhaVx ', None, 14, 28)": [
+            "green",
+            [
+                "section",
+                "CHWlW ZgZTu FlDNH hQfuy feniZ wBpop uAyYK yJYJo OGgqj tQHio PCVZs  Kiog iKqXF eeiyR ",
+                null
+            ],
+            "/html/body/div/div/div/div/div[1]/div/div[2]/div/div[2]/div/div[1]/section/header"
+        ],
+        "('div', 'rRTs EwJTR UpiKB sKbok RsAxh msYPt zKjNI SXHxp OaElp KzevM LFuuA jLoop  liAe uMOq zYIfP pYgZk Mxrkk VZTD lZur TPpRg NoUSU igcMP DtJWr QgBvn DFdlJ QGHKv HNQqj ', None, 14, 29)": [
+            "green",
+            [
+                "section",
+                "CHWlW ZgZTu FlDNH hQfuy feniZ wBpop uAyYK yJYJo OGgqj tQHio PCVZs  Kiog iKqXF eeiyR ",
+                null
+            ],
+            "/html/body/div/div/div/div/div[1]/div/div[2]/div/div[2]/div/div[1]/section/div[1]"
+        ],
+        "('div', 'EwJTR UpiKB sKbok RsAxh msYPt zKjNI SXHxp OaElp KzevM LFuuA jLoop  liAe uMOq zYIfP pYgZk Mxrkk VZTD lZur TPpRg NoUSU igcMP DtJWr QgBvn DFdlJ QGHKv HNQqj ', None, 14, 33)": [
+            "green",
+            [
+                "section",
+                "CHWlW ZgZTu FlDNH hQfuy feniZ wBpop uAyYK yJYJo OGgqj tQHio PCVZs  Kiog iKqXF eeiyR ",
+                null
+            ],
+            "/html/body/div/div/div/div/div[1]/div/div[2]/div/div[2]/div/div[1]/section/div[5]"
+        ],
+        "('div', 'rRTs EwJTR UpiKB sKbok RsAxh msYPt zKjNI SXHxp OaElp KzevM LFuuA jLoop  liAe uMOq zYIfP pYgZk Mxrkk hsDdd lZur TPpRg NoUSU igcMP DtJWr QgBvn DFdlJ ', None, 14, 34)": [
+            "green",
+            [
+                "section",
+                "CHWlW ZgZTu FlDNH hQfuy feniZ wBpop uAyYK yJYJo OGgqj tQHio PCVZs  Kiog iKqXF eeiyR ",
+                null
+            ],
+            "/html/body/div/div/div/div/div[1]/div/div[2]/div/div[2]/div/div[3]/section/div[1]"
+        ],
+        "('div', 'EwJTR UpiKB sKbok RsAxh msYPt zKjNI SXHxp OaElp KzevM LFuuA jLoop  liAe uMOq zYIfP pYgZk Mxrkk hsDdd lZur TPpRg NoUSU igcMP DtJWr QgBvn DFdlJ ', None, 14, 36)": [
+            "green",
+            [
+                "section",
+                "CHWlW ZgZTu FlDNH hQfuy feniZ wBpop uAyYK yJYJo OGgqj tQHio PCVZs  Kiog iKqXF eeiyR ",
+                null
+            ],
+            "/html/body/div/div/div/div/div[1]/div/div[2]/div/div[2]/div/div[3]/section/div[3]"
+        ],
+        "('div', 'Ad fitt-article-right-rail  ad-slot  ', None, 14, 37)": [
+            "green",
+            [
+                "div",
+                null,
+                null
+            ],
+            "/html/body/div/div/div/div/div[1]/div/div[2]/div/div[2]/div/div[4]/div/div"
+        ]
+    },
+    "15": {
+        "('div', 'TQPvQ fVlAg HUcap kxY REjk UamUc WxHIR HhZOB yaUf VOJBn KMpjV XSbaH Umfib ukdDD ', None, 15, 0)": [
+            "green",
+            [
+                "div",
+                "kKfXc VZTD rEPuv ",
+                null
+            ],
+            "/html/body/div/div/div/div/div[1]/div/div[2]/div/div[1]/div/div[3]/div[1]/div/div[1]"
+        ],
+        "('div', 'VZTD mLASH gpiba ', None, 15, 1)": [
+            "green",
+            [
+                "div",
+                "kKfXc VZTD rEPuv ",
+                null
+            ],
+            "/html/body/div/div/div/div/div[1]/div/div[2]/div/div[1]/div/div[3]/div[1]/div/div[2]"
+        ],
+        "('ul', 'MZaCt dUXCH nyWZo RnMws Hdwln WBHfo tAchw UDeQM XMkl NUfbq kqfZ ', None, 15, 2)": [
+            "green",
+            [
+                "div",
+                "JpUfa aYoBt ",
+                null
+            ],
+            "/html/body/div/div/div/div/div[1]/div/div[2]/div/div[1]/div/div[3]/div[2]/div/ul"
+        ],
+        "('div', 'nMMea bNYiy Mjgpa dGwha DDmxa jgKNG RGHCC aBIU PriDW lZur ', None, 15, 3)": [
+            "green",
+            [
+                "figcaption",
+                null,
+                null
+            ],
+            "/html/body/div/div/div/div/div[1]/div/div[2]/div/div[1]/div/div[4]/figure/figcaption/div"
+        ],
+        "('li', 'Veett mmrhV lZur foTEL SpgmX cnYss qArv hxIMs isuUo hCkek nYZyJ xXFZR luHJ DuCgd ', None, 15, 4)": [
+            "green",
+            [
+                "b",
+                "cXscX",
+                null
+            ],
+            "/html/body/div/div/div/div/div[1]/div/div[2]/div/div[1]/div/div[6]/ul/b/li[1]"
+        ],
+        "('li', ' ', None, 15, 7)": [
+            "green",
+            [
+                "ul",
+                "VZTD UeCOM dAmzA ltDkr qBPOY uoPjL ",
+                null
+            ],
+            "/html/body/div/div/div/div/div[1]/div/div[2]/div/div[1]/div/div[8]/div/ul/li[1]"
+        ],
+        "('a', 'AnchorLink', None, 15, 11)": [
+            "green",
+            [
+                "div",
+                "watch-live-1",
+                null
+            ],
+            "/html/body/div/div/div/div/div[1]/div/div[2]/div/div[2]/div/section/div/div[2]/a"
+        ],
+        "('div', None, None, 15, 12)": [
+            "green",
+            [
+                "header",
+                "mLASH VZTD bhaVx ",
+                null
+            ],
+            "/html/body/div/div/div/div/div[1]/div/div[2]/div/div[2]/div/div[1]/section/header/div"
+        ],
+        "('a', 'iVcn UbGlr ibBnq qdXbA VZTD DbOXS tqUtK GpWVU iJYzE QGHKv HNQqj ICwhc xuArw ZLXw kSqqG ', None, 15, 13)": [
+            "green",
+            [
+                "div",
+                "rRTs EwJTR UpiKB sKbok RsAxh msYPt zKjNI SXHxp OaElp KzevM LFuuA jLoop  liAe uMOq zYIfP pYgZk Mxrkk VZTD lZur TPpRg NoUSU igcMP DtJWr QgBvn DFdlJ QGHKv HNQqj ",
+                null
+            ],
+            "/html/body/div/div/div/div/div[1]/div/div[2]/div/div[2]/div/div[1]/section/div[1]/a"
+        ],
+        "('a', 'iVcn UbGlr ibBnq qdXbA VZTD DbOXS tqUtK GpWVU iJYzE QGHKv HNQqj ICwhc xuArw ZLXw kSqqG ', None, 15, 17)": [
+            "green",
+            [
+                "div",
+                "EwJTR UpiKB sKbok RsAxh msYPt zKjNI SXHxp OaElp KzevM LFuuA jLoop  liAe uMOq zYIfP pYgZk Mxrkk VZTD lZur TPpRg NoUSU igcMP DtJWr QgBvn DFdlJ QGHKv HNQqj ",
+                null
+            ],
+            "/html/body/div/div/div/div/div[1]/div/div[2]/div/div[2]/div/div[1]/section/div[5]/a"
+        ],
+        "('a', 'iVcn UbGlr ibBnq qdXbA VZTD DbOXS tqUtK GpWVU iJYzE QGHKv HNQqj ICwhc dVINO ', None, 15, 18)": [
+            "green",
+            [
+                "div",
+                "rRTs EwJTR UpiKB sKbok RsAxh msYPt zKjNI SXHxp OaElp KzevM LFuuA jLoop  liAe uMOq zYIfP pYgZk Mxrkk hsDdd lZur TPpRg NoUSU igcMP DtJWr QgBvn DFdlJ ",
+                null
+            ],
+            "/html/body/div/div/div/div/div[1]/div/div[2]/div/div[2]/div/div[3]/section/div[1]/a"
+        ],
+        "('a', 'iVcn UbGlr ibBnq qdXbA VZTD DbOXS tqUtK GpWVU iJYzE QGHKv HNQqj ICwhc dVINO ', None, 15, 20)": [
+            "green",
+            [
+                "div",
+                "EwJTR UpiKB sKbok RsAxh msYPt zKjNI SXHxp OaElp KzevM LFuuA jLoop  liAe uMOq zYIfP pYgZk Mxrkk hsDdd lZur TPpRg NoUSU igcMP DtJWr QgBvn DFdlJ ",
+                null
+            ],
+            "/html/body/div/div/div/div/div[1]/div/div[2]/div/div[2]/div/div[3]/section/div[3]/a"
+        ]
+    },
+    "16": {
+        "('span', None, None, 16, 0)": [
+            "green",
+            [
+                "div",
+                "TQPvQ fVlAg HUcap kxY REjk UamUc WxHIR HhZOB yaUf VOJBn KMpjV XSbaH Umfib ukdDD ",
+                null
+            ],
+            "/html/body/div/div/div/div/div[1]/div/div[2]/div/div[1]/div/div[3]/div[1]/div/div[1]/span[1]"
+        ],
+        "('div', 'xAPpq JQYD ZdbeE  jTKbV pCRh ', None, 16, 2)": [
+            "green",
+            [
+                "div",
+                "VZTD mLASH gpiba ",
+                null
+            ],
+            "/html/body/div/div/div/div/div[1]/div/div[2]/div/div[1]/div/div[3]/div[1]/div/div[2]/div"
+        ],
+        "('li', 'WEJto ', None, 16, 3)": [
+            "green",
+            [
+                "ul",
+                "MZaCt dUXCH nyWZo RnMws Hdwln WBHfo tAchw UDeQM XMkl NUfbq kqfZ ",
+                null
+            ],
+            "/html/body/div/div/div/div/div[1]/div/div[2]/div/div[1]/div/div[3]/div[2]/div/ul/li[1]"
+        ],
+        "('div', 'HXPPJ barbu IzgMt VcHIt uhSzI YGNMU cRAsZ xqMcl QtRul ', None, 16, 9)": [
+            "green",
+            [
+                "div",
+                "nMMea bNYiy Mjgpa dGwha DDmxa jgKNG RGHCC aBIU PriDW lZur ",
+                null
+            ],
+            "/html/body/div/div/div/div/div[1]/div/div[2]/div/div[1]/div/div[4]/figure/figcaption/div/div[1]"
+        ],
+        "('div', 'qinlA IpWvx oqZz tylGM lyWxS nWcVF UhTug PPcLh ', None, 16, 10)": [
+            "green",
+            [
+                "div",
+                "nMMea bNYiy Mjgpa dGwha DDmxa jgKNG RGHCC aBIU PriDW lZur ",
+                null
+            ],
+            "/html/body/div/div/div/div/div[1]/div/div[2]/div/div[1]/div/div[4]/figure/figcaption/div/div[2]"
+        ],
+        "('a', 'zZygg UbGlr iFzkS qdXbA WCDhQ DbOXS tqUtK GpWVU iJYzE ', None, 16, 11)": [
+            "green",
+            [
+                "li",
+                "Veett mmrhV lZur foTEL SpgmX cnYss qArv hxIMs isuUo hCkek nYZyJ xXFZR luHJ DuCgd ",
+                null
+            ],
+            "/html/body/div/div/div/div/div[1]/div/div[2]/div/div[1]/div/div[6]/ul/b/li[3]/a"
+        ],
+        "('a', 'theme-HLysv theme-HReFq mLASH egFzk qXWHA ScoIf zYXIH jIRH wNxoc OJpwZ eqFg wSPfd ofvJb bMrzT LaUnX EgONj ibBnq kyjTO lvyBv aANqO aNnIu GDslh LjPJo RpDvg YYtC rTpcz EDgo SIwmX oIWqB mzm sXtkB yayQB vXSTR ENhiS dQa-Du SVBll bpBbX GpQCA tuAKv xTell wdAqb ZqGqs LVAIE TnrRA uECag DcwSV XnBOJ cELRj SUAFz XzYk zkmjG aSyef pFen hoNVj TQOOL Haltu NafGB KpEhF jyjDy kZHqU FZKIw QddLR SKDYB UmcQM giepU cTjQC aRMla MMxXy fFMcX PbMFf hJRbU MRTyf iFJTR koyYF TkdYt DZNRX MALjb VUFMN  ', None, 16, 12)": [
+            "green",
+            [
+                "li",
+                " ",
+                null
+            ],
+            "/html/body/div/div/div/div/div[1]/div/div[2]/div/div[1]/div/div[8]/div/ul/li[1]/a"
+        ],
+        "('div', 'AmbientVideoWrapper', None, 16, 16)": [
+            "green",
+            [
+                "a",
+                "AnchorLink",
+                null
+            ],
+            "/html/body/div/div/div/div/div[1]/div/div[2]/div/div[2]/div/section/div/div[2]/a/div"
+        ],
+        "('span', 'LiveCircle OnNow', None, 16, 17)": [
+            "green",
+            [
+                "a",
+                "AnchorLink",
+                null
+            ],
+            "/html/body/div/div/div/div/div[1]/div/div[2]/div/div[2]/div/section/div/div[2]/a/span"
+        ],
+        "('h2', 'KuBvM lFzlq GbVC HkWF exKgG kGyAC SwCrv RTkZF ', None, 16, 18)": [
+            "green",
+            [
+                "div",
+                null,
+                null
+            ],
+            "/html/body/div/div/div/div/div[1]/div/div[2]/div/div[2]/div/div[1]/section/header/div/h2"
+        ],
+        "('div', 'hsDdd GpQCA lZur BOsoU YMZw dihEb srtah LmIPo JzlZQ bpoDG kOMGa qLeeo jCA-DP cjmDv OWLMy VbrfA zZsl kjmkg OwbFk QuuaM ', None, 16, 19)": [
+            "green",
+            [
+                "a",
+                "iVcn UbGlr ibBnq qdXbA VZTD DbOXS tqUtK GpWVU iJYzE QGHKv HNQqj ICwhc xuArw ZLXw kSqqG ",
+                null
+            ],
+            "/html/body/div/div/div/div/div[1]/div/div[2]/div/div[2]/div/div[1]/section/div[1]/a/div[1]"
+        ],
+        "('div', 'QGHKv iVcn VZTD rEPuv ICwhc ibBnq xuArw ZLXw kSqqG ', None, 16, 20)": [
+            "green",
+            [
+                "a",
+                "iVcn UbGlr ibBnq qdXbA VZTD DbOXS tqUtK GpWVU iJYzE QGHKv HNQqj ICwhc xuArw ZLXw kSqqG ",
+                null
+            ],
+            "/html/body/div/div/div/div/div[1]/div/div[2]/div/div[2]/div/div[1]/section/div[1]/a/div[2]"
+        ],
+        "('div', 'QGHKv iVcn VZTD rEPuv ICwhc ibBnq ', None, 16, 29)": [
+            "green",
+            [
+                "a",
+                "iVcn UbGlr ibBnq qdXbA VZTD DbOXS tqUtK GpWVU iJYzE QGHKv HNQqj ICwhc dVINO ",
+                null
+            ],
+            "/html/body/div/div/div/div/div[1]/div/div[2]/div/div[2]/div/div[3]/section/div[1]/a/div"
+        ]
+    },
+    "17": {
+        "('span', 'YKjhS ', None, 17, 0)": [
+            "green",
+            [
+                "span",
+                null,
+                null
+            ],
+            "/html/body/div/div/div/div/div[1]/div/div[2]/div/div[1]/div/div[3]/div[1]/div/div[1]/span[2]/span"
+        ],
+        "('button', 'theme-EWITS mLASH egFzk qXWHA ScoIf ZXRVe jIRH NoTgg OJpwZ uklrk wSPfd ofvJb nMRSd YIauu gGlNh ARCOA kyjTO xqlN aANqO aNnIu GDslh LjPJo RpDvg YYtC rTpcz EDgo UVTAB ihLsD niWVk yayQB vXSTR ENhiS dQa-Du kOEGk WMbJE eVJEc TElCQ ZAqMY enocc pJSQ pvoyF aaksc OKklU ATKRo RfOGv neOGk fuOso DwqSE fnpin ArvQf dUniT Mzjkf Niff NKnwO ijAAn dEuPM vwJ JmUFf sgyq cRbVn sBVbK fCfdG oMkBz aOwuK XsORH EgRXa hMVHb LTwlP jJbTO CnYjj TiUFI qeCAC xqvdn JaQpT dAfv PNgfG fIWCu NewES UJNbG EgBCK UvFHa lCCRi XDQHW spAMS TPSuu sbdDW askuE VsLUC YHsrW pYmVc eHvZI qRTXS odcNV NzKLB DbNtg nKDCU gTRVo iCOvJ znFR hjDDH JboFf OBVry ', None, 17, 1)": [
+            "green",
+            [
+                "li",
+                "WEJto ",
+                null
+            ],
+            "/html/body/div/div/div/div/div[1]/div/div[2]/div/div[1]/div/div[3]/div[2]/div/ul/li[1]/button"
+        ],
+        "('div', None, None, 17, 6)": [
+            "green",
+            [
+                "li",
+                "WEJto ",
+                null
+            ],
+            "/html/body/div/div/div/div/div[1]/div/div[2]/div/div[1]/div/div[3]/div[2]/div/ul/li[6]/div"
+        ],
+        "('span', 'hsDdd OOSI GpQCA lZur VlFaz ', None, 17, 7)": [
+            "green",
+            [
+                "div",
+                "HXPPJ barbu IzgMt VcHIt uhSzI YGNMU cRAsZ xqMcl QtRul ",
+                null
+            ],
+            "/html/body/div/div/div/div/div[1]/div/div[2]/div/div[1]/div/div[4]/figure/figcaption/div/div[1]/span"
+        ],
+        "('span', 'YNujN JGtjI aZFDu rkKLh  gtOSm FbbUW tUtYa vOCwz EQwFq yCufu eEak Qmvg nyTIa SRXVc vzLa jgBfc WXDas CiUCW kqbG zrdEG txGfn ygKVe BbezD UOtxr CVfpq xijV soGRS XgdC sEIlf daWqJ ', None, 17, 8)": [
+            "green",
+            [
+                "div",
+                "qinlA IpWvx oqZz tylGM lyWxS nWcVF UhTug PPcLh ",
+                null
+            ],
+            "/html/body/div/div/div/div/div[1]/div/div[2]/div/div[1]/div/div[4]/figure/figcaption/div/div[2]/span"
+        ],
+        "('span', 'QXDKT rGjeC tuAKv iMbiE ', None, 17, 9)": [
+            "green",
+            [
+                "a",
+                "theme-HLysv theme-HReFq mLASH egFzk qXWHA ScoIf zYXIH jIRH wNxoc OJpwZ eqFg wSPfd ofvJb bMrzT LaUnX EgONj ibBnq kyjTO lvyBv aANqO aNnIu GDslh LjPJo RpDvg YYtC rTpcz EDgo SIwmX oIWqB mzm sXtkB yayQB vXSTR ENhiS dQa-Du SVBll bpBbX GpQCA tuAKv xTell wdAqb ZqGqs LVAIE TnrRA uECag DcwSV XnBOJ cELRj SUAFz XzYk zkmjG aSyef pFen hoNVj TQOOL Haltu NafGB KpEhF jyjDy kZHqU FZKIw QddLR SKDYB UmcQM giepU cTjQC aRMla MMxXy fFMcX PbMFf hJRbU MRTyf iFJTR koyYF TkdYt DZNRX MALjb VUFMN  ",
+                null
+            ],
+            "/html/body/div/div/div/div/div[1]/div/div[2]/div/div[1]/div/div[8]/div/ul/li[1]/a/span"
+        ],
+        "('div', 'VideoPlayer', None, 17, 13)": [
+            "green",
+            [
+                "div",
+                "AmbientVideoWrapper",
+                null
+            ],
+            "/html/body/div/div/div/div/div[1]/div/div[2]/div/div[2]/div/section/div/div[2]/a/div/div"
+        ],
+        "('button', 'Button Button--sm Button--icon-noLabel AmbientVideoWrapper__Toggle AmbientVideoWrapper__Toggle--bottom_left', None, 17, 14)": [
+            "green",
+            [
+                "div",
+                "AmbientVideoWrapper",
+                null
+            ],
+            "/html/body/div/div/div/div/div[1]/div/div[2]/div/div[2]/div/section/div/div[2]/a/div/button"
+        ],
+        "('span', 'LiveCircle-circle', None, 17, 15)": [
+            "green",
+            [
+                "span",
+                "LiveCircle OnNow",
+                null
+            ],
+            "/html/body/div/div/div/div/div[1]/div/div[2]/div/div[2]/div/section/div/div[2]/a/span/span[1]"
+        ],
+        "('span', 'LiveCircle-title-red', None, 17, 16)": [
+            "green",
+            [
+                "span",
+                "LiveCircle OnNow",
+                null
+            ],
+            "/html/body/div/div/div/div/div[1]/div/div[2]/div/div[2]/div/section/div/div[2]/a/span/span[2]"
+        ],
+        "('div', 'GpQCA lZur Rnci uMOq ', None, 17, 17)": [
+            "green",
+            [
+                "div",
+                "hsDdd GpQCA lZur BOsoU YMZw dihEb srtah LmIPo JzlZQ bpoDG kOMGa qLeeo jCA-DP cjmDv OWLMy VbrfA zZsl kjmkg OwbFk QuuaM ",
+                null
+            ],
+            "/html/body/div/div/div/div/div[1]/div/div[2]/div/div[2]/div/div[1]/section/div[1]/a/div[1]/div"
+        ],
+        "('div', 'VZTD rEPuv QXDKT aimoN ', None, 17, 18)": [
+            "green",
+            [
+                "div",
+                "QGHKv iVcn VZTD rEPuv ICwhc ibBnq xuArw ZLXw kSqqG ",
+                null
+            ],
+            "/html/body/div/div/div/div/div[1]/div/div[2]/div/div[2]/div/div[1]/section/div[1]/a/div[2]/div[1]"
+        ],
+        "('div', 'RVPG cTzRP UzlIl VXIwh hCp lZur YOODG aimoN ', None, 17, 19)": [
+            "green",
+            [
+                "div",
+                "QGHKv iVcn VZTD rEPuv ICwhc ibBnq xuArw ZLXw kSqqG ",
+                null
+            ],
+            "/html/body/div/div/div/div/div[1]/div/div[2]/div/div[2]/div/div[1]/section/div[1]/a/div[2]/div[2]"
+        ],
+        "('div', 'VZTD HNQqj QXDKT QBuju SHKi nCIGi NxHUa sJErG nJjCu dlVQH ', None, 17, 32)": [
+            "green",
+            [
+                "div",
+                "QGHKv iVcn VZTD rEPuv ICwhc ibBnq ",
+                null
+            ],
+            "/html/body/div/div/div/div/div[1]/div/div[2]/div/div[2]/div/div[3]/section/div[1]/a/div/div[1]"
+        ],
+        "('div', 'RVPG cTzRP UzlIl VXIwh hCp lZur YOODG ', None, 17, 33)": [
+            "green",
+            [
+                "div",
+                "QGHKv iVcn VZTD rEPuv ICwhc ibBnq ",
+                null
+            ],
+            "/html/body/div/div/div/div/div[1]/div/div[2]/div/div[2]/div/div[3]/section/div[1]/a/div/div[2]"
+        ]
+    },
+    "18": {
+        "('img', 'awXxV CfkUa EknAv NwgWd ', None, 18, 0)": [
+            "green",
+            [
+                "span",
+                "YKjhS ",
+                null
+            ],
+            "/html/body/div/div/div/div/div[1]/div/div[2]/div/div[1]/div/div[3]/div[1]/div/div[1]/span[2]/span/img"
+        ],
+        "('span', 'CSJky pdAzW JSFPu ', None, 18, 1)": [
+            "green",
+            [
+                "button",
+                "theme-EWITS mLASH egFzk qXWHA ScoIf ZXRVe jIRH NoTgg OJpwZ uklrk wSPfd ofvJb nMRSd YIauu gGlNh ARCOA kyjTO xqlN aANqO aNnIu GDslh LjPJo RpDvg YYtC rTpcz EDgo UVTAB ihLsD niWVk yayQB vXSTR ENhiS dQa-Du kOEGk WMbJE eVJEc TElCQ ZAqMY enocc pJSQ pvoyF aaksc OKklU ATKRo RfOGv neOGk fuOso DwqSE fnpin ArvQf dUniT Mzjkf Niff NKnwO ijAAn dEuPM vwJ JmUFf sgyq cRbVn sBVbK fCfdG oMkBz aOwuK XsORH EgRXa hMVHb LTwlP jJbTO CnYjj TiUFI qeCAC xqvdn JaQpT dAfv PNgfG fIWCu NewES UJNbG EgBCK UvFHa lCCRi XDQHW spAMS TPSuu sbdDW askuE VsLUC YHsrW pYmVc eHvZI qRTXS odcNV NzKLB DbNtg nKDCU gTRVo iCOvJ znFR hjDDH JboFf OBVry ",
+                null
+            ],
+            "/html/body/div/div/div/div/div[1]/div/div[2]/div/div[1]/div/div[3]/div[2]/div/ul/li[1]/button/span"
+        ],
+        "('button', 'theme-EWITS mLASH egFzk qXWHA ScoIf ZXRVe jIRH NoTgg OJpwZ uklrk wSPfd ofvJb nMRSd YIauu gGlNh ARCOA kyjTO xqlN aANqO aNnIu GDslh LjPJo RpDvg YYtC rTpcz EDgo UVTAB ihLsD niWVk yayQB vXSTR ENhiS dQa-Du kOEGk WMbJE eVJEc TElCQ ZAqMY enocc pJSQ pvoyF aaksc OKklU ATKRo RfOGv neOGk fuOso DwqSE fnpin ArvQf dUniT Mzjkf Niff NKnwO ijAAn dEuPM vwJ JmUFf sgyq cRbVn sBVbK fCfdG oMkBz aOwuK XsORH EgRXa hMVHb LTwlP jJbTO CnYjj TiUFI qeCAC xqvdn JaQpT dAfv PNgfG fIWCu NewES UJNbG EgBCK UvFHa lCCRi XDQHW spAMS TPSuu sbdDW askuE VsLUC YHsrW pYmVc eHvZI qRTXS odcNV NzKLB DbNtg nKDCU gTRVo iCOvJ znFR hjDDH JboFf OBVry ', None, 18, 6)": [
+            "green",
+            [
+                "div",
+                null,
+                null
+            ],
+            "/html/body/div/div/div/div/div[1]/div/div[2]/div/div[1]/div/div[3]/div[2]/div/ul/li[6]/div/button"
+        ],
+        "('div', 'xdNAs rMQsN cELo NoeP BtinW YHmbu hWtE ', None, 18, 7)": [
+            "green",
+            [
+                "div",
+                null,
+                null
+            ],
+            "/html/body/div/div/div/div/div[1]/div/div[2]/div/div[1]/div/div[3]/div[2]/div/ul/li[6]/div/div"
+        ],
+        "('span', None, None, 18, 8)": [
+            "green",
+            [
+                "span",
+                "hsDdd OOSI GpQCA lZur VlFaz ",
+                null
+            ],
+            "/html/body/div/div/div/div/div[1]/div/div[2]/div/div[1]/div/div[4]/figure/figcaption/div/div[1]/span/span"
+        ],
+        "('iframe', 'absolute-fill', None, 18, 9)": [
+            "green",
+            [
+                "div",
+                "VideoPlayer",
+                null
+            ],
+            "/html/body/div/div/div/div/div[1]/div/div[2]/div/div[2]/div/section/div/div[2]/a/div/div/iframe"
+        ],
+        "('svg', 'icon__svg', None, 18, 10)": [
+            "green",
+            [
+                "button",
+                "Button Button--sm Button--icon-noLabel AmbientVideoWrapper__Toggle AmbientVideoWrapper__Toggle--bottom_left",
+                null
+            ],
+            "/html/body/div/div/div/div/div[1]/div/div[2]/div/div[2]/div/section/div/div[2]/a/div/button/svg"
+        ],
+        "('div', 'FvQLF iLTd NqeUA UzzHi iWsMV ', None, 18, 11)": [
+            "green",
+            [
+                "div",
+                "GpQCA lZur Rnci uMOq ",
+                null
+            ],
+            "/html/body/div/div/div/div/div[1]/div/div[2]/div/div[2]/div/div[1]/section/div[1]/a/div[1]/div/div"
+        ],
+        "('div', 'CJAFL gDeX ', None, 18, 12)": [
+            "green",
+            [
+                "div",
+                "VZTD rEPuv QXDKT aimoN ",
+                null
+            ],
+            "/html/body/div/div/div/div/div[1]/div/div[2]/div/div[2]/div/div[1]/section/div[1]/a/div[2]/div[1]/div"
+        ],
+        "('div', 'VZTD rEPuv ltDkr QXDKT ', None, 18, 13)": [
+            "green",
+            [
+                "div",
+                "RVPG cTzRP UzlIl VXIwh hCp lZur YOODG aimoN ",
+                null
+            ],
+            "/html/body/div/div/div/div/div[1]/div/div[2]/div/div[2]/div/div[1]/section/div[1]/a/div[2]/div[2]/div"
+        ],
+        "('div', 'CJAFL gDeX ', None, 18, 26)": [
+            "green",
+            [
+                "div",
+                "VZTD HNQqj QXDKT QBuju SHKi nCIGi NxHUa sJErG nJjCu dlVQH ",
+                null
+            ],
+            "/html/body/div/div/div/div/div[1]/div/div[2]/div/div[2]/div/div[3]/section/div[1]/a/div/div[1]/div"
+        ],
+        "('div', 'VZTD rEPuv ltDkr QXDKT ', None, 18, 27)": [
+            "green",
+            [
+                "div",
+                "RVPG cTzRP UzlIl VXIwh hCp lZur YOODG ",
+                null
+            ],
+            "/html/body/div/div/div/div/div[1]/div/div[2]/div/div[2]/div/div[3]/section/div[1]/a/div/div[2]/div"
+        ]
+    },
+    "19": {
+        "('svg', ' ', None, 19, 0)": [
+            "green",
+            [
+                "span",
+                "CSJky pdAzW JSFPu ",
+                null
+            ],
+            "/html/body/div/div/div/div/div[1]/div/div[2]/div/div[1]/div/div[3]/div[2]/div/ul/li[1]/button/span/svg"
+        ],
+        "('span', 'CSJky pdAzW JSFPu ', None, 19, 5)": [
+            "green",
+            [
+                "button",
+                "theme-EWITS mLASH egFzk qXWHA ScoIf ZXRVe jIRH NoTgg OJpwZ uklrk wSPfd ofvJb nMRSd YIauu gGlNh ARCOA kyjTO xqlN aANqO aNnIu GDslh LjPJo RpDvg YYtC rTpcz EDgo UVTAB ihLsD niWVk yayQB vXSTR ENhiS dQa-Du kOEGk WMbJE eVJEc TElCQ ZAqMY enocc pJSQ pvoyF aaksc OKklU ATKRo RfOGv neOGk fuOso DwqSE fnpin ArvQf dUniT Mzjkf Niff NKnwO ijAAn dEuPM vwJ JmUFf sgyq cRbVn sBVbK fCfdG oMkBz aOwuK XsORH EgRXa hMVHb LTwlP jJbTO CnYjj TiUFI qeCAC xqvdn JaQpT dAfv PNgfG fIWCu NewES UJNbG EgBCK UvFHa lCCRi XDQHW spAMS TPSuu sbdDW askuE VsLUC YHsrW pYmVc eHvZI qRTXS odcNV NzKLB DbNtg nKDCU gTRVo iCOvJ znFR hjDDH JboFf OBVry ",
+                null
+            ],
+            "/html/body/div/div/div/div/div[1]/div/div[2]/div/div[1]/div/div[3]/div[2]/div/ul/li[6]/div/button/span"
+        ],
+        "('span', 'gtOSm FbbUW tUtYa vOCwz EQwFq yCufu eEak Qmvg nyTIa SRXVc vzLa jgBfc WXDas CiUCW kqbG zrdEG txGfn ygKVe BbezD UOtxr CVfpq xijV soGRS XgdC sEIlf daWqJ ', None, 19, 6)": [
+            "green",
+            [
+                "span",
+                null,
+                null
+            ],
+            "/html/body/div/div/div/div/div[1]/div/div[2]/div/div[1]/div/div[4]/figure/figcaption/div/div[1]/span/span/span"
+        ],
+        "('use', None, None, 19, 7)": [
+            "green",
+            [
+                "svg",
+                "icon__svg",
+                null
+            ],
+            "/html/body/div/div/div/div/div[1]/div/div[2]/div/div[2]/div/section/div/div[2]/a/div/button/svg/use"
+        ],
+        "('img', 'hsDdd ', None, 19, 8)": [
+            "green",
+            [
+                "div",
+                "FvQLF iLTd NqeUA UzzHi iWsMV ",
+                null
+            ],
+            "/html/body/div/div/div/div/div[1]/div/div[2]/div/div[2]/div/div[1]/section/div[1]/a/div[1]/div/div/img"
+        ],
+        "('h2', 'PFoxV eBpQD rcQBv bQtjQ lQUdN GpQCA mAkiF FvMyr WvoqU dMSoH tuAKv ', 'Rutgerstoinvestigateheadline', 19, 9)": [
+            "green",
+            [
+                "div",
+                "CJAFL gDeX ",
+                null
+            ],
+            "/html/body/div/div/div/div/div[1]/div/div[2]/div/div[2]/div/div[1]/section/div[1]/a/div[2]/div[1]/div/h2"
+        ],
+        "('ul', 'tfFRZ zOGtW VZTD UeCOM RzKoN JEct YaqUo BedyR UoVV WtEci dSKvB seFhp ', None, 19, 10)": [
+            "green",
+            [
+                "div",
+                "VZTD rEPuv ltDkr QXDKT ",
+                null
+            ],
+            "/html/body/div/div/div/div/div[1]/div/div[2]/div/div[2]/div/div[1]/section/div[1]/a/div[2]/div[2]/div/ul"
+        ],
+        "('h2', 'PFoxV eBpQD rcQBv bQtjQ lQUdN GpQCA mAkiF FvMyr WvoqU dMSoH tuAKv ', 'SaquonBarkleyscores3headline', 19, 12)": [
+            "green",
+            [
+                "div",
+                "CJAFL gDeX ",
+                null
+            ],
+            "/html/body/div/div/div/div/div[1]/div/div[2]/div/div[2]/div/div[1]/section/div[2]/a/div[2]/div[1]/div/h2"
+        ],
+        "('h2', 'PFoxV eBpQD rcQBv bQtjQ lQUdN GpQCA mAkiF FvMyr WvoqU dMSoH tuAKv ', 'Futureveterinarianreheadline', 19, 15)": [
+            "green",
+            [
+                "div",
+                "CJAFL gDeX ",
+                null
+            ],
+            "/html/body/div/div/div/div/div[1]/div/div[2]/div/div[2]/div/div[1]/section/div[3]/a/div[2]/div[1]/div/h2"
+        ],
+        "('h2', 'PFoxV eBpQD rcQBv bQtjQ lQUdN GpQCA mAkiF FvMyr WvoqU dMSoH tuAKv ', 'Streetclosuresothercheadline', 19, 18)": [
+            "green",
+            [
+                "div",
+                "CJAFL gDeX ",
+                null
+            ],
+            "/html/body/div/div/div/div/div[1]/div/div[2]/div/div[2]/div/div[1]/section/div[4]/a/div[2]/div[1]/div/h2"
+        ],
+        "('h2', 'PFoxV eBpQD rcQBv bQtjQ lQUdN GpQCA mAkiF FvMyr WvoqU dMSoH tuAKv ', '1dead2injuredafterboheadline', 19, 21)": [
+            "green",
+            [
+                "div",
+                "CJAFL gDeX ",
+                null
+            ],
+            "/html/body/div/div/div/div/div[1]/div/div[2]/div/div[2]/div/div[1]/section/div[5]/a/div[2]/div[1]/div/h2"
+        ],
+        "('p', 'PFoxV eBpQD KMxLo GpQCA tuAKv zuqUq WTxSK HxnoC JmHQS KlMT BEWVm ', '15yearoldshotandkillbody', 19, 23)": [
+            "green",
+            [
+                "div",
+                "CJAFL gDeX ",
+                null
+            ],
+            "/html/body/div/div/div/div/div[1]/div/div[2]/div/div[2]/div/div[3]/section/div[1]/a/div/div[1]/div/p"
+        ],
+        "('p', 'PFoxV eBpQD KMxLo GpQCA tuAKv zuqUq WTxSK HxnoC JmHQS KlMT BEWVm ', 'PrayerserviceatGloucbody', 19, 25)": [
+            "green",
+            [
+                "div",
+                "CJAFL gDeX ",
+                null
+            ],
+            "/html/body/div/div/div/div/div[1]/div/div[2]/div/div[2]/div/div[3]/section/div[2]/a/div/div[1]/div/p"
+        ],
+        "('p', 'PFoxV eBpQD KMxLo GpQCA tuAKv zuqUq WTxSK HxnoC JmHQS KlMT BEWVm ', 'UnionAramarkworkersabody', 19, 27)": [
+            "green",
+            [
+                "div",
+                "CJAFL gDeX ",
+                null
+            ],
+            "/html/body/div/div/div/div/div[1]/div/div[2]/div/div[2]/div/div[3]/section/div[3]/a/div/div[1]/div/p"
+        ]
+    },
+    "20": {
+        "('path', None, None, 20, 0)": [
+            "green",
+            [
+                "svg",
+                " ",
+                null
+            ],
+            "/html/body/div/div/div/div/div[1]/div/div[2]/div/div[1]/div/div[3]/div[2]/div/ul/li[1]/button/span/svg/path"
+        ],
+        "('svg', ' ', None, 20, 6)": [
+            "green",
+            [
+                "span",
+                "CSJky pdAzW JSFPu ",
+                null
+            ],
+            "/html/body/div/div/div/div/div[1]/div/div[2]/div/div[1]/div/div[3]/div[2]/div/ul/li[6]/div/button/span/svg"
+        ],
+        "('li', 'tuAKv fzeHv eSWW VUFMN SdBAb AQSxL xBxr ', 'RutgerstoinvestigatepubDate', 20, 7)": [
+            "green",
+            [
+                "ul",
+                "tfFRZ zOGtW VZTD UeCOM RzKoN JEct YaqUo BedyR UoVV WtEci dSKvB seFhp ",
+                null
+            ],
+            "/html/body/div/div/div/div/div[1]/div/div[2]/div/div[2]/div/div[1]/section/div[1]/a/div[2]/div[2]/div/ul/li"
+        ],
+        "('li', 'tuAKv fzeHv eSWW VUFMN SdBAb AQSxL xBxr ', 'SaquonBarkleyscores3pubDate', 20, 8)": [
+            "green",
+            [
+                "ul",
+                "tfFRZ zOGtW VZTD UeCOM RzKoN JEct YaqUo BedyR UoVV WtEci dSKvB seFhp ",
+                null
+            ],
+            "/html/body/div/div/div/div/div[1]/div/div[2]/div/div[2]/div/div[1]/section/div[2]/a/div[2]/div[2]/div/ul/li"
+        ]
+    },
+    "21": {
+        "('path', None, None, 21, 0)": [
+            "green",
+            [
+                "svg",
+                " ",
+                null
+            ],
+            "/html/body/div/div/div/div/div[1]/div/div[2]/div/div[1]/div/div[3]/div[2]/div/ul/li[6]/div/button/span/svg/path"
+        ],
+        "('div', 'theme-eGZms theme-aMvDO mLASH egFzk qXWHA ScoIf zRKnP jIRH wNxoc OJpwZ BOFPn wSPfd ofvJb bMrzT RGoaN gGlNh ARCOA kyjTO lvyBv aANqO aNnIu GDslh LjPJo RpDvg YYtC rTpcz EDgo SIwmX sWWJW mzm bVept SEPRz LRqoM kzZQf xGdAb hBvCD fQMZM yHyni pzxXD AbcH zUtsb ', None, 21, 1)": [
+            "green",
+            [
+                "li",
+                "tuAKv fzeHv eSWW VUFMN SdBAb AQSxL xBxr ",
+                "RutgerstoinvestigatepubDate"
+            ],
+            "/html/body/div/div/div/div/div[1]/div/div[2]/div/div[2]/div/div[1]/section/div[1]/a/div[2]/div[2]/div/ul/li/div"
+        ],
+        "('div', 'theme-eGZms theme-aMvDO mLASH egFzk qXWHA ScoIf zRKnP jIRH wNxoc OJpwZ BOFPn wSPfd ofvJb bMrzT RGoaN gGlNh ARCOA kyjTO lvyBv aANqO aNnIu GDslh LjPJo RpDvg YYtC rTpcz EDgo SIwmX sWWJW mzm bVept SEPRz LRqoM kzZQf xGdAb hBvCD fQMZM yHyni pzxXD AbcH zUtsb ', None, 21, 2)": [
+            "green",
+            [
+                "li",
+                "tuAKv fzeHv eSWW VUFMN SdBAb AQSxL xBxr ",
+                "SaquonBarkleyscores3pubDate"
+            ],
+            "/html/body/div/div/div/div/div[1]/div/div[2]/div/div[2]/div/div[1]/section/div[2]/a/div[2]/div[2]/div/ul/li/div"
+        ]
+    },
+    "22": {
+        "('span', 'QXDKT rGjeC tuAKv iMbiE ', None, 22, 0)": [
+            "green",
+            [
+                "div",
+                "theme-eGZms theme-aMvDO mLASH egFzk qXWHA ScoIf zRKnP jIRH wNxoc OJpwZ BOFPn wSPfd ofvJb bMrzT RGoaN gGlNh ARCOA kyjTO lvyBv aANqO aNnIu GDslh LjPJo RpDvg YYtC rTpcz EDgo SIwmX sWWJW mzm bVept SEPRz LRqoM kzZQf xGdAb hBvCD fQMZM yHyni pzxXD AbcH zUtsb ",
+                null
+            ],
+            "/html/body/div/div/div/div/div[1]/div/div[2]/div/div[2]/div/div[1]/section/div[1]/a/div[2]/div[2]/div/ul/li/div/span"
+        ]
+    },
+    "23": {
+        "('span', 'awXxV  jTKbV pCRh ', None, 23, 0)": [
+            "green",
+            [
+                "span",
+                "QXDKT rGjeC tuAKv iMbiE ",
+                null
+            ],
+            "/html/body/div/div/div/div/div[1]/div/div[2]/div/div[2]/div/div[1]/section/div[1]/a/div[2]/div[2]/div/ul/li/div/span/span"
+        ]
+    }
+}

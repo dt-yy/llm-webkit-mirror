@@ -1,0 +1,2630 @@
+{
+    "0": {
+      "('html', None, None, 0, 0)": [
+        "red",
+        null
+      ]
+    },
+    "1": {
+      "('head', None, None, 1, 0)": [
+        "green",
+        [
+          "html",
+          null,
+          null
+        ]
+      ],
+      "('body', '', None, 1, 1)": [
+        "red",
+        [
+          "html",
+          null,
+          null
+        ]
+      ]
+    },
+    "2": {
+      "('meta', None, None, 2, 0)": [
+        "green",
+        [
+          "head",
+          null,
+          null
+        ]
+      ],
+      "('link', None, None, 2, 4)": [
+        "green",
+        [
+          "head",
+          null,
+          null
+        ]
+      ],
+      "('script', None, None, 2, 17)": [
+        "green",
+        [
+          "head",
+          null,
+          null
+        ]
+      ],
+      "('title', None, None, 2, 34)": [
+        "green",
+        [
+          "head",
+          null,
+          null
+        ]
+      ],
+      "('div', None, 'abcotv', 2, 70)": [
+        "red",
+        [
+          "body",
+          "",
+          null
+        ]
+      ],
+      "('script', None, None, 2, 71)": [
+        "green",
+        [
+          "body",
+          "",
+          null
+        ]
+      ]
+    },
+    "3": {
+      "('div', None, 'fitt-analytics', 3, 0)": [
+        "red",
+        [
+          "div",
+          null,
+          "abcotv"
+        ]
+      ]
+    },
+    "4": {
+      "('div', 'bp-mobileMDPlus bp-mobileLGPlus bp-tabletPlus bp-desktopPlus bp-desktopLGPlus', None, 4, 0)": [
+        "red",
+        [
+          "div",
+          null,
+          "fitt-analytics"
+        ]
+      ]
+    },
+    "5": {
+      "('div', 'wrapper prism-story', None, 5, 0)": [
+        "red",
+        [
+          "div",
+          "bp-mobileMDPlus bp-mobileLGPlus bp-tabletPlus bp-desktopPlus bp-desktopLGPlus",
+          null
+        ]
+      ]
+    },
+    "6": {
+      "('section', 'breaking-news', None, 6, 0)": [
+        "red",
+        [
+          "div",
+          "wrapper prism-story",
+          null
+        ]
+      ],
+      "('section', 'nav', None, 6, 1)": [
+        "green",
+        [
+          "div",
+          "wrapper prism-story",
+          null
+        ]
+      ],
+      "('div', 'theme-otv', 'themeProvider', 6, 2)": [
+        "red",
+        [
+          "div",
+          "wrapper prism-story",
+          null
+        ]
+      ],
+      "('div', None, 'path', 6, 3)": [
+        "green",
+        [
+          "div",
+          "wrapper prism-story",
+          null
+        ]
+      ],
+      "('div', None, 'tashl', 6, 4)": [
+        "green",
+        [
+          "div",
+          "wrapper prism-story",
+          null
+        ]
+      ],
+      "('footer', 'footer', None, 6, 5)": [
+        "green",
+        [
+          "div",
+          "wrapper prism-story",
+          null
+        ]
+      ],
+      "('div', None, None, 6, 6)": [
+        "green",
+        [
+          "div",
+          "wrapper prism-story",
+          null
+        ]
+      ]
+    },
+    "7": {
+      "('div', None, 'breaking-news-handler', 7, 0)": [
+        "red",
+        [
+          "section",
+          "breaking-news",
+          null
+        ]
+      ],
+      "('div', 'breaking-news-pager', None, 7, 1)": [
+        "green",
+        [
+          "section",
+          "breaking-news",
+          null
+        ]
+      ],
+      "('header', 'feature-container wpvi', None, 7, 2)": [
+        "green",
+        [
+          "section",
+          "nav",
+          null
+        ]
+      ],
+      "('nav', 'main-nav', None, 7, 3)": [
+        "green",
+        [
+          "section",
+          "nav",
+          null
+        ]
+      ],
+      "('div', 'profile-drop-down has-breaking', None, 7, 4)": [
+        "green",
+        [
+          "section",
+          "nav",
+          null
+        ]
+      ],
+      "('div', 'FITT_Article_outer-container iJVrZ lqtkC glxIO HfYhe vUYNV dHdHP jLREf zXXje aGO', 'FITTArticle', 7, 5)": [
+        "red",
+        [
+          "div",
+          "theme-otv",
+          "themeProvider"
+        ]
+      ],
+      "('div', 'footer-searchsocial', None, 7, 6)": [
+        "green",
+        [
+          "footer",
+          "footer",
+          null
+        ]
+      ],
+      "('div', 'footer-sections', None, 7, 7)": [
+        "green",
+        [
+          "footer",
+          "footer",
+          null
+        ]
+      ],
+      "('div', 'footer-legal', None, 7, 8)": [
+        "green",
+        [
+          "footer",
+          "footer",
+          null
+        ]
+      ],
+      "('div', 'clear', None, 7, 9)": [
+        "green",
+        [
+          "footer",
+          "footer",
+          null
+        ]
+      ],
+      "('script', None, None, 7, 10)": [
+        "green",
+        [
+          "div",
+          null,
+          null
+        ]
+      ],
+      "('div', None, 'ZN_5hSLIyrLhlJ7ndr', 7, 11)": [
+        "green",
+        [
+          "div",
+          null,
+          null
+        ]
+      ],
+      "('div', 'Ad ad-slot', None, 7, 13)": [
+        "green",
+        [
+          "div",
+          null,
+          null
+        ]
+      ]
+    },
+    "8": {
+      "('ul', 'breaking-news-stories collapse', 'breaking-news-stories', 8, 0)": [
+        "red",
+        [
+          "div",
+          null,
+          "breaking-news-handler"
+        ]
+      ],
+      "('div', 'hr', None, 8, 1)": [
+        "green",
+        [
+          "div",
+          "breaking-news-pager",
+          null
+        ]
+      ],
+      "('ul', None, None, 8, 2)": [
+        "green",
+        [
+          "div",
+          "breaking-news-pager",
+          null
+        ]
+      ],
+      "('a', 'feature-action', None, 8, 3)": [
+        "green",
+        [
+          "header",
+          "feature-container wpvi",
+          null
+        ]
+      ],
+      "('div', 'feature-header-container wpvi', None, 8, 4)": [
+        "green",
+        [
+          "header",
+          "feature-container wpvi",
+          null
+        ]
+      ],
+      "('div', 'nav-wrapper vis-hidden', None, 8, 5)": [
+        "green",
+        [
+          "nav",
+          "main-nav",
+          null
+        ]
+      ],
+      "('div', 'profile-name', None, 8, 6)": [
+        "green",
+        [
+          "div",
+          "profile-drop-down has-breaking",
+          null
+        ]
+      ],
+      "('div', 'profile-edit', None, 8, 7)": [
+        "green",
+        [
+          "div",
+          "profile-drop-down has-breaking",
+          null
+        ]
+      ],
+      "('div', 'profile-logout', None, 8, 8)": [
+        "green",
+        [
+          "div",
+          "profile-drop-down has-breaking",
+          null
+        ]
+      ],
+      "('div', 'pNwJE xZCNW WDwAI rbeIr tPakT HymbH JHrzh YppdR', None, 8, 9)": [
+        "green",
+        [
+          "div",
+          "FITT_Article_outer-container iJVrZ lqtkC glxIO HfYhe vUYNV dHdHP jLREf zXXje aGO",
+          "FITTArticle"
+        ]
+      ],
+      "('div', 'FITT_Article_main VZTD UeCOM jIRH oimqG DjbQm UwdmX Xmrlz ReShI KaJdY lqtkC ssImf HfYhe RTHNs iJVrZ', None, 8, 10)": [
+        "red",
+        [
+          "div",
+          "FITT_Article_outer-container iJVrZ lqtkC glxIO HfYhe vUYNV dHdHP jLREf zXXje aGO",
+          "FITTArticle"
+        ]
+      ],
+      "('div', 'footer-brand desktop', None, 8, 11)": [
+        "green",
+        [
+          "div",
+          "footer-searchsocial",
+          null
+        ]
+      ],
+      "('section', 'footer-smallnav', None, 8, 12)": [
+        "green",
+        [
+          "div",
+          "footer-searchsocial",
+          null
+        ]
+      ],
+      "('div', 'footer-brand mobile', None, 8, 13)": [
+        "green",
+        [
+          "div",
+          "footer-searchsocial",
+          null
+        ]
+      ],
+      "('div', 'clear', None, 8, 14)": [
+        "green",
+        [
+          "div",
+          "footer-searchsocial",
+          null
+        ]
+      ],
+      "('div', 'frame-social', None, 8, 15)": [
+        "green",
+        [
+          "div",
+          "footer-searchsocial",
+          null
+        ]
+      ],
+      "('div', 'footer-sections-col1', None, 8, 16)": [
+        "green",
+        [
+          "div",
+          "footer-sections",
+          null
+        ]
+      ],
+      "('div', 'footer-sections-col2', None, 8, 17)": [
+        "green",
+        [
+          "div",
+          "footer-sections",
+          null
+        ]
+      ],
+      "('div', 'footer-legal-links', None, 8, 18)": [
+        "green",
+        [
+          "div",
+          "footer-legal",
+          null
+        ]
+      ],
+      "('div', 'footer-legal-copyright', None, 8, 19)": [
+        "green",
+        [
+          "div",
+          "footer-legal",
+          null
+        ]
+      ]
+    },
+    "9": {
+      "('li', 'breaking-news-story 0 on', None, 9, 0)": [
+        "green",
+        [
+          "ul",
+          "breaking-news-stories collapse",
+          "breaking-news-stories"
+        ]
+      ],
+      "('li', 'breaking-news-story 1 off', None, 9, 1)": [
+        "green",
+        [
+          "ul",
+          "breaking-news-stories collapse",
+          "breaking-news-stories"
+        ]
+      ],
+      "('li', 'breaking-news-story 2 off', None, 9, 2)": [
+        "green",
+        [
+          "ul",
+          "breaking-news-stories collapse",
+          "breaking-news-stories"
+        ]
+      ],
+      "('hr', None, None, 9, 3)": [
+        "green",
+        [
+          "div",
+          "hr",
+          null
+        ]
+      ],
+      "('li', 'on', None, 9, 4)": [
+        "green",
+        [
+          "ul",
+          null,
+          null
+        ]
+      ],
+      "('li', None, None, 9, 5)": [
+        "green",
+        [
+          "ul",
+          null,
+          null
+        ]
+      ],
+      "('p', None, None, 9, 7)": [
+        "green",
+        [
+          "a",
+          "feature-action",
+          null
+        ]
+      ],
+      "('div', 'feature-search-overlay', None, 9, 8)": [
+        "green",
+        [
+          "div",
+          "feature-header-container wpvi",
+          null
+        ]
+      ],
+      "('div', 'feature-search-bar', None, 9, 9)": [
+        "green",
+        [
+          "div",
+          "feature-header-container wpvi",
+          null
+        ]
+      ],
+      "('div', 'feature-search-close', None, 9, 10)": [
+        "green",
+        [
+          "div",
+          "feature-header-container wpvi",
+          null
+        ]
+      ],
+      "('div', 'feature-header-left', None, 9, 11)": [
+        "green",
+        [
+          "div",
+          "feature-header-container wpvi",
+          null
+        ]
+      ],
+      "('div', 'feature-header-right', None, 9, 12)": [
+        "green",
+        [
+          "div",
+          "feature-header-container wpvi",
+          null
+        ]
+      ],
+      "('div', 'nav-sections-main-local', None, 9, 13)": [
+        "green",
+        [
+          "div",
+          "nav-wrapper vis-hidden",
+          null
+        ]
+      ],
+      "('div', 'nav-sections-links nav-sections-categories subnav-categories', None, 9, 14)": [
+        "green",
+        [
+          "div",
+          "nav-wrapper vis-hidden",
+          null
+        ]
+      ],
+      "('div', 'nav-sections-community-shows nav-sections-station-info', None, 9, 15)": [
+        "green",
+        [
+          "div",
+          "nav-wrapper vis-hidden",
+          null
+        ]
+      ],
+      "('div', 'nav-sections-community-shows', None, 9, 16)": [
+        "green",
+        [
+          "div",
+          "nav-wrapper vis-hidden",
+          null
+        ]
+      ],
+      "('div', 'nav-promos-follow', None, 9, 17)": [
+        "green",
+        [
+          "div",
+          "nav-wrapper vis-hidden",
+          null
+        ]
+      ],
+      "('div', None, None, 9, 18)": [
+        "green",
+        [
+          "div",
+          "pNwJE xZCNW WDwAI rbeIr tPakT HymbH JHrzh YppdR",
+          null
+        ]
+      ],
+      "('div', 'Kiog kNVGM nvpSA qwdi bmjsw', None, 9, 19)": [
+        "red",
+        [
+          "div",
+          "FITT_Article_main VZTD UeCOM jIRH oimqG DjbQm UwdmX Xmrlz ReShI KaJdY lqtkC ssImf HfYhe RTHNs iJVrZ",
+          null
+        ]
+      ],
+      "('div', None, None, 9, 20)": [
+        "green",
+        [
+          "div",
+          "footer-brand desktop",
+          null
+        ]
+      ],
+      "('ul', None, None, 9, 21)": [
+        "green",
+        [
+          "section",
+          "footer-smallnav",
+          null
+        ]
+      ],
+      "('div', None, None, 9, 22)": [
+        "green",
+        [
+          "div",
+          "footer-brand mobile",
+          null
+        ]
+      ],
+      "('div', 'frame-social-action', None, 9, 23)": [
+        "green",
+        [
+          "div",
+          "frame-social",
+          null
+        ]
+      ],
+      "('div', 'frame-social-icons', None, 9, 24)": [
+        "green",
+        [
+          "div",
+          "frame-social",
+          null
+        ]
+      ],
+      "('div', 'footer-sections-group', None, 9, 25)": [
+        "green",
+        [
+          "div",
+          "footer-sections-col1",
+          null
+        ]
+      ],
+      "('div', 'footer-sections-group', None, 9, 27)": [
+        "green",
+        [
+          "div",
+          "footer-sections-col2",
+          null
+        ]
+      ],
+      "('ul', 'footer-legal-links-mobile', None, 9, 29)": [
+        "green",
+        [
+          "div",
+          "footer-legal-links",
+          null
+        ]
+      ],
+      "('div', 'footer-legal-links-col1', None, 9, 30)": [
+        "green",
+        [
+          "div",
+          "footer-legal-links",
+          null
+        ]
+      ],
+      "('div', 'footer-legal-links-col2', None, 9, 31)": [
+        "green",
+        [
+          "div",
+          "footer-legal-links",
+          null
+        ]
+      ],
+      "('div', 'clear', None, 9, 32)": [
+        "green",
+        [
+          "div",
+          "footer-legal-links",
+          null
+        ]
+      ]
+    },
+    "10": {
+      "('div', 'breaking-news-content', None, 10, 0)": [
+        "green",
+        [
+          "li",
+          "breaking-news-story 0 on",
+          null
+        ]
+      ],
+      "('div', 'breaking-news-button', None, 10, 1)": [
+        "green",
+        [
+          "li",
+          "breaking-news-story 0 on",
+          null
+        ]
+      ],
+      "('div', 'breaking-news-content', None, 10, 2)": [
+        "green",
+        [
+          "li",
+          "breaking-news-story 1 off",
+          null
+        ]
+      ],
+      "('div', 'breaking-news-button', None, 10, 3)": [
+        "green",
+        [
+          "li",
+          "breaking-news-story 1 off",
+          null
+        ]
+      ],
+      "('div', 'breaking-news-content', None, 10, 4)": [
+        "green",
+        [
+          "li",
+          "breaking-news-story 2 off",
+          null
+        ]
+      ],
+      "('div', 'breaking-news-button', None, 10, 5)": [
+        "green",
+        [
+          "li",
+          "breaking-news-story 2 off",
+          null
+        ]
+      ],
+      "('span', 'feature-watch-live', None, 10, 6)": [
+        "green",
+        [
+          "p",
+          null,
+          null
+        ]
+      ],
+      "('form', 'form-search frame-search', None, 10, 7)": [
+        "green",
+        [
+          "div",
+          "feature-search-bar",
+          null
+        ]
+      ],
+      "('span', 'feature-menu closed', None, 10, 8)": [
+        "green",
+        [
+          "div",
+          "feature-header-left",
+          null
+        ]
+      ],
+      "('a', 'feature-logo', None, 10, 9)": [
+        "green",
+        [
+          "div",
+          "feature-header-left",
+          null
+        ]
+      ],
+      "('div', 'feature-nav-local', None, 10, 10)": [
+        "green",
+        [
+          "div",
+          "feature-header-right",
+          null
+        ]
+      ],
+      "('a', 'feature-local-expand', None, 10, 11)": [
+        "green",
+        [
+          "div",
+          "feature-header-right",
+          null
+        ]
+      ],
+      "('div', 'feature-border feature-border-one', None, 10, 12)": [
+        "green",
+        [
+          "div",
+          "feature-header-right",
+          null
+        ]
+      ],
+      "('div', 'feature-weather-container weather-desktop', None, 10, 13)": [
+        "green",
+        [
+          "div",
+          "feature-header-right",
+          null
+        ]
+      ],
+      "('div', 'feature-border feature-border-two', None, 10, 14)": [
+        "green",
+        [
+          "div",
+          "feature-header-right",
+          null
+        ]
+      ],
+      "('div', 'feature-ux-container', None, 10, 15)": [
+        "green",
+        [
+          "div",
+          "feature-header-right",
+          null
+        ]
+      ],
+      "('div', 'feature-border feature-border-three', None, 10, 16)": [
+        "green",
+        [
+          "div",
+          "feature-header-right",
+          null
+        ]
+      ],
+      "('div', 'nav-sections-links nav-sections-main', None, 10, 17)": [
+        "green",
+        [
+          "div",
+          "nav-sections-main-local",
+          null
+        ]
+      ],
+      "('div', 'nav-sections-links nav-sections-local subnav-local', None, 10, 18)": [
+        "green",
+        [
+          "div",
+          "nav-sections-main-local",
+          null
+        ]
+      ],
+      "('div', 'nav-sections-header', None, 10, 19)": [
+        "green",
+        [
+          "div",
+          "nav-sections-links nav-sections-categories subnav-categories",
+          null
+        ]
+      ],
+      "('div', 'nav-sections-links nav-sections-community subnav-community', None, 10, 20)": [
+        "green",
+        [
+          "div",
+          "nav-sections-community-shows nav-sections-station-info",
+          null
+        ]
+      ],
+      "('div', 'nav-sections-links nav-sections-shows subnav-shows', None, 10, 21)": [
+        "green",
+        [
+          "div",
+          "nav-sections-community-shows",
+          null
+        ]
+      ],
+      "('div', 'frame-social nav-social', None, 10, 22)": [
+        "green",
+        [
+          "div",
+          "nav-promos-follow",
+          null
+        ]
+      ],
+      "('div', None, None, 10, 23)": [
+        "green",
+        [
+          "div",
+          null,
+          null
+        ]
+      ],
+      "('div', 'theme-e FITT_Article_main__body oBTii mrzah', None, 10, 24)": [
+        "red",
+        [
+          "div",
+          "Kiog kNVGM nvpSA qwdi bmjsw",
+          null
+        ]
+      ],
+      "('div', 'theme-e FITT_Article_main__sidebar oBTii mrzah mZWbG RCVjw fjcc BFuEm', None, 10, 25)": [
+        "green",
+        [
+          "div",
+          "Kiog kNVGM nvpSA qwdi bmjsw",
+          null
+        ]
+      ],
+      "('a', None, None, 10, 26)": [
+        "green",
+        [
+          "div",
+          null,
+          null
+        ]
+      ],
+      "('li', None, None, 10, 27)": [
+        "green",
+        [
+          "ul",
+          null,
+          null
+        ]
+      ],
+      "('li', '', None, 10, 30)": [
+        "green",
+        [
+          "ul",
+          null,
+          null
+        ]
+      ],
+      "('a', 'follow-btn follow-btn--facebook', None, 10, 36)": [
+        "green",
+        [
+          "div",
+          "frame-social-icons",
+          null
+        ]
+      ],
+      "('a', 'follow-btn follow-btn--twitter', None, 10, 37)": [
+        "green",
+        [
+          "div",
+          "frame-social-icons",
+          null
+        ]
+      ],
+      "('a', 'follow-btn follow-btn--instagram', None, 10, 38)": [
+        "green",
+        [
+          "div",
+          "frame-social-icons",
+          null
+        ]
+      ],
+      "('a', 'follow-btn follow-btn--email', None, 10, 39)": [
+        "green",
+        [
+          "div",
+          "frame-social-icons",
+          null
+        ]
+      ],
+      "('a', None, None, 10, 40)": [
+        "green",
+        [
+          "div",
+          "footer-sections-group",
+          null
+        ]
+      ],
+      "('li', None, None, 10, 63)": [
+        "green",
+        [
+          "ul",
+          "footer-legal-links-mobile",
+          null
+        ]
+      ],
+      "('a', None, None, 10, 71)": [
+        "green",
+        [
+          "div",
+          "footer-legal-links-col1",
+          null
+        ]
+      ],
+      "('a', 'ot-sdk-show-settings', None, 10, 72)": [
+        "green",
+        [
+          "div",
+          "footer-legal-links-col1",
+          null
+        ]
+      ],
+      "('a', None, None, 10, 75)": [
+        "green",
+        [
+          "div",
+          "footer-legal-links-col2",
+          null
+        ]
+      ]
+    },
+    "11": {
+      "('div', 'arrow', None, 11, 0)": [
+        "green",
+        [
+          "div",
+          "breaking-news-content",
+          null
+        ]
+      ],
+      "('div', 'breaking-news-callout', None, 11, 1)": [
+        "green",
+        [
+          "div",
+          "breaking-news-content",
+          null
+        ]
+      ],
+      "('a', 'AnchorLink button', None, 11, 2)": [
+        "green",
+        [
+          "div",
+          "breaking-news-button",
+          null
+        ]
+      ],
+      "('input', 'search-bar-input', None, 11, 9)": [
+        "green",
+        [
+          "form",
+          "form-search frame-search",
+          null
+        ]
+      ],
+      "('input', 'search-btn', None, 11, 10)": [
+        "green",
+        [
+          "form",
+          "form-search frame-search",
+          null
+        ]
+      ],
+      "('div', 'menu-icon menu-closed', None, 11, 11)": [
+        "green",
+        [
+          "span",
+          "feature-menu closed",
+          null
+        ]
+      ],
+      "('div', 'sml-logo', None, 11, 12)": [
+        "green",
+        [
+          "a",
+          "feature-logo",
+          null
+        ]
+      ],
+      "('div', 'lrg-logo', None, 11, 13)": [
+        "green",
+        [
+          "a",
+          "feature-logo",
+          null
+        ]
+      ],
+      "('div', 'local-links', None, 11, 14)": [
+        "green",
+        [
+          "div",
+          "feature-nav-local",
+          null
+        ]
+      ],
+      "('a', None, None, 11, 15)": [
+        "green",
+        [
+          "div",
+          "feature-weather-container weather-desktop",
+          null
+        ]
+      ],
+      "('div', 'weather-text-container', None, 11, 16)": [
+        "green",
+        [
+          "div",
+          "feature-weather-container weather-desktop",
+          null
+        ]
+      ],
+      "('a', 'feature-logged-out login register', None, 11, 17)": [
+        "green",
+        [
+          "div",
+          "feature-ux-container",
+          null
+        ]
+      ],
+      "('div', 'feature-search-container', None, 11, 18)": [
+        "green",
+        [
+          "div",
+          "feature-ux-container",
+          null
+        ]
+      ],
+      "('div', 'subnav-search-bar', None, 11, 19)": [
+        "green",
+        [
+          "div",
+          "nav-sections-links nav-sections-main",
+          null
+        ]
+      ],
+      "('a', 'subnav-main-btn', None, 11, 20)": [
+        "green",
+        [
+          "div",
+          "nav-sections-links nav-sections-main",
+          null
+        ]
+      ],
+      "('div', 'nav-sections-header', None, 11, 22)": [
+        "green",
+        [
+          "div",
+          "nav-sections-links nav-sections-local subnav-local",
+          null
+        ]
+      ],
+      "('a', 'nav-section-name', None, 11, 23)": [
+        "green",
+        [
+          "div",
+          "nav-sections-header",
+          null
+        ]
+      ],
+      "('div', 'nav-sections-categories-1', None, 11, 24)": [
+        "green",
+        [
+          "div",
+          "nav-sections-header",
+          null
+        ]
+      ],
+      "('div', 'nav-sections-categories-2', None, 11, 25)": [
+        "green",
+        [
+          "div",
+          "nav-sections-header",
+          null
+        ]
+      ],
+      "('div', 'nav-sections-header', None, 11, 26)": [
+        "green",
+        [
+          "div",
+          "nav-sections-links nav-sections-community subnav-community",
+          null
+        ]
+      ],
+      "('div', 'nav-sections-header', None, 11, 27)": [
+        "green",
+        [
+          "div",
+          "nav-sections-links nav-sections-shows subnav-shows",
+          null
+        ]
+      ],
+      "('div', 'frame-social-action', None, 11, 28)": [
+        "green",
+        [
+          "div",
+          "frame-social nav-social",
+          null
+        ]
+      ],
+      "('div', 'frame-social-icons', None, 11, 29)": [
+        "green",
+        [
+          "div",
+          "frame-social nav-social",
+          null
+        ]
+      ],
+      "('div', 'Ad fitt-article-top-banner ad-slot', None, 11, 30)": [
+        "green",
+        [
+          "div",
+          null,
+          null
+        ]
+      ],
+      "('div', 'dHdHP jLREf zXXje aGO eCClZ nTLv jLsYA gmuro TOSFd VmeZt sCkVm hkQai wGrlE MUuGM fciaN qQjt DhNVo Tgcqk IGLAf tWjkv', None, 11, 31)": [
+        "red",
+        [
+          "div",
+          "theme-e FITT_Article_main__body oBTii mrzah",
+          null
+        ]
+      ],
+      "('div', 'dHdHP jLREf zXXje aGO eCClZ nTLv jLsYA gmuro TOSFd VmeZt sCkVm hkQai wGrlE MUuGM fciaN qQjt DhNVo Tgcqk IGLAf tWjkv', None, 11, 32)": [
+        "green",
+        [
+          "div",
+          "theme-e FITT_Article_main__sidebar oBTii mrzah mZWbG RCVjw fjcc BFuEm",
+          null
+        ]
+      ],
+      "('img', None, None, 11, 33)": [
+        "green",
+        [
+          "a",
+          null,
+          null
+        ]
+      ],
+      "('a', None, None, 11, 34)": [
+        "green",
+        [
+          "li",
+          null,
+          null
+        ]
+      ],
+      "('a', 'footer-smallnav-header', None, 11, 37)": [
+        "green",
+        [
+          "li",
+          "",
+          null
+        ]
+      ],
+      "('ul', None, None, 11, 38)": [
+        "green",
+        [
+          "li",
+          "",
+          null
+        ]
+      ],
+      "('a', 'ot-sdk-show-settings', None, 11, 48)": [
+        "green",
+        [
+          "li",
+          null,
+          null
+        ]
+      ]
+    },
+    "12": {
+      "('span', 'breaking-news-label', None, 12, 0)": [
+        "green",
+        [
+          "div",
+          "breaking-news-callout",
+          null
+        ]
+      ],
+      "('span', None, None, 12, 1)": [
+        "green",
+        [
+          "div",
+          "breaking-news-callout",
+          null
+        ]
+      ],
+      "('span', None, None, 12, 6)": [
+        "green",
+        [
+          "div",
+          "local-links",
+          null
+        ]
+      ],
+      "('div', 'feature-weather icon-weather_', None, 12, 10)": [
+        "green",
+        [
+          "a",
+          null,
+          null
+        ]
+      ],
+      "('span', 'feature-degrees', None, 12, 11)": [
+        "green",
+        [
+          "a",
+          null,
+          null
+        ]
+      ],
+      "('a', 'feature-weather-location', None, 12, 12)": [
+        "green",
+        [
+          "div",
+          "weather-text-container",
+          null
+        ]
+      ],
+      "('a', 'feature-weather-edit', None, 12, 13)": [
+        "green",
+        [
+          "div",
+          "weather-text-container",
+          null
+        ]
+      ],
+      "('form', 'form-search frame-search', None, 12, 14)": [
+        "green",
+        [
+          "div",
+          "subnav-search-bar",
+          null
+        ]
+      ],
+      "('span', 'subnav-watch', None, 12, 15)": [
+        "green",
+        [
+          "a",
+          "subnav-main-btn",
+          null
+        ]
+      ],
+      "('span', 'subnav-apps', None, 12, 16)": [
+        "green",
+        [
+          "a",
+          "subnav-main-btn",
+          null
+        ]
+      ],
+      "('a', 'nav-section-name', None, 12, 17)": [
+        "green",
+        [
+          "div",
+          "nav-sections-header",
+          null
+        ]
+      ],
+      "('div', None, None, 12, 18)": [
+        "green",
+        [
+          "div",
+          "nav-sections-header",
+          null
+        ]
+      ],
+      "('div', 'expand-arrow-light', None, 12, 19)": [
+        "green",
+        [
+          "a",
+          "nav-section-name",
+          null
+        ]
+      ],
+      "('span', None, None, 12, 20)": [
+        "green",
+        [
+          "div",
+          "nav-sections-categories-1",
+          null
+        ]
+      ],
+      "('span', None, None, 12, 27)": [
+        "green",
+        [
+          "div",
+          "nav-sections-categories-2",
+          null
+        ]
+      ],
+      "('a', 'follow-btn follow-btn--facebook', None, 12, 39)": [
+        "green",
+        [
+          "div",
+          "frame-social-icons",
+          null
+        ]
+      ],
+      "('a', 'follow-btn follow-btn--twitter', None, 12, 40)": [
+        "green",
+        [
+          "div",
+          "frame-social-icons",
+          null
+        ]
+      ],
+      "('a', 'follow-btn follow-btn--instagram', None, 12, 41)": [
+        "green",
+        [
+          "div",
+          "frame-social-icons",
+          null
+        ]
+      ],
+      "('a', 'follow-btn follow-btn--email', None, 12, 42)": [
+        "green",
+        [
+          "div",
+          "frame-social-icons",
+          null
+        ]
+      ],
+      "('div', '', None, 12, 43)": [
+        "green",
+        [
+          "div",
+          "dHdHP jLREf zXXje aGO eCClZ nTLv jLsYA gmuro TOSFd VmeZt sCkVm hkQai wGrlE MUuGM fciaN qQjt DhNVo Tgcqk IGLAf tWjkv",
+          null
+        ]
+      ],
+      "('div', 'kCTVx qtHut lqtkC HkWF HfYhe kGyAC', None, 12, 44)": [
+        "red",
+        [
+          "div",
+          "dHdHP jLREf zXXje aGO eCClZ nTLv jLsYA gmuro TOSFd VmeZt sCkVm hkQai wGrlE MUuGM fciaN qQjt DhNVo Tgcqk IGLAf tWjkv",
+          null
+        ]
+      ],
+      "('div', 'QHblV nkdHX hTosT whbOj', None, 12, 45)": [
+        "green",
+        [
+          "div",
+          "dHdHP jLREf zXXje aGO eCClZ nTLv jLsYA gmuro TOSFd VmeZt sCkVm hkQai wGrlE MUuGM fciaN qQjt DhNVo Tgcqk IGLAf tWjkv",
+          null
+        ]
+      ],
+      "('div', 'XQpSH', None, 12, 46)": [
+        "green",
+        [
+          "div",
+          "dHdHP jLREf zXXje aGO eCClZ nTLv jLsYA gmuro TOSFd VmeZt sCkVm hkQai wGrlE MUuGM fciaN qQjt DhNVo Tgcqk IGLAf tWjkv",
+          null
+        ]
+      ],
+      "('div', 'xvlfx ZRifP TKoO eaKKC bOdfO', None, 12, 47)": [
+        "red",
+        [
+          "div",
+          "dHdHP jLREf zXXje aGO eCClZ nTLv jLsYA gmuro TOSFd VmeZt sCkVm hkQai wGrlE MUuGM fciaN qQjt DhNVo Tgcqk IGLAf tWjkv",
+          null
+        ]
+      ],
+      "('div', 'report-typo', None, 12, 48)": [
+        "green",
+        [
+          "div",
+          "dHdHP jLREf zXXje aGO eCClZ nTLv jLsYA gmuro TOSFd VmeZt sCkVm hkQai wGrlE MUuGM fciaN qQjt DhNVo Tgcqk IGLAf tWjkv",
+          null
+        ]
+      ],
+      "('div', 'copyright', None, 12, 49)": [
+        "green",
+        [
+          "div",
+          "dHdHP jLREf zXXje aGO eCClZ nTLv jLsYA gmuro TOSFd VmeZt sCkVm hkQai wGrlE MUuGM fciaN qQjt DhNVo Tgcqk IGLAf tWjkv",
+          null
+        ]
+      ],
+      "('div', None, None, 12, 50)": [
+        "green",
+        [
+          "div",
+          "dHdHP jLREf zXXje aGO eCClZ nTLv jLsYA gmuro TOSFd VmeZt sCkVm hkQai wGrlE MUuGM fciaN qQjt DhNVo Tgcqk IGLAf tWjkv",
+          null
+        ]
+      ],
+      "('div', 'taboola bmjsw lZur', None, 12, 51)": [
+        "green",
+        [
+          "div",
+          "dHdHP jLREf zXXje aGO eCClZ nTLv jLsYA gmuro TOSFd VmeZt sCkVm hkQai wGrlE MUuGM fciaN qQjt DhNVo Tgcqk IGLAf tWjkv",
+          null
+        ]
+      ],
+      "('section', 'watch inner watch__article-sidebar watch__article-sidebar--onlyfirstLive', None, 12, 52)": [
+        "green",
+        [
+          "div",
+          "dHdHP jLREf zXXje aGO eCClZ nTLv jLsYA gmuro TOSFd VmeZt sCkVm hkQai wGrlE MUuGM fciaN qQjt DhNVo Tgcqk IGLAf tWjkv",
+          null
+        ]
+      ],
+      "('div', 'expand-arrow-light', None, 12, 57)": [
+        "green",
+        [
+          "a",
+          "footer-smallnav-header",
+          null
+        ]
+      ],
+      "('a', None, None, 12, 58)": [
+        "green",
+        [
+          "ul",
+          null,
+          null
+        ]
+      ]
+    },
+    "13": {
+      "('a', 'AnchorLink', None, 13, 0)": [
+        "green",
+        [
+          "span",
+          null,
+          null
+        ]
+      ],
+      "('input', 'search-bar-input', None, 13, 4)": [
+        "green",
+        [
+          "form",
+          "form-search frame-search",
+          null
+        ]
+      ],
+      "('input', 'search-btn', None, 13, 5)": [
+        "green",
+        [
+          "form",
+          "form-search frame-search",
+          null
+        ]
+      ],
+      "('div', 'expand-arrow-light', None, 13, 6)": [
+        "green",
+        [
+          "a",
+          "nav-section-name",
+          null
+        ]
+      ],
+      "('span', None, None, 13, 7)": [
+        "green",
+        [
+          "div",
+          null,
+          null
+        ]
+      ],
+      "('div', 'IKUxI xFOBK YsVzB NuCDJ fMJDZ ZCNuU tZcZX JuzoE', None, 13, 41)": [
+        "green",
+        [
+          "div",
+          "",
+          null
+        ]
+      ],
+      "('h1', 'vMjAx eeTZd WaKtx eHrJ', None, 13, 42)": [
+        "red",
+        [
+          "div",
+          "kCTVx qtHut lqtkC HkWF HfYhe kGyAC",
+          null
+        ]
+      ],
+      "('div', 'VZTD mLASH OcxMG oJce', None, 13, 43)": [
+        "green",
+        [
+          "div",
+          "QHblV nkdHX hTosT whbOj",
+          null
+        ]
+      ],
+      "('div', 'RwkLV Wowzl FokqZ LhXlJ FjRYD toBqx', None, 13, 44)": [
+        "green",
+        [
+          "div",
+          "QHblV nkdHX hTosT whbOj",
+          null
+        ]
+      ],
+      "('p', 'EkqkG nlgHS yuUao MvWXB TjIXL aGjvy ebVHC', None, 13, 45)": [
+        "red",
+        [
+          "div",
+          "xvlfx ZRifP TKoO eaKKC bOdfO",
+          null
+        ]
+      ],
+      "('p', 'EkqkG nlgHS yuUao lqtkC TjIXL aGjvy', None, 13, 46)": [
+        "red",
+        [
+          "div",
+          "xvlfx ZRifP TKoO eaKKC bOdfO",
+          null
+        ]
+      ],
+      "('div', 'oLzSq QrHMO fnRUo pvsTF EhJPu vPlOC zNYgW OsTsW RMeqy daRVX ISNQ sKyCY eRftA acPPc MENS nFwaT MCnQE mEeeY SmBjI xegrY rPLsU iulOd NIuqO zzscu lzDCc aHUBM IEgzD OjMNy eQqcx SVqKB GQmdz jaoD VWDdR ONJdw vrZxD OnRTz gbbfF roDbV GPGwb oMlSS gfNzt oJhud eXZcf zhVlX', None, 13, 50)": [
+        "green",
+        [
+          "div",
+          "xvlfx ZRifP TKoO eaKKC bOdfO",
+          null
+        ]
+      ],
+      "('h2', 'RxNCg PvZ nIjPJ PMXYp LmsHF SfAHY mNgye lNbol LBPRq', None, 13, 53)": [
+        "red",
+        [
+          "div",
+          "xvlfx ZRifP TKoO eaKKC bOdfO",
+          null
+        ]
+      ],
+      "('div', 'oLzSq QrHMO GbsKS pvsTF EhJPu vPlOC zNYgW OsTsW AMhAA daRVX ISNQ sKyCY eRftA acPPc ebfE nFwaT MCnQE mEeeY SmBjI xegrY VvTxJ iulOd NIuqO zzscu lzDCc aHUBM hbvnu OjMNy eQqcx SVqKB GQmdz jaoD iShaE ONJdw vrZxD OnRTz gbbfF roDbV kRoBe oMlSS gfNzt oJhud eXZcf zhVlX', None, 13, 59)": [
+        "green",
+        [
+          "div",
+          "xvlfx ZRifP TKoO eaKKC bOdfO",
+          null
+        ]
+      ],
+      "('div', 'eTIW QrHMO fnRUo pvsTF EhJPu vPlOC zNYgW OsTsW RMeqy daRVX ISNQ sKyCY eRftA acPPc MENS nFwaT MCnQE mEeeY SmBjI xegrY rPLsU iulOd NIuqO zzscu lzDCc aHUBM IEgzD OjMNy eQqcx SVqKB GQmdz jaoD VWDdR ONJdw vrZxD OnRTz gbbfF roDbV GPGwb oMlSS gfNzt oJhud eXZcf zhVlX sUzSN', None, 13, 228)": [
+        "green",
+        [
+          "div",
+          "xvlfx ZRifP TKoO eaKKC bOdfO",
+          null
+        ]
+      ],
+      "('a', None, None, 13, 229)": [
+        "green",
+        [
+          "div",
+          "report-typo",
+          null
+        ]
+      ],
+      "('div', None, None, 13, 230)": [
+        "green",
+        [
+          "div",
+          null,
+          null
+        ]
+      ],
+      "('div', None, 'taboola-below-article-thumbnails', 13, 231)": [
+        "green",
+        [
+          "div",
+          "taboola bmjsw lZur",
+          null
+        ]
+      ],
+      "('div', 'watch-side1', None, 13, 232)": [
+        "green",
+        [
+          "section",
+          "watch inner watch__article-sidebar watch__article-sidebar--onlyfirstLive",
+          null
+        ]
+      ],
+      "('section', 'CHWlW ZgZTu FlDNH hQfuy feniZ wBpop uAyYK yJYJo OGgqj tQHio PCVZs Kiog iKqXF eeiyR', None, 13, 233)": [
+        "green",
+        [
+          "div",
+          null,
+          null
+        ]
+      ]
+    },
+    "14": {
+      "('a', 'AnchorLink', None, 14, 0)": [
+        "green",
+        [
+          "span",
+          null,
+          null
+        ]
+      ],
+      "('div', 'jVJih nAZp', None, 14, 17)": [
+        "green",
+        [
+          "div",
+          "IKUxI xFOBK YsVzB NuCDJ fMJDZ ZCNuU tZcZX JuzoE",
+          null
+        ]
+      ],
+      "('span', 'gtOSm FbbUW tUtYa vOCwz EQwFq yCufu eEak Qmvg nyTIa SRXVc vzLa jgBfc WXDas CiUCW kqbG zrdEG txGfn ygKVe BbezD UOtxr CVfpq xijV soGRS XgdC sEIlf daWqJ', None, 14, 18)": [
+        "green",
+        [
+          "h1",
+          "vMjAx eeTZd WaKtx eHrJ",
+          null
+        ]
+      ],
+      "('div', 'kKfXc VZTD rEPuv', None, 14, 19)": [
+        "green",
+        [
+          "div",
+          "VZTD mLASH OcxMG oJce",
+          null
+        ]
+      ],
+      "('div', 'JpUfa aYoBt', None, 14, 20)": [
+        "green",
+        [
+          "div",
+          "RwkLV Wowzl FokqZ LhXlJ FjRYD toBqx",
+          null
+        ]
+      ],
+      "('a', 'zZygg UbGlr iFzkS qdXbA WCDhQ DbOXS tqUtK GpWVU iJYzE', None, 14, 21)": [
+        "green",
+        [
+          "p",
+          "EkqkG nlgHS yuUao MvWXB TjIXL aGjvy ebVHC",
+          null
+        ]
+      ],
+      "('a', 'zZygg UbGlr iFzkS qdXbA WCDhQ DbOXS tqUtK GpWVU iJYzE', None, 14, 23)": [
+        "green",
+        [
+          "p",
+          "EkqkG nlgHS yuUao lqtkC TjIXL aGjvy",
+          null
+        ]
+      ],
+      "('b', 'cXscX', None, 14, 29)": [
+        "green",
+        [
+          "p",
+          "EkqkG nlgHS yuUao lqtkC TjIXL aGjvy",
+          null
+        ]
+      ],
+      "('div', None, None, 14, 31)": [
+        "green",
+        [
+          "div",
+          "oLzSq QrHMO fnRUo pvsTF EhJPu vPlOC zNYgW OsTsW RMeqy daRVX ISNQ sKyCY eRftA acPPc MENS nFwaT MCnQE mEeeY SmBjI xegrY rPLsU iulOd NIuqO zzscu lzDCc aHUBM IEgzD OjMNy eQqcx SVqKB GQmdz jaoD VWDdR ONJdw vrZxD OnRTz gbbfF roDbV GPGwb oMlSS gfNzt oJhud eXZcf zhVlX",
+          null
+        ]
+      ],
+      "('a', 'zZygg UbGlr iFzkS qdXbA WCDhQ DbOXS tqUtK GpWVU iJYzE', None, 14, 34)": [
+        "green",
+        [
+          "h2",
+          "RxNCg PvZ nIjPJ PMXYp LmsHF SfAHY mNgye lNbol LBPRq",
+          null
+        ]
+      ],
+      "('i', None, None, 14, 39)": [
+        "green",
+        [
+          "p",
+          "EkqkG nlgHS yuUao lqtkC TjIXL aGjvy",
+          null
+        ]
+      ],
+      "('div', None, None, 14, 49)": [
+        "green",
+        [
+          "div",
+          "oLzSq QrHMO GbsKS pvsTF EhJPu vPlOC zNYgW OsTsW AMhAA daRVX ISNQ sKyCY eRftA acPPc ebfE nFwaT MCnQE mEeeY SmBjI xegrY VvTxJ iulOd NIuqO zzscu lzDCc aHUBM hbvnu OjMNy eQqcx SVqKB GQmdz jaoD iShaE ONJdw vrZxD OnRTz gbbfF roDbV kRoBe oMlSS gfNzt oJhud eXZcf zhVlX",
+          null
+        ]
+      ],
+      "('b', 'cXscX', None, 14, 63)": [
+        "green",
+        [
+          "h2",
+          "RxNCg PvZ nIjPJ PMXYp LmsHF SfAHY mNgye lNbol LBPRq",
+          null
+        ]
+      ],
+      "('div', 'lqtkC glxIO HfYhe vUYNV', None, 14, 393)": [
+        "green",
+        [
+          "div",
+          "oLzSq QrHMO fnRUo pvsTF EhJPu vPlOC zNYgW OsTsW RMeqy daRVX ISNQ sKyCY eRftA acPPc MENS nFwaT MCnQE mEeeY SmBjI xegrY rPLsU iulOd NIuqO zzscu lzDCc aHUBM IEgzD OjMNy eQqcx SVqKB GQmdz jaoD VWDdR ONJdw vrZxD OnRTz gbbfF roDbV GPGwb oMlSS gfNzt oJhud eXZcf zhVlX",
+          null
+        ]
+      ],
+      "('div', 'lqtkC glxIO HfYhe vUYNV', None, 14, 396)": [
+        "green",
+        [
+          "div",
+          "eTIW QrHMO fnRUo pvsTF EhJPu vPlOC zNYgW OsTsW RMeqy daRVX ISNQ sKyCY eRftA acPPc MENS nFwaT MCnQE mEeeY SmBjI xegrY rPLsU iulOd NIuqO zzscu lzDCc aHUBM IEgzD OjMNy eQqcx SVqKB GQmdz jaoD VWDdR ONJdw vrZxD OnRTz gbbfF roDbV GPGwb oMlSS gfNzt oJhud eXZcf zhVlX sUzSN",
+          null
+        ]
+      ],
+      "('h2', 'QOIir pZjYK JKlkC RZhHM', None, 14, 397)": [
+        "green",
+        [
+          "div",
+          null,
+          null
+        ]
+      ],
+      "('ul', 'VZTD UeCOM dAmzA ltDkr qBPOY uoPjL', None, 14, 398)": [
+        "green",
+        [
+          "div",
+          null,
+          null
+        ]
+      ],
+      "('div', 'section-header', None, 14, 399)": [
+        "green",
+        [
+          "div",
+          "watch-side1",
+          null
+        ]
+      ],
+      "('div', 'watch-live-1', None, 14, 400)": [
+        "green",
+        [
+          "div",
+          "watch-side1",
+          null
+        ]
+      ],
+      "('header', 'mLASH VZTD bhaVx', None, 14, 401)": [
+        "green",
+        [
+          "section",
+          "CHWlW ZgZTu FlDNH hQfuy feniZ wBpop uAyYK yJYJo OGgqj tQHio PCVZs Kiog iKqXF eeiyR",
+          null
+        ]
+      ],
+      "('div', 'rRTs EwJTR UpiKB sKbok RsAxh msYPt zKjNI SXHxp OaElp KzevM LFuuA jLoop liAe uMOq zYIfP pYgZk Mxrkk VZTD lZur TPpRg NoUSU igcMP DtJWr QgBvn DFdlJ QGHKv HNQqj', None, 14, 402)": [
+        "green",
+        [
+          "section",
+          "CHWlW ZgZTu FlDNH hQfuy feniZ wBpop uAyYK yJYJo OGgqj tQHio PCVZs Kiog iKqXF eeiyR",
+          null
+        ]
+      ],
+      "('div', 'EwJTR UpiKB sKbok RsAxh msYPt zKjNI SXHxp OaElp KzevM LFuuA jLoop liAe uMOq zYIfP pYgZk Mxrkk VZTD lZur TPpRg NoUSU igcMP DtJWr QgBvn DFdlJ QGHKv HNQqj', None, 14, 406)": [
+        "green",
+        [
+          "section",
+          "CHWlW ZgZTu FlDNH hQfuy feniZ wBpop uAyYK yJYJo OGgqj tQHio PCVZs Kiog iKqXF eeiyR",
+          null
+        ]
+      ],
+      "('div', 'rRTs EwJTR UpiKB sKbok RsAxh msYPt zKjNI SXHxp OaElp KzevM LFuuA jLoop liAe uMOq zYIfP pYgZk Mxrkk hsDdd lZur TPpRg NoUSU igcMP DtJWr QgBvn DFdlJ', None, 14, 407)": [
+        "green",
+        [
+          "section",
+          "CHWlW ZgZTu FlDNH hQfuy feniZ wBpop uAyYK yJYJo OGgqj tQHio PCVZs Kiog iKqXF eeiyR",
+          null
+        ]
+      ],
+      "('div', 'EwJTR UpiKB sKbok RsAxh msYPt zKjNI SXHxp OaElp KzevM LFuuA jLoop liAe uMOq zYIfP pYgZk Mxrkk hsDdd lZur TPpRg NoUSU igcMP DtJWr QgBvn DFdlJ', None, 14, 409)": [
+        "green",
+        [
+          "section",
+          "CHWlW ZgZTu FlDNH hQfuy feniZ wBpop uAyYK yJYJo OGgqj tQHio PCVZs Kiog iKqXF eeiyR",
+          null
+        ]
+      ],
+      "('div', 'Ad fitt-article-right-rail ad-slot', None, 14, 410)": [
+        "green",
+        [
+          "div",
+          null,
+          null
+        ]
+      ]
+    },
+    "15": {
+      "('ul', 'VZTD UeCOM dAmzA ltDkr qBPOY uoPjL', None, 15, 0)": [
+        "green",
+        [
+          "div",
+          "jVJih nAZp",
+          null
+        ]
+      ],
+      "('div', 'TQPvQ fVlAg HUcap kxY REjk UamUc WxHIR HhZOB yaUf VOJBn KMpjV XSbaH Umfib ukdDD', None, 15, 1)": [
+        "green",
+        [
+          "div",
+          "kKfXc VZTD rEPuv",
+          null
+        ]
+      ],
+      "('div', 'VZTD mLASH gpiba', None, 15, 2)": [
+        "green",
+        [
+          "div",
+          "kKfXc VZTD rEPuv",
+          null
+        ]
+      ],
+      "('ul', 'MZaCt dUXCH nyWZo RnMws Hdwln WBHfo tAchw UDeQM XMkl NUfbq kqfZ', None, 15, 3)": [
+        "green",
+        [
+          "div",
+          "JpUfa aYoBt",
+          null
+        ]
+      ],
+      "('br', None, None, 15, 4)": [
+        "green",
+        [
+          "b",
+          "cXscX",
+          null
+        ]
+      ],
+      "('a', 'zZygg UbGlr iFzkS qdXbA WCDhQ DbOXS tqUtK GpWVU iJYzE', None, 15, 6)": [
+        "green",
+        [
+          "b",
+          "cXscX",
+          null
+        ]
+      ],
+      "('div', 'InlineImage GpQCA lZur asrEW', None, 15, 33)": [
+        "green",
+        [
+          "div",
+          null,
+          null
+        ]
+      ],
+      "('div', None, None, 15, 37)": [
+        "green",
+        [
+          "div",
+          null,
+          null
+        ]
+      ],
+      "('a', 'zZygg UbGlr iFzkS qdXbA WCDhQ DbOXS tqUtK GpWVU iJYzE', None, 15, 38)": [
+        "green",
+        [
+          "i",
+          null,
+          null
+        ]
+      ],
+      "('h2', 'section-header', None, 15, 95)": [
+        "green",
+        [
+          "div",
+          null,
+          null
+        ]
+      ],
+      "('div', None, None, 15, 96)": [
+        "green",
+        [
+          "div",
+          "lqtkC glxIO HfYhe vUYNV",
+          null
+        ]
+      ],
+      "('li', '', None, 15, 100)": [
+        "green",
+        [
+          "ul",
+          "VZTD UeCOM dAmzA ltDkr qBPOY uoPjL",
+          null
+        ]
+      ],
+      "('a', 'AnchorLink', None, 15, 129)": [
+        "green",
+        [
+          "div",
+          "watch-live-1",
+          null
+        ]
+      ],
+      "('div', None, None, 15, 130)": [
+        "green",
+        [
+          "header",
+          "mLASH VZTD bhaVx",
+          null
+        ]
+      ],
+      "('a', 'iVcn UbGlr ibBnq qdXbA VZTD DbOXS tqUtK GpWVU iJYzE QGHKv HNQqj ICwhc xuArw ZLXw kSqqG', None, 15, 131)": [
+        "green",
+        [
+          "div",
+          "rRTs EwJTR UpiKB sKbok RsAxh msYPt zKjNI SXHxp OaElp KzevM LFuuA jLoop liAe uMOq zYIfP pYgZk Mxrkk VZTD lZur TPpRg NoUSU igcMP DtJWr QgBvn DFdlJ QGHKv HNQqj",
+          null
+        ]
+      ],
+      "('a', 'iVcn UbGlr ibBnq qdXbA VZTD DbOXS tqUtK GpWVU iJYzE QGHKv HNQqj ICwhc xuArw ZLXw kSqqG', None, 15, 135)": [
+        "green",
+        [
+          "div",
+          "EwJTR UpiKB sKbok RsAxh msYPt zKjNI SXHxp OaElp KzevM LFuuA jLoop liAe uMOq zYIfP pYgZk Mxrkk VZTD lZur TPpRg NoUSU igcMP DtJWr QgBvn DFdlJ QGHKv HNQqj",
+          null
+        ]
+      ],
+      "('a', 'iVcn UbGlr ibBnq qdXbA VZTD DbOXS tqUtK GpWVU iJYzE QGHKv HNQqj ICwhc dVINO', None, 15, 136)": [
+        "green",
+        [
+          "div",
+          "rRTs EwJTR UpiKB sKbok RsAxh msYPt zKjNI SXHxp OaElp KzevM LFuuA jLoop liAe uMOq zYIfP pYgZk Mxrkk hsDdd lZur TPpRg NoUSU igcMP DtJWr QgBvn DFdlJ",
+          null
+        ]
+      ],
+      "('a', 'iVcn UbGlr ibBnq qdXbA VZTD DbOXS tqUtK GpWVU iJYzE QGHKv HNQqj ICwhc dVINO', None, 15, 138)": [
+        "green",
+        [
+          "div",
+          "EwJTR UpiKB sKbok RsAxh msYPt zKjNI SXHxp OaElp KzevM LFuuA jLoop liAe uMOq zYIfP pYgZk Mxrkk hsDdd lZur TPpRg NoUSU igcMP DtJWr QgBvn DFdlJ",
+          null
+        ]
+      ]
+    },
+    "16": {
+      "('li', '', None, 16, 0)": [
+        "green",
+        [
+          "ul",
+          "VZTD UeCOM dAmzA ltDkr qBPOY uoPjL",
+          null
+        ]
+      ],
+      "('span', 'tChGB zbFav', None, 16, 1)": [
+        "green",
+        [
+          "div",
+          "TQPvQ fVlAg HUcap kxY REjk UamUc WxHIR HhZOB yaUf VOJBn KMpjV XSbaH Umfib ukdDD",
+          null
+        ]
+      ],
+      "('span', None, None, 16, 2)": [
+        "green",
+        [
+          "div",
+          "TQPvQ fVlAg HUcap kxY REjk UamUc WxHIR HhZOB yaUf VOJBn KMpjV XSbaH Umfib ukdDD",
+          null
+        ]
+      ],
+      "('div', 'xAPpq JQYD ZdbeE jTKbV pCRh', None, 16, 4)": [
+        "green",
+        [
+          "div",
+          "VZTD mLASH gpiba",
+          null
+        ]
+      ],
+      "('li', 'WEJto', None, 16, 5)": [
+        "green",
+        [
+          "ul",
+          "MZaCt dUXCH nyWZo RnMws Hdwln WBHfo tAchw UDeQM XMkl NUfbq kqfZ",
+          null
+        ]
+      ],
+      "('figure', 'kzIjN GNmeK pYrtp dSqFO', None, 16, 11)": [
+        "green",
+        [
+          "div",
+          "InlineImage GpQCA lZur asrEW",
+          null
+        ]
+      ],
+      "('div', 'Ad fitt-article-inline-box ad-slot', None, 16, 14)": [
+        "green",
+        [
+          "div",
+          null,
+          null
+        ]
+      ],
+      "('div', 'Ad fitt-article-inline-outstream ad-slot', None, 16, 15)": [
+        "green",
+        [
+          "div",
+          null,
+          null
+        ]
+      ],
+      "('b', 'cXscX', None, 16, 17)": [
+        "green",
+        [
+          "a",
+          "zZygg UbGlr iFzkS qdXbA WCDhQ DbOXS tqUtK GpWVU iJYzE",
+          null
+        ]
+      ],
+      "('div', 'VZTD mLASH rEPuv kUPWF evNvN', None, 16, 23)": [
+        "green",
+        [
+          "div",
+          null,
+          null
+        ]
+      ],
+      "('a', 'theme-HLysv theme-HReFq mLASH egFzk qXWHA ScoIf zYXIH jIRH wNxoc OJpwZ eqFg wSPfd ofvJb bMrzT LaUnX EgONj ibBnq kyjTO lvyBv aANqO aNnIu GDslh LjPJo RpDvg YYtC rTpcz EDgo SIwmX oIWqB mzm sXtkB yayQB vXSTR ENhiS dQa-Du SVBll bpBbX GpQCA tuAKv xTell wdAqb ZqGqs LVAIE TnrRA uECag DcwSV XnBOJ cELRj SUAFz XzYk zkmjG aSyef pFen hoNVj TQOOL Haltu NafGB KpEhF jyjDy kZHqU FZKIw QddLR SKDYB UmcQM giepU cTjQC aRMla MMxXy fFMcX PbMFf hJRbU MRTyf iFJTR koyYF TkdYt DZNRX MALjb VUFMN', None, 16, 27)": [
+        "green",
+        [
+          "li",
+          "",
+          null
+        ]
+      ],
+      "('div', 'AmbientVideoWrapper', None, 16, 56)": [
+        "green",
+        [
+          "a",
+          "AnchorLink",
+          null
+        ]
+      ],
+      "('span', 'LiveCircle OnNow', None, 16, 57)": [
+        "green",
+        [
+          "a",
+          "AnchorLink",
+          null
+        ]
+      ],
+      "('h2', 'KuBvM lFzlq GbVC HkWF exKgG kGyAC SwCrv RTkZF', None, 16, 58)": [
+        "green",
+        [
+          "div",
+          null,
+          null
+        ]
+      ],
+      "('div', 'hsDdd GpQCA lZur BOsoU YMZw dihEb srtah LmIPo JzlZQ bpoDG kOMGa qLeeo jCA-DP cjmDv OWLMy VbrfA zZsl kjmkg OwbFk QuuaM', None, 16, 59)": [
+        "green",
+        [
+          "a",
+          "iVcn UbGlr ibBnq qdXbA VZTD DbOXS tqUtK GpWVU iJYzE QGHKv HNQqj ICwhc xuArw ZLXw kSqqG",
+          null
+        ]
+      ],
+      "('div', 'QGHKv iVcn VZTD rEPuv ICwhc ibBnq xuArw ZLXw kSqqG', None, 16, 60)": [
+        "green",
+        [
+          "a",
+          "iVcn UbGlr ibBnq qdXbA VZTD DbOXS tqUtK GpWVU iJYzE QGHKv HNQqj ICwhc xuArw ZLXw kSqqG",
+          null
+        ]
+      ],
+      "('div', 'QGHKv iVcn VZTD rEPuv ICwhc ibBnq', None, 16, 69)": [
+        "green",
+        [
+          "a",
+          "iVcn UbGlr ibBnq qdXbA VZTD DbOXS tqUtK GpWVU iJYzE QGHKv HNQqj ICwhc dVINO",
+          null
+        ]
+      ]
+    },
+    "17": {
+      "('a', 'theme-HLysv theme-HReFq mLASH egFzk qXWHA ScoIf zYXIH jIRH wNxoc OJpwZ eqFg wSPfd ofvJb bMrzT LaUnX EgONj ibBnq kyjTO lvyBv aANqO aNnIu GDslh LjPJo RpDvg YYtC rTpcz EDgo SIwmX oIWqB mzm sXtkB yayQB vXSTR ENhiS dQa-Du SVBll bpBbX GpQCA tuAKv xTell wdAqb ZqGqs LVAIE TnrRA uECag DcwSV XnBOJ cELRj SUAFz XzYk zkmjG aSyef pFen hoNVj TQOOL Haltu NafGB KpEhF jyjDy kZHqU FZKIw QddLR SKDYB UmcQM giepU cTjQC aRMla MMxXy fFMcX PbMFf hJRbU MRTyf iFJTR koyYF TkdYt DZNRX MALjb VUFMN', None, 17, 0)": [
+        "green",
+        [
+          "li",
+          "",
+          null
+        ]
+      ],
+      "('span', 'EpNlu', None, 17, 1)": [
+        "green",
+        [
+          "span",
+          null,
+          null
+        ]
+      ],
+      "('span', 'YKjhS', None, 17, 2)": [
+        "green",
+        [
+          "span",
+          null,
+          null
+        ]
+      ],
+      "('button', 'theme-EWITS mLASH egFzk qXWHA ScoIf ZXRVe jIRH NoTgg OJpwZ uklrk wSPfd ofvJb nMRSd YIauu gGlNh ARCOA kyjTO xqlN aANqO aNnIu GDslh LjPJo RpDvg YYtC rTpcz EDgo UVTAB ihLsD niWVk yayQB vXSTR ENhiS dQa-Du kOEGk WMbJE eVJEc TElCQ ZAqMY enocc pJSQ pvoyF aaksc OKklU ATKRo RfOGv neOGk fuOso DwqSE fnpin ArvQf dUniT Mzjkf Niff NKnwO ijAAn dEuPM vwJ JmUFf sgyq cRbVn sBVbK fCfdG oMkBz aOwuK XsORH EgRXa hMVHb LTwlP jJbTO CnYjj TiUFI qeCAC xqvdn JaQpT dAfv PNgfG fIWCu NewES UJNbG EgBCK UvFHa lCCRi XDQHW spAMS TPSuu sbdDW askuE VsLUC YHsrW pYmVc eHvZI qRTXS odcNV NzKLB DbNtg nKDCU gTRVo iCOvJ znFR hjDDH JboFf OBVry', None, 17, 3)": [
+        "green",
+        [
+          "li",
+          "WEJto",
+          null
+        ]
+      ],
+      "('div', None, None, 17, 8)": [
+        "green",
+        [
+          "li",
+          "WEJto",
+          null
+        ]
+      ],
+      "('cc-alg-uc-tex', None, None, 17, 9)": [
+        "green",
+        [
+          "figure",
+          "kzIjN GNmeK pYrtp dSqFO",
+          null
+        ]
+      ],
+      "('figcaption', None, None, 17, 10)": [
+        "green",
+        [
+          "figure",
+          "kzIjN GNmeK pYrtp dSqFO",
+          null
+        ]
+      ],
+      "('span', 'QXDKT rGjeC tuAKv iMbiE', None, 17, 15)": [
+        "green",
+        [
+          "a",
+          "theme-HLysv theme-HReFq mLASH egFzk qXWHA ScoIf zYXIH jIRH wNxoc OJpwZ eqFg wSPfd ofvJb bMrzT LaUnX EgONj ibBnq kyjTO lvyBv aANqO aNnIu GDslh LjPJo RpDvg YYtC rTpcz EDgo SIwmX oIWqB mzm sXtkB yayQB vXSTR ENhiS dQa-Du SVBll bpBbX GpQCA tuAKv xTell wdAqb ZqGqs LVAIE TnrRA uECag DcwSV XnBOJ cELRj SUAFz XzYk zkmjG aSyef pFen hoNVj TQOOL Haltu NafGB KpEhF jyjDy kZHqU FZKIw QddLR SKDYB UmcQM giepU cTjQC aRMla MMxXy fFMcX PbMFf hJRbU MRTyf iFJTR koyYF TkdYt DZNRX MALjb VUFMN",
+          null
+        ]
+      ],
+      "('div', 'VideoPlayer', None, 17, 44)": [
+        "green",
+        [
+          "div",
+          "AmbientVideoWrapper",
+          null
+        ]
+      ],
+      "('button', 'Button Button--sm Button--icon-noLabel AmbientVideoWrapper__Toggle AmbientVideoWrapper__Toggle--bottom_left', None, 17, 45)": [
+        "green",
+        [
+          "div",
+          "AmbientVideoWrapper",
+          null
+        ]
+      ],
+      "('span', 'LiveCircle-circle', None, 17, 46)": [
+        "green",
+        [
+          "span",
+          "LiveCircle OnNow",
+          null
+        ]
+      ],
+      "('span', 'LiveCircle-title-red', None, 17, 47)": [
+        "green",
+        [
+          "span",
+          "LiveCircle OnNow",
+          null
+        ]
+      ],
+      "('div', 'GpQCA lZur Rnci uMOq', None, 17, 48)": [
+        "green",
+        [
+          "div",
+          "hsDdd GpQCA lZur BOsoU YMZw dihEb srtah LmIPo JzlZQ bpoDG kOMGa qLeeo jCA-DP cjmDv OWLMy VbrfA zZsl kjmkg OwbFk QuuaM",
+          null
+        ]
+      ],
+      "('div', 'VZTD rEPuv QXDKT aimoN', None, 17, 49)": [
+        "green",
+        [
+          "div",
+          "QGHKv iVcn VZTD rEPuv ICwhc ibBnq xuArw ZLXw kSqqG",
+          null
+        ]
+      ],
+      "('div', 'RVPG cTzRP UzlIl VXIwh hCp lZur YOODG aimoN', None, 17, 50)": [
+        "green",
+        [
+          "div",
+          "QGHKv iVcn VZTD rEPuv ICwhc ibBnq xuArw ZLXw kSqqG",
+          null
+        ]
+      ],
+      "('div', 'VZTD HNQqj QXDKT QBuju SHKi nCIGi NxHUa sJErG nJjCu dlVQH', None, 17, 63)": [
+        "green",
+        [
+          "div",
+          "QGHKv iVcn VZTD rEPuv ICwhc ibBnq",
+          null
+        ]
+      ],
+      "('div', 'RVPG cTzRP UzlIl VXIwh hCp lZur YOODG', None, 17, 64)": [
+        "green",
+        [
+          "div",
+          "QGHKv iVcn VZTD rEPuv ICwhc ibBnq",
+          null
+        ]
+      ]
+    },
+    "18": {
+      "('span', 'QXDKT rGjeC tuAKv iMbiE', None, 18, 0)": [
+        "green",
+        [
+          "a",
+          "theme-HLysv theme-HReFq mLASH egFzk qXWHA ScoIf zYXIH jIRH wNxoc OJpwZ eqFg wSPfd ofvJb bMrzT LaUnX EgONj ibBnq kyjTO lvyBv aANqO aNnIu GDslh LjPJo RpDvg YYtC rTpcz EDgo SIwmX oIWqB mzm sXtkB yayQB vXSTR ENhiS dQa-Du SVBll bpBbX GpQCA tuAKv xTell wdAqb ZqGqs LVAIE TnrRA uECag DcwSV XnBOJ cELRj SUAFz XzYk zkmjG aSyef pFen hoNVj TQOOL Haltu NafGB KpEhF jyjDy kZHqU FZKIw QddLR SKDYB UmcQM giepU cTjQC aRMla MMxXy fFMcX PbMFf hJRbU MRTyf iFJTR koyYF TkdYt DZNRX MALjb VUFMN",
+          null
+        ]
+      ],
+      "('img', 'awXxV CfkUa EknAv NwgWd', None, 18, 1)": [
+        "green",
+        [
+          "span",
+          "YKjhS",
+          null
+        ]
+      ],
+      "('span', 'CSJky pdAzW JSFPu', None, 18, 2)": [
+        "green",
+        [
+          "button",
+          "theme-EWITS mLASH egFzk qXWHA ScoIf ZXRVe jIRH NoTgg OJpwZ uklrk wSPfd ofvJb nMRSd YIauu gGlNh ARCOA kyjTO xqlN aANqO aNnIu GDslh LjPJo RpDvg YYtC rTpcz EDgo UVTAB ihLsD niWVk yayQB vXSTR ENhiS dQa-Du kOEGk WMbJE eVJEc TElCQ ZAqMY enocc pJSQ pvoyF aaksc OKklU ATKRo RfOGv neOGk fuOso DwqSE fnpin ArvQf dUniT Mzjkf Niff NKnwO ijAAn dEuPM vwJ JmUFf sgyq cRbVn sBVbK fCfdG oMkBz aOwuK XsORH EgRXa hMVHb LTwlP jJbTO CnYjj TiUFI qeCAC xqvdn JaQpT dAfv PNgfG fIWCu NewES UJNbG EgBCK UvFHa lCCRi XDQHW spAMS TPSuu sbdDW askuE VsLUC YHsrW pYmVc eHvZI qRTXS odcNV NzKLB DbNtg nKDCU gTRVo iCOvJ znFR hjDDH JboFf OBVry",
+          null
+        ]
+      ],
+      "('button', 'theme-EWITS mLASH egFzk qXWHA ScoIf ZXRVe jIRH NoTgg OJpwZ uklrk wSPfd ofvJb nMRSd YIauu gGlNh ARCOA kyjTO xqlN aANqO aNnIu GDslh LjPJo RpDvg YYtC rTpcz EDgo UVTAB ihLsD niWVk yayQB vXSTR ENhiS dQa-Du kOEGk WMbJE eVJEc TElCQ ZAqMY enocc pJSQ pvoyF aaksc OKklU ATKRo RfOGv neOGk fuOso DwqSE fnpin ArvQf dUniT Mzjkf Niff NKnwO ijAAn dEuPM vwJ JmUFf sgyq cRbVn sBVbK fCfdG oMkBz aOwuK XsORH EgRXa hMVHb LTwlP jJbTO CnYjj TiUFI qeCAC xqvdn JaQpT dAfv PNgfG fIWCu NewES UJNbG EgBCK UvFHa lCCRi XDQHW spAMS TPSuu sbdDW askuE VsLUC YHsrW pYmVc eHvZI qRTXS odcNV NzKLB DbNtg nKDCU gTRVo iCOvJ znFR hjDDH JboFf OBVry', None, 18, 7)": [
+        "green",
+        [
+          "div",
+          null,
+          null
+        ]
+      ],
+      "('div', 'xdNAs rMQsN cELo NoeP BtinW YHmbu hWtE', None, 18, 8)": [
+        "green",
+        [
+          "div",
+          null,
+          null
+        ]
+      ],
+      "('a', 'zZygg UbGlr iFzkS qdXbA hsDdd DbOXS oklLN GpWVU iJYzE', None, 18, 9)": [
+        "green",
+        [
+          "cc-alg-uc-tex",
+          null,
+          null
+        ]
+      ],
+      "('iframe', 'absolute-fill', None, 18, 12)": [
+        "green",
+        [
+          "div",
+          "VideoPlayer",
+          null
+        ]
+      ],
+      "('svg', 'icon__svg', None, 18, 13)": [
+        "green",
+        [
+          "button",
+          "Button Button--sm Button--icon-noLabel AmbientVideoWrapper__Toggle AmbientVideoWrapper__Toggle--bottom_left",
+          null
+        ]
+      ],
+      "('div', 'FvQLF iLTd NqeUA UzzHi iWsMV', None, 18, 14)": [
+        "green",
+        [
+          "div",
+          "GpQCA lZur Rnci uMOq",
+          null
+        ]
+      ],
+      "('div', 'CJAFL gDeX', None, 18, 15)": [
+        "green",
+        [
+          "div",
+          "VZTD rEPuv QXDKT aimoN",
+          null
+        ]
+      ],
+      "('div', 'VZTD rEPuv ltDkr QXDKT', None, 18, 16)": [
+        "green",
+        [
+          "div",
+          "RVPG cTzRP UzlIl VXIwh hCp lZur YOODG aimoN",
+          null
+        ]
+      ],
+      "('div', 'CJAFL gDeX', None, 18, 29)": [
+        "green",
+        [
+          "div",
+          "VZTD HNQqj QXDKT QBuju SHKi nCIGi NxHUa sJErG nJjCu dlVQH",
+          null
+        ]
+      ],
+      "('div', 'VZTD rEPuv ltDkr QXDKT', None, 18, 30)": [
+        "green",
+        [
+          "div",
+          "RVPG cTzRP UzlIl VXIwh hCp lZur YOODG",
+          null
+        ]
+      ]
+    },
+    "19": {
+      "('svg', '', None, 19, 0)": [
+        "green",
+        [
+          "span",
+          "CSJky pdAzW JSFPu",
+          null
+        ]
+      ],
+      "('span', 'CSJky pdAzW JSFPu', None, 19, 5)": [
+        "green",
+        [
+          "button",
+          "theme-EWITS mLASH egFzk qXWHA ScoIf ZXRVe jIRH NoTgg OJpwZ uklrk wSPfd ofvJb nMRSd YIauu gGlNh ARCOA kyjTO xqlN aANqO aNnIu GDslh LjPJo RpDvg YYtC rTpcz EDgo UVTAB ihLsD niWVk yayQB vXSTR ENhiS dQa-Du kOEGk WMbJE eVJEc TElCQ ZAqMY enocc pJSQ pvoyF aaksc OKklU ATKRo RfOGv neOGk fuOso DwqSE fnpin ArvQf dUniT Mzjkf Niff NKnwO ijAAn dEuPM vwJ JmUFf sgyq cRbVn sBVbK fCfdG oMkBz aOwuK XsORH EgRXa hMVHb LTwlP jJbTO CnYjj TiUFI qeCAC xqvdn JaQpT dAfv PNgfG fIWCu NewES UJNbG EgBCK UvFHa lCCRi XDQHW spAMS TPSuu sbdDW askuE VsLUC YHsrW pYmVc eHvZI qRTXS odcNV NzKLB DbNtg nKDCU gTRVo iCOvJ znFR hjDDH JboFf OBVry",
+          null
+        ]
+      ],
+      "('img', 'hsDdd vBqtr KrDt WAUrb hakZw HlUVI', None, 19, 6)": [
+        "green",
+        [
+          "a",
+          "zZygg UbGlr iFzkS qdXbA hsDdd DbOXS oklLN GpWVU iJYzE",
+          null
+        ]
+      ],
+      "('use', None, None, 19, 9)": [
+        "green",
+        [
+          "svg",
+          "icon__svg",
+          null
+        ]
+      ],
+      "('img', 'hsDdd', None, 19, 10)": [
+        "green",
+        [
+          "div",
+          "FvQLF iLTd NqeUA UzzHi iWsMV",
+          null
+        ]
+      ],
+      "('h3', 'PFoxV eBpQD rcQBv bQtjQ lQUdN GpQCA mAkiF FvMyr WvoqU dMSoH tuAKv', 'Delcofirechiefresignheadline', 19, 11)": [
+        "green",
+        [
+          "div",
+          "CJAFL gDeX",
+          null
+        ]
+      ],
+      "('ul', 'tfFRZ zOGtW VZTD UeCOM RzKoN JEct YaqUo BedyR UoVV WtEci dSKvB seFhp', None, 19, 12)": [
+        "green",
+        [
+          "div",
+          "VZTD rEPuv ltDkr QXDKT",
+          null
+        ]
+      ],
+      "('h3', 'PFoxV eBpQD rcQBv bQtjQ lQUdN GpQCA mAkiF FvMyr WvoqU dMSoH tuAKv', 'Suspectpurchased50roheadline', 19, 14)": [
+        "green",
+        [
+          "div",
+          "CJAFL gDeX",
+          null
+        ]
+      ],
+      "('h3', 'PFoxV eBpQD rcQBv bQtjQ lQUdN GpQCA mAkiF FvMyr WvoqU dMSoH tuAKv', 'Wheresthebeef400caseheadline', 19, 17)": [
+        "green",
+        [
+          "div",
+          "CJAFL gDeX",
+          null
+        ]
+      ],
+      "('h3', 'PFoxV eBpQD rcQBv bQtjQ lQUdN GpQCA mAkiF FvMyr WvoqU dMSoH tuAKv', 'AccuWeatherPeakoftheheadline', 19, 20)": [
+        "green",
+        [
+          "div",
+          "CJAFL gDeX",
+          null
+        ]
+      ],
+      "('h3', 'PFoxV eBpQD rcQBv bQtjQ lQUdN GpQCA mAkiF FvMyr WvoqU dMSoH tuAKv', 'PhilliesAlecBohmputsheadline', 19, 23)": [
+        "green",
+        [
+          "div",
+          "CJAFL gDeX",
+          null
+        ]
+      ],
+      "('p', 'PFoxV eBpQD KMxLo GpQCA tuAKv zuqUq WTxSK HxnoC JmHQS KlMT BEWVm', 'HoustonsHurricaneBerbody', 19, 25)": [
+        "green",
+        [
+          "div",
+          "CJAFL gDeX",
+          null
+        ]
+      ],
+      "('p', 'PFoxV eBpQD KMxLo GpQCA tuAKv zuqUq WTxSK HxnoC JmHQS KlMT BEWVm', 'MansweptbytideinNYCrbody', 19, 27)": [
+        "green",
+        [
+          "div",
+          "CJAFL gDeX",
+          null
+        ]
+      ],
+      "('p', 'PFoxV eBpQD KMxLo GpQCA tuAKv zuqUq WTxSK HxnoC JmHQS KlMT BEWVm', 'Montcomanaccusedofkibody', 19, 29)": [
+        "green",
+        [
+          "div",
+          "CJAFL gDeX",
+          null
+        ]
+      ]
+    },
+    "20": {
+      "('path', None, None, 20, 0)": [
+        "green",
+        [
+          "svg",
+          "",
+          null
+        ]
+      ],
+      "('svg', '', None, 20, 6)": [
+        "green",
+        [
+          "span",
+          "CSJky pdAzW JSFPu",
+          null
+        ]
+      ],
+      "('li', 'tuAKv fzeHv eSWW VUFMN SdBAb AQSxL xBxr', 'DelcofirechiefresignpubDate', 20, 7)": [
+        "green",
+        [
+          "ul",
+          "tfFRZ zOGtW VZTD UeCOM RzKoN JEct YaqUo BedyR UoVV WtEci dSKvB seFhp",
+          null
+        ]
+      ],
+      "('li', 'tuAKv fzeHv eSWW VUFMN SdBAb AQSxL xBxr', 'Suspectpurchased50ropubDate', 20, 8)": [
+        "green",
+        [
+          "ul",
+          "tfFRZ zOGtW VZTD UeCOM RzKoN JEct YaqUo BedyR UoVV WtEci dSKvB seFhp",
+          null
+        ]
+      ],
+      "('li', 'tuAKv fzeHv eSWW VUFMN SdBAb AQSxL xBxr', 'Wheresthebeef400casepubDate', 20, 9)": [
+        "green",
+        [
+          "ul",
+          "tfFRZ zOGtW VZTD UeCOM RzKoN JEct YaqUo BedyR UoVV WtEci dSKvB seFhp",
+          null
+        ]
+      ],
+      "('li', 'tuAKv fzeHv eSWW VUFMN SdBAb AQSxL xBxr', 'AccuWeatherPeakofthepubDate', 20, 10)": [
+        "green",
+        [
+          "ul",
+          "tfFRZ zOGtW VZTD UeCOM RzKoN JEct YaqUo BedyR UoVV WtEci dSKvB seFhp",
+          null
+        ]
+      ],
+      "('li', 'tuAKv fzeHv eSWW VUFMN SdBAb AQSxL xBxr', 'HoustonsHurricaneBerpubDate', 20, 11)": [
+        "green",
+        [
+          "ul",
+          "tfFRZ zOGtW VZTD UeCOM RzKoN JEct YaqUo BedyR UoVV WtEci dSKvB seFhp",
+          null
+        ]
+      ],
+      "('li', 'tuAKv fzeHv eSWW VUFMN SdBAb AQSxL xBxr', 'MontcomanaccusedofkipubDate', 20, 12)": [
+        "green",
+        [
+          "ul",
+          "tfFRZ zOGtW VZTD UeCOM RzKoN JEct YaqUo BedyR UoVV WtEci dSKvB seFhp",
+          null
+        ]
+      ]
+    },
+    "21": {
+      "('path', None, None, 21, 0)": [
+        "green",
+        [
+          "svg",
+          "",
+          null
+        ]
+      ],
+      "('div', 'theme-eGZms theme-aMvDO mLASH egFzk qXWHA ScoIf zRKnP jIRH wNxoc OJpwZ BOFPn wSPfd ofvJb bMrzT RGoaN gGlNh ARCOA kyjTO lvyBv aANqO aNnIu GDslh LjPJo RpDvg YYtC rTpcz EDgo SIwmX sWWJW mzm bVept SEPRz LRqoM kzZQf xGdAb hBvCD fQMZM yHyni pzxXD AbcH zUtsb', None, 21, 1)": [
+        "green",
+        [
+          "li",
+          "tuAKv fzeHv eSWW VUFMN SdBAb AQSxL xBxr",
+          "DelcofirechiefresignpubDate"
+        ]
+      ],
+      "('div', 'theme-eGZms theme-aMvDO mLASH egFzk qXWHA ScoIf zRKnP jIRH wNxoc OJpwZ BOFPn wSPfd ofvJb bMrzT RGoaN gGlNh ARCOA kyjTO lvyBv aANqO aNnIu GDslh LjPJo RpDvg YYtC rTpcz EDgo SIwmX sWWJW mzm bVept SEPRz LRqoM kzZQf xGdAb hBvCD fQMZM yHyni pzxXD AbcH zUtsb', None, 21, 2)": [
+        "green",
+        [
+          "li",
+          "tuAKv fzeHv eSWW VUFMN SdBAb AQSxL xBxr",
+          "Suspectpurchased50ropubDate"
+        ]
+      ],
+      "('div', 'theme-eGZms theme-aMvDO mLASH egFzk qXWHA ScoIf zRKnP jIRH wNxoc OJpwZ BOFPn wSPfd ofvJb bMrzT RGoaN gGlNh ARCOA kyjTO lvyBv aANqO aNnIu GDslh LjPJo RpDvg YYtC rTpcz EDgo SIwmX sWWJW mzm bVept SEPRz LRqoM kzZQf xGdAb hBvCD fQMZM yHyni pzxXD AbcH zUtsb', None, 21, 3)": [
+        "green",
+        [
+          "li",
+          "tuAKv fzeHv eSWW VUFMN SdBAb AQSxL xBxr",
+          "Wheresthebeef400casepubDate"
+        ]
+      ],
+      "('div', 'theme-eGZms theme-aMvDO mLASH egFzk qXWHA ScoIf zRKnP jIRH wNxoc OJpwZ BOFPn wSPfd ofvJb bMrzT RGoaN gGlNh ARCOA kyjTO lvyBv aANqO aNnIu GDslh LjPJo RpDvg YYtC rTpcz EDgo SIwmX sWWJW mzm bVept SEPRz LRqoM kzZQf xGdAb hBvCD fQMZM yHyni pzxXD AbcH zUtsb', None, 21, 4)": [
+        "green",
+        [
+          "li",
+          "tuAKv fzeHv eSWW VUFMN SdBAb AQSxL xBxr",
+          "AccuWeatherPeakofthepubDate"
+        ]
+      ],
+      "('div', 'theme-eGZms theme-aMvDO mLASH egFzk qXWHA ScoIf zRKnP jIRH wNxoc OJpwZ BOFPn wSPfd ofvJb bMrzT RGoaN gGlNh ARCOA kyjTO lvyBv aANqO aNnIu GDslh LjPJo RpDvg YYtC rTpcz EDgo SIwmX sWWJW mzm bVept SEPRz LRqoM kzZQf xGdAb hBvCD fQMZM yHyni pzxXD AbcH zUtsb', None, 21, 5)": [
+        "green",
+        [
+          "li",
+          "tuAKv fzeHv eSWW VUFMN SdBAb AQSxL xBxr",
+          "HoustonsHurricaneBerpubDate"
+        ]
+      ],
+      "('div', 'theme-eGZms theme-aMvDO mLASH egFzk qXWHA ScoIf zRKnP jIRH wNxoc OJpwZ BOFPn wSPfd ofvJb bMrzT RGoaN gGlNh ARCOA kyjTO lvyBv aANqO aNnIu GDslh LjPJo RpDvg YYtC rTpcz EDgo SIwmX sWWJW mzm bVept SEPRz LRqoM kzZQf xGdAb hBvCD fQMZM yHyni pzxXD AbcH zUtsb', None, 21, 6)": [
+        "green",
+        [
+          "li",
+          "tuAKv fzeHv eSWW VUFMN SdBAb AQSxL xBxr",
+          "MontcomanaccusedofkipubDate"
+        ]
+      ]
+    },
+    "22": {
+      "('span', 'QXDKT rGjeC tuAKv iMbiE', None, 22, 0)": [
+        "green",
+        [
+          "div",
+          "theme-eGZms theme-aMvDO mLASH egFzk qXWHA ScoIf zRKnP jIRH wNxoc OJpwZ BOFPn wSPfd ofvJb bMrzT RGoaN gGlNh ARCOA kyjTO lvyBv aANqO aNnIu GDslh LjPJo RpDvg YYtC rTpcz EDgo SIwmX sWWJW mzm bVept SEPRz LRqoM kzZQf xGdAb hBvCD fQMZM yHyni pzxXD AbcH zUtsb",
+          null
+        ]
+      ]
+    },
+    "23": {
+      "('span', 'awXxV jTKbV pCRh', None, 23, 0)": [
+        "green",
+        [
+          "span",
+          "QXDKT rGjeC tuAKv iMbiE",
+          null
+        ]
+      ]
+    }
+  }
