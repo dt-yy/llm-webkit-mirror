@@ -131,7 +131,7 @@ class LayoutBatchParser(BaseMainHtmlParser):
         # 不要创建新实例，直接使用当前实例处理
         content, body = self.process(html_source)
         # 相似度计算
-        if PreDataJsonKey.TYPICAL_MAIN_HTML in pre_data:
+        if pre_data.get(PreDataJsonKey.TYPICAL_MAIN_HTML, None):
             template_main_html = pre_data[PreDataJsonKey.TYPICAL_MAIN_HTML]
             layer_n = max(len(template_data), len(self.template_data))
             feature1 = get_feature(template_main_html)
@@ -210,8 +210,7 @@ class LayoutBatchParser(BaseMainHtmlParser):
                         # 计算位置差异
                         position_diff = [test_position[0] - template_position[0],
                                          test_position[1] - template_position[1]]
-
-                        # 如果位置相同或相近（差异在±1范围内），且标签相同，则染色
+                        # TODO 这里需要优化，如果位置相同或相近（差异在±1范围内），且标签相同，则染色
                         if ((-1 <= position_diff[0] <= 1 and -1 <= position_diff[1] <= 1) and test_key[0] == template_key[0]):  # 检查标签是否相同
                             # 进一步检查相似度
                             if self.get_similarity(test_element_dict, test_position, template_element_dict):
@@ -245,10 +244,22 @@ class LayoutBatchParser(BaseMainHtmlParser):
                 child_key = self.normalize_key((child.tag, child.get('class'), child.get('id')))
                 current_layer_keys.add(child_key)
 
+        # 获取element的当前子层的所有节点
+        element_parent = element.getparent()
+        current_layer_keys = set()
+        if element_parent is None:
+            current_layer_keys.add(keyy)
+        else:
+            for child in element_parent:
+                child_key = self.normalize_key((child.tag, child.get('class'), child.get('id')))
+                current_layer_keys.add(child_key)
+
         # 匹配正文节点
         has_red = False
         layer_nodes_list = []
         layer_nodes_dict = dict()
+        if class_tag == 'mw-editsection':
+            print('test')
         for node_keyy, node_value in layer_nodes.items():
             node_parent_keyy = self.normalize_key(node_value[1])
             if node_parent_keyy is not None:

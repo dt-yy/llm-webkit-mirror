@@ -1,10 +1,8 @@
-from lxml import etree, html
-
+from lxml import etree
 from llm_web_kit.exception.exception import TagMappingParserException
-from llm_web_kit.html_layout.html_layout_cosin import get_feature, similarity
 from llm_web_kit.input.pre_data_json import PreDataJson, PreDataJsonKey
+from llm_web_kit.libs.html_utils import html_to_element
 from llm_web_kit.main_html_parser.parser.parser import BaseMainHtmlParser
-from llm_web_kit.libs.html_utils import element_to_html, html_to_element
 
 SIMILAR_THRESHOLD = 0.9
 
