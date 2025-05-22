@@ -210,7 +210,7 @@ class LayoutBatchParser(BaseMainHtmlParser):
                         # 计算位置差异
                         position_diff = [test_position[0] - template_position[0],
                                          test_position[1] - template_position[1]]
-                        # TODO 这里需要优化，如果位置相同或相近（差异在±1范围内），且标签相同，则染色
+                        # TODO 这里需要优化，如果位置相同或相近，且标签相同，则染色, 考虑标签层级，和节点匹配结合
                         if ((-1 <= position_diff[0] <= 1 and -1 <= position_diff[1] <= 1) and test_key[0] == template_key[0]):  # 检查标签是否相同
                             # 进一步检查相似度
                             if self.get_similarity(test_element_dict, test_position, template_element_dict):
